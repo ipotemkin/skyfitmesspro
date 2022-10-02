@@ -52,9 +52,11 @@ export const mockUserCoursesResponse = [
   { 
     id: 1,
     name: "Йога",
+    coverUrl: "assets/images/card-violet.png", 
   },
   {
     id: 2,
     name: "Стретчинг",
+    coverUrl: "assets/images/card-blue.png",
   }
 ]
