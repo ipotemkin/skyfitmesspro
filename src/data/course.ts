@@ -415,6 +415,35 @@ export const mockCourses = {
   },
 }
 
+export const mockCoursesList = [
+  { 
+    id: 1,
+    name: "Йога",
+    coverUrl: "assets/images/card-violet.png"
+  },
+  {
+    id: 2,
+    name: "Стретчинг",
+    coverUrl: "assets/images/card-blue.png",
+  },
+  {
+    id: 3,
+    name: "Бодифлекс",
+    coverUrl: "assets/images/card-lightblue.png",
+  },
+  {
+    id: 4,
+    name: "Танцевальный фитнес",
+    coverUrl: "assets/images/card-orange.png",
+  },
+  {
+    id: 5,
+    name: "Степ-аэробика",
+    coverUrl: "assets/images/card-lightgreen.png", 
+  }
+]
+
+
 // информация по тренировке пользователя по выбранному курсу
 export const mockUserWorkout = {
   id: 2,
