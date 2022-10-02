@@ -11,7 +11,7 @@ export const Gallery = () => {
     <div>
       <div className={cnGallery()}>
         {mockCoursesList.map((item) => (
-          <Card item={item}></Card>
+          <Card item={item} key={item.id}></Card>
         ))}
       </div>
     </div>

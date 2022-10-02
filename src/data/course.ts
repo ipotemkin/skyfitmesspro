@@ -24,7 +24,7 @@ export const mockCourses = {
       {
         id: 1,
         name: 'Утренняя практика / Йога на каждый день / 1 день / Алексей Казубский',
-        video_url: 'https://youtu.be/oqe98Dxivns',
+        videoUrl: 'https://youtu.be/oqe98Dxivns',
         exercises: [
           {
             id: 1,
@@ -36,7 +36,7 @@ export const mockCourses = {
       {
         id: 2,
         name: 'Красота и здоровье / Йога на каждый день / 2 день / Алексей Казубский',
-        video_url: 'https://youtu.be/v-xTLFDhoD0',
+        videoUrl: 'https://youtu.be/v-xTLFDhoD0',
         exercises: [
           {
             id: 1,
@@ -58,7 +58,7 @@ export const mockCourses = {
       {
         id: 3,
         name: 'Асаны стоя / Йога на каждый день / 3 день / Алексей Казубский',
-        video_url: 'https://youtu.be/WxFz-4YsiEE',
+        videoUrl: 'https://youtu.be/WxFz-4YsiEE',
         exercises: [
           {
             id: 1,
@@ -90,7 +90,7 @@ export const mockCourses = {
       {
         id: 4,
         name: 'Растягиваем мышцы бедра / Йога на каждый день / 4 день / Алексей Казубский',
-        video_url: 'https://youtu.be/09uGkAEQuZI',
+        videoUrl: 'https://youtu.be/09uGkAEQuZI',
         exercises: [
           {
             id: 1,
@@ -117,7 +117,7 @@ export const mockCourses = {
       {
         id: 5,
         name: 'Гибкость спины / Йога на каждый день / 5 день / Алексей Казубский',
-        video_url: 'https://youtu.be/MIvcMapie_A',
+        videoUrl: 'https://youtu.be/MIvcMapie_A',
         exercises: [
           {
             id: 1,
@@ -158,7 +158,7 @@ export const mockCourses = {
       {
         id: 1,
         name: 'Основы стретчинга',
-        video_url: 'https://youtu.be/Ewm-Bfg5ncg',
+        videoUrl: 'https://youtu.be/Ewm-Bfg5ncg',
         exercises: [
           {
             id: 1,
@@ -185,7 +185,7 @@ export const mockCourses = {
       {
         id: 2,
         name: 'Разогрев мышц',
-        video_url: 'https://youtu.be/IISxKE3LGSE',
+        videoUrl: 'https://youtu.be/IISxKE3LGSE',
         exercises: [
           {
             id: 1,
@@ -207,7 +207,7 @@ export const mockCourses = {
       {
         id: 3,
         name: 'Разогрев мышц 2.0',
-        video_url: 'https://youtu.be/HKB89EIJ2J0',
+        videoUrl: 'https://youtu.be/HKB89EIJ2J0',
         exercises: [
           {
             id: 1,
@@ -245,7 +245,7 @@ export const mockCourses = {
       {
         id: 1,
         name: 'Техника дыхания',
-        video_url: 'https://youtu.be/HruMFn74NII',
+        videoUrl: 'https://youtu.be/HruMFn74NII',
         exercises: [
           {
             id: 1,
@@ -267,7 +267,7 @@ export const mockCourses = {
       {
         id: 2,
         name: 'Тренировка мышц бедер',
-        video_url: 'https://youtu.be/zxaoes0JQ5g',
+        videoUrl: 'https://youtu.be/zxaoes0JQ5g',
         exercises: [
           {
             id: 1,
@@ -289,7 +289,7 @@ export const mockCourses = {
       {
         id: 3,
         name: 'Тренировка мышц ягодиц',
-        video_url: 'https://youtu.be/JTCaG3Y9xlM',
+        videoUrl: 'https://youtu.be/JTCaG3Y9xlM',
         exercises: [
           {
             id: 1,
@@ -325,31 +325,31 @@ export const mockCourses = {
       {
         id: 1,
         name: 'Урок 1. Основы',
-        video_url: 'https://youtu.be/x6_8ZEYXPak',
+        videoUrl: 'https://youtu.be/x6_8ZEYXPak',
         exercises: [],
       },
       {
         id: 2,
         name: 'Урок 2. Основные движения',
-        video_url: 'https://youtu.be/UjVtcMD4On4',
+        videoUrl: 'https://youtu.be/UjVtcMD4On4',
         exercises: [],
       },
       {
         id: 3,
         name: 'Урок 3. Новые движения',
-        video_url: 'https://youtu.be/gvL27uHhKz4',
+        videoUrl: 'https://youtu.be/gvL27uHhKz4',
         exercises: [],
       },
       {
         id: 4,
         name: 'Урок 4. Продвинутые движения',
-        video_url: 'https://youtu.be/3RPauxe4SeE',
+        videoUrl: 'https://youtu.be/3RPauxe4SeE',
         exercises: [],
       },
       {
         id: 5,
         name: 'Урок 5. Мастер-класс',
-        video_url: 'https://youtu.be/_78_OGLyy9Y',
+        videoUrl: 'https://youtu.be/_78_OGLyy9Y',
         exercises: [],
       },
     ],
@@ -370,25 +370,25 @@ export const mockCourses = {
       {
         id: 1,
         name: 'Урок 1. Основы',
-        video_url: 'https://youtu.be/oK2mdodtPY4',
+        videoUrl: 'https://youtu.be/oK2mdodtPY4',
         exercises: [],
       },
       {
         id: 2,
         name: 'Урок 2. Основные движения',
-        video_url: 'https://youtu.be/gJPs7b8SpVw',
+        videoUrl: 'https://youtu.be/gJPs7b8SpVw',
         exercises: [],
       },
       {
         id: 3,
         name: 'Урок 3. Новые движения',
-        video_url: 'https://youtu.be/PGAQfXIAY7k',
+        videoUrl: 'https://youtu.be/PGAQfXIAY7k',
         exercises: [],
       },
       {
         id: 4,
         name: 'Урок 4. Продвинутые движения',
-        video_url: 'https://youtu.be/zuBLSarZuyk',
+        videoUrl: 'https://youtu.be/zuBLSarZuyk',
         exercises: [],
       },
     ],
@@ -427,7 +427,7 @@ export const mockCoursesList = [
 export const mockUserWorkout = {
   id: 2,
   name: 'Красота и здоровье / Йога на каждый день / 2 день / Алексей Казубский',
-  video_url: 'https://youtu.be/v-xTLFDhoD0',
+  videoUrl: 'https://youtu.be/v-xTLFDhoD0',
   exercises: [
     {
       id: 1,
