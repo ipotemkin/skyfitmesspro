@@ -1,0 +1,37 @@
+.Card {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
+  box-sizing: border-box;
+  width: 360px;
+  min-height: 480px;
+  padding: 30px;
+
+  background-color: #ffffff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  box-shadow: 10px -10px 16px rgba(0, 0, 0, 0.1),
+    -10px 10px 15.9988px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+
+  cursor: pointer;
+}
+
+.Card-Title {
+  /* font-family: 'Abhaya Libre ExtraBold'; */
+  font-style: normal;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 40px;
+
+  letter-spacing: -0.5px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+
+  color: #000000;
+
+  margin: 0;
+  padding: 0;
+}
