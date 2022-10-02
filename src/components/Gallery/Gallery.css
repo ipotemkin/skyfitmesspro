@@ -1,0 +1,23 @@
+.Gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  gap: 37px;
+
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 34px;
+}
+
+@media (max-width: 1200px) {
+  .Gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .Gallery {
+    grid-template-columns: 1fr;
+  }
+}
