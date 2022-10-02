@@ -1,7 +1,7 @@
 .Card {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
 
   box-sizing: border-box;
   width: 360px;
