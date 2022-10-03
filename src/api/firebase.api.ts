@@ -2,10 +2,9 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, Firestore, getDoc, doc } from 'firebase/firestore/lite';
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
-import { config } from 'dotenv';
 import { projectId } from '../env';
 
-console.log(config());
+// console.log('projectID -->', projectId);
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
