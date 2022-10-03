@@ -5,7 +5,7 @@ export interface User {
 }
 
 export interface CourseMainData {
-  id: number;
+  id?: number;
   name: string;
   coverUrl: string;
 }
