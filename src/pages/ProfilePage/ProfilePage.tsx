@@ -6,6 +6,7 @@ import { Logo } from '../../components/Logo/Logo';
 import { UserInfo } from '../../components/UserInfo/UserInfo';
 import { mockUserResponse } from '../../data/user';
 import { UserCourses } from '../../components/UserCourses/UserCourses';
+import { ReactComponent as ReactLogo } from './assets/arrow.svg';
 
 import './ProfilePage.css';
 
@@ -18,12 +19,13 @@ export const ProfilePage: FC = () => (
       <nav className={cnProfilePage('Nav', [cnNav()])}>
         <Logo color={LOGO_COLOR_DARK} />
         <div className={cnNav('User')}>
-          <div className={cnNav('UserAvatar')}/>
+          <div className={cnNav('UserAvatar')} />
           <div className={cnNav('UserName')}>{mockUserResponse.username}</div>
+          <ReactLogo className={cnNav('Icon')}/>
         </div>
       </nav>
-      <UserInfo/>
-      <UserCourses/>
+      <UserInfo />
+      <UserCourses />
     </div>
   </div>
 );
