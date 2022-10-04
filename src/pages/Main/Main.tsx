@@ -1,17 +1,17 @@
-import { cn } from '@bem-react/classname';
-import { Button } from '../../components/Button/Button';
-import { Gallery } from '../../components/Gallery/Gallery';
-import { Logo } from '../../components/Logo/Logo';
-import { LOGO_COLOR_LIGHT } from '../../constants';
+import { cn } from '@bem-react/classname'
+import { Button } from '../../components/Button/Button'
+import { Gallery } from '../../components/Gallery/Gallery'
+import { Logo } from '../../components/Logo/Logo'
+import { LOGO_COLOR_LIGHT } from '../../constants'
 
-import './Main.css';
+import './Main.css'
 
-const cnMainPage = cn('MainPage');
-const cnMain = cn('Main');
-const cnHeader = cn('Header');
-const cnNav = cn('Nav');
-const cnTitle = cn('Title');
-const cnSubtitle = cn('Subtitle');
+const cnMainPage = cn('MainPage')
+const cnMain = cn('Main')
+const cnHeader = cn('Header')
+const cnNav = cn('Nav')
+const cnTitle = cn('Title')
+const cnSubtitle = cn('Subtitle')
 
 export const Main = () => {
   return (
@@ -45,5 +45,5 @@ export const Main = () => {
         </main>
       </div>
     </div>
-  );
-};
+  )
+}
