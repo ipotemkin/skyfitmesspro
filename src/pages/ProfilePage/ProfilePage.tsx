@@ -5,6 +5,7 @@ import { LOGO_COLOR_DARK } from '../../constants';
 import { Logo } from '../../components/Logo/Logo';
 import { UserInfo } from '../../components/UserInfo/UserInfo';
 import { mockUserResponse } from '../../data/user';
+import { UserCourses } from '../../components/UserCourses/UserCourses';
 
 import './ProfilePage.css';
 
@@ -22,6 +23,7 @@ export const ProfilePage: FC = () => (
         </div>
       </nav>
       <UserInfo/>
+      <UserCourses/>
     </div>
   </div>
 );

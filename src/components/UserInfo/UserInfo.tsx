@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { cn } from '@bem-react/classname';
 
+import { mockUserResponse } from '../../data/user';
 import { Button } from '../Button/Button';
 
 import './UserInfo.css'
-import { mockUserResponse } from '../../data/user';
 
 const cnUserInfo = cn('UserInfo');
 
