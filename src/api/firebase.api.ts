@@ -3,16 +3,22 @@ import { getFirestore, collection, getDocs, Firestore, getDoc, doc } from 'fireb
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
 import { projectId } from '../env';
+import { getAuth } from "firebase/auth";
 
 // console.log('projectID -->', projectId);
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
   projectId: projectId,
+  apiKey: "AIzaSyADzEwdRjcwMitDfmmBd9GdSvKwSQlc9hQ"
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+
+const auth = getAuth();
+const user = auth.currentUser;
+console.log('user -->', user);
 
 // Get a list of courses from the database
 export async function getCourses(db: Firestore) {
