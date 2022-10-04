@@ -9,7 +9,6 @@ const cnCard = cn('Card')
 type Props = { item: CourseMainData }
 
 export const Card: FC<Props> = ({ item }) => {
-  console.log(item)
   return (
     <div
       className={cnCard()}
