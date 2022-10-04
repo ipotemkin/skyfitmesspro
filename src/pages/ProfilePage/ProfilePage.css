@@ -1,0 +1,17 @@
+.ProfilePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-height: 100vh;
+
+  background-color: #fff;
+}
+
+.ProfilePage-Wrapper {
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  max-width: 1160px;
+}
