@@ -7,10 +7,9 @@ function App() {
   // getCourses(db)
   // getCourseById(db, 3)
 
-  api.getCourses();
+  api.getCourses()
 
-  return <Main></Main>;
+  return <Main></Main>
 }
 
-export default App;
-
+export default App

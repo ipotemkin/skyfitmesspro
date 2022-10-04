@@ -1,22 +1,19 @@
-import { cn } from '@bem-react/classname';
-// import { mockCoursesList } from '../../data/course';
-import { Card } from '../Card/Card';
-import { useCourses } from '../../hooks/apiHooks';
+import { cn } from '@bem-react/classname'
+import { Card } from '../Card/Card'
+import { useGetCoursesQuery } from '../../api/courses.api'
 
-import './Gallery.css';
+import './Gallery.css'
 
-const cnGallery = cn('Gallery');
+const cnGallery = cn('Gallery')
 
 export const Gallery = () => {
-  const courses = useCourses()
-  
+  const { data } = useGetCoursesQuery()
+
   return (
-    <div>
-      <div className={cnGallery()}>
-        {courses && courses.map((item) => (
-          <Card item={item} key={item.name}></Card>
-        ))}
-      </div>
+    <div className={cnGallery()}>
+      {data && data.map((item) => (
+        <Card item={item} key={item.id}></Card>
+      ))}
     </div>
-  );
-};
+  )
+}
