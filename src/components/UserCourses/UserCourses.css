@@ -1,19 +1,17 @@
-.UserCourses {
-}
-
 .UserCourses-Title {
-  font-size: 48px;
-  font-weight: 400;
-  line-height: 1.16;
   margin: 0;
   margin-bottom: 60px;
+
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.16;
 }
 
 .UserCourses-Gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
   gap: 37px;
+  justify-items: center;
 
   box-sizing: border-box;
   width: 100%;
@@ -27,8 +25,8 @@
 
 .UserCourses-Button {
   position: absolute;
-  left: 30px;
   bottom: 30px;
+  left: 30px;
 }
 
 @media (max-width: 1200px) {
