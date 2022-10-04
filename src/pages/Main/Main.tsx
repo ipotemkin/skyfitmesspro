@@ -1,26 +1,38 @@
-import { cn } from '@bem-react/classname';
-import { Button } from '../../components/Button/Button';
-import { Gallery } from '../../components/Gallery/Gallery';
-import { Logo } from '../../components/Logo/Logo';
-import { LOGO_COLOR_LIGHT } from '../../constants';
+import { cn } from '@bem-react/classname'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '../../components/Button/Button'
+import { Gallery } from '../../components/Gallery/Gallery'
+import { Logo } from '../../components/Logo/Logo'
+import { LOGO_COLOR_LIGHT } from '../../constants'
 
-import './Main.css';
+import './Main.css'
 
-const cnMainPage = cn('MainPage');
-const cnMain = cn('Main');
-const cnHeader = cn('Header');
-const cnNav = cn('Nav');
-const cnTitle = cn('Title');
-const cnSubtitle = cn('Subtitle');
+const cnMainPage = cn('MainPage')
+const cnMain = cn('Main')
+const cnHeader = cn('Header')
+const cnNav = cn('Nav')
+const cnTitle = cn('Title')
+const cnSubtitle = cn('Subtitle')
 
 export const Main = () => {
+  const navigate = useNavigate()
+
+  const clickHandler = () => {
+    navigate('/login')
+  }
+
   return (
     <div className={cnMainPage()}>
       <div className={cnMainPage('Wrapper')}>
         <header className={cnHeader()}>
           <nav className={cnNav()}>
             <Logo color={LOGO_COLOR_LIGHT}></Logo>
-            <Button type="tertiary" size="s" buttonText="Войти"></Button>
+            <Button
+              type="tertiary"
+              size="s"
+              buttonText="Войти"
+              onClick={clickHandler}
+            ></Button>
           </nav>
           <h2 className={cnSubtitle()}>Онлайн-тренировки для занятий дома</h2>
           <div className={cnTitle('Wrapper')}>
@@ -45,5 +57,5 @@ export const Main = () => {
         </main>
       </div>
     </div>
-  );
-};
+  )
+}

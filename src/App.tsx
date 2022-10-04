@@ -1,8 +1,13 @@
-import './App.css';
-import { Main } from './pages/Main/Main';
+import './App.css'
+
+import AppRoutes from './pages/AppRoutes'
 
 function App() {
-  return <Main></Main>;
+  return (
+    <>
+      <AppRoutes />
+    </>
+  )
 }
 
-export default App;
+export default App
