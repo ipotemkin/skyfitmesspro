@@ -393,7 +393,7 @@ export const mockCourses = {
       },
     ],
   },
-};
+}
 
 export const mockCoursesList = [
   {
@@ -421,7 +421,7 @@ export const mockCoursesList = [
     name: 'Степ-аэробика',
     coverUrl: 'assets/images/card-lightgreen.png',
   },
-];
+]
 
 // информация по тренировке пользователя по выбранному курсу
 export const mockUserWorkout = {
@@ -448,7 +448,7 @@ export const mockUserWorkout = {
       userProgress: 2,
     },
   ],
-};
+}
 
 // все тренировки пользователя по выбранному курсу
 export const moskUserWorkouts = [
@@ -477,4 +477,4 @@ export const moskUserWorkouts = [
     name: 'Гибкость спины / Йога на каждый день / 5 день / Алексей Казубский',
     done: false,
   },
-];
+]

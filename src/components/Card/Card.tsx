@@ -1,15 +1,15 @@
-import { cn } from '@bem-react/classname';
-import { FC } from 'react';
-import { CourseMainData } from '../../types';
+import { cn } from '@bem-react/classname'
+import { FC } from 'react'
+import { CourseMainData } from '../../types'
 
-import './Card.css';
+import './Card.css'
 
-const cnCard = cn('Card');
+const cnCard = cn('Card')
 
-type Props = { item: CourseMainData };
+type Props = { item: CourseMainData }
 
 export const Card: FC<Props> = ({ item }) => {
-  console.log(item);
+  console.log(item)
   return (
     <div
       className={cnCard()}
@@ -17,5 +17,5 @@ export const Card: FC<Props> = ({ item }) => {
     >
       <p className={cnCard('Title')}>{item.name}</p>
     </div>
-  );
-};
+  )
+}

@@ -1,16 +1,16 @@
-import { FC } from 'react';
-import { cn } from '@bem-react/classname';
+import { FC } from 'react'
+import { cn } from '@bem-react/classname'
 
-import './Button.css';
+import './Button.css'
 
-const cnButton = cn('Button');
+const cnButton = cn('Button')
 
 export type ButtonProps = {
-  type?: 'action' | 'outlined' | 'secondary' | 'tertiary';
-  size?: 's' | 'm' | 'l';
-  buttonStatus?: 'normal' | 'disabled';
-  buttonText?: string;
-};
+  type?: 'action' | 'outlined' | 'secondary' | 'tertiary'
+  size?: 's' | 'm' | 'l'
+  buttonStatus?: 'normal' | 'disabled'
+  buttonText?: string
+}
 
 export const Button: FC<ButtonProps> = ({
   type = 'action',
@@ -28,5 +28,5 @@ export const Button: FC<ButtonProps> = ({
     >
       {buttonText ? buttonText : ''}
     </button>
-  );
-};
+  )
+}
