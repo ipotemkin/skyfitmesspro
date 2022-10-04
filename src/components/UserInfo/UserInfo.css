@@ -1,0 +1,32 @@
+.UserInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-bottom: 75px;
+}
+
+.UserInfo-Title {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.16;
+  margin: 0;
+}
+
+.UserInfo-InfoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: ;
+}
+
+.UserInfo-User {
+  font-size: 24px;
+  margin: 0;
+  line-height: 1.333;
+}
+
+.UserInfo-EditBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

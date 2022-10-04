@@ -3,8 +3,10 @@ import { cn } from '@bem-react/classname';
 
 import { LOGO_COLOR_DARK } from '../../constants';
 import { Logo } from '../../components/Logo/Logo';
+import { UserInfo } from '../../components/UserInfo/UserInfo';
+import { mockUserResponse } from '../../data/user';
 
-import './Profile.css';
+import './ProfilePage.css';
 
 const cnProfilePage = cn('ProfilePage');
 const cnNav = cn('Nav');
@@ -15,10 +17,11 @@ export const ProfilePage: FC = () => (
       <nav className={cnProfilePage('Nav', [cnNav()])}>
         <Logo color={LOGO_COLOR_DARK} />
         <div className={cnNav('User')}>
-          <div className={cnNav('UserAvatar')}></div>
-          <div className={cnNav('UserName')}></div>
+          <div className={cnNav('UserAvatar')}/>
+          <div className={cnNav('UserName')}>{mockUserResponse.username}</div>
         </div>
       </nav>
+      <UserInfo/>
     </div>
   </div>
 );

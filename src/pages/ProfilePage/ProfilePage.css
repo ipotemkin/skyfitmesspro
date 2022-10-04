@@ -15,3 +15,32 @@
   box-sizing: border-box;
   max-width: 1160px;
 }
+
+.ProfilePage-Nav {
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.Nav-User {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.Nav-UserAvatar {
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-image: radial-gradient(circle 25px, #d9d9d9 100%, transparent 0%);
+  background-size: 50px 50px;
+  background-position: 0;
+}
+
+.Nav-UserName {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.333;
+}
