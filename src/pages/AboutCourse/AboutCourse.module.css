@@ -200,6 +200,8 @@
   background-image: url('./phone.png');
   background-repeat: no-repeat;
   background-position: right 0;
+
+  margin-bottom: 95px;
 }
 
 .Footer-Text {

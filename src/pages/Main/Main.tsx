@@ -4,7 +4,7 @@ import { Gallery } from '../../components/Gallery/Gallery'
 import { Logo } from '../../components/Logo/Logo'
 import { LOGO_COLOR_LIGHT } from '../../constants'
 
-import './Main.css'
+import styles from './Main.module.css'
 
 const cnMainPage = cn('MainPage')
 const cnMain = cn('Main')
@@ -15,24 +15,26 @@ const cnSubtitle = cn('Subtitle')
 
 export const Main = () => {
   return (
-    <div className={cnMainPage()}>
-      <div className={cnMainPage('Wrapper')}>
-        <header className={cnHeader()}>
-          <nav className={cnNav()}>
+    <div className={styles[cnMainPage()]}>
+      <div className={styles[cnMainPage('Wrapper')]}>
+        <header className={styles[cnHeader()]}>
+          <nav className={styles[cnNav()]}>
             <Logo color={LOGO_COLOR_LIGHT}></Logo>
             <Button type="tertiary" size="s" buttonText="Войти"></Button>
           </nav>
-          <h2 className={cnSubtitle()}>Онлайн-тренировки для занятий дома</h2>
-          <div className={cnTitle('Wrapper')}>
-            <h1 className={cnTitle()} id="top">
+          <h2 className={styles[cnSubtitle()]}>
+            Онлайн-тренировки для занятий дома
+          </h2>
+          <div className={styles[cnTitle('Wrapper')]}>
+            <h1 className={styles[cnTitle()]} id="top">
               Начните заниматься спортом и&nbsp;улучшите качество жизни
             </h1>
-            <div className={cnHeader('Sticker')}>
+            <div className={styles[cnHeader('Sticker')]}>
               Измени своё тело&nbsp;за&nbsp;полгода
             </div>
           </div>
         </header>
-        <main className={cnMain()}>
+        <main className={styles[cnMain()]}>
           <Gallery></Gallery>
           <a href="#top">
             <Button
