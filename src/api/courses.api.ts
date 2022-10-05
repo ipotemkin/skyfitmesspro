@@ -1,17 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CourseData } from '../types';
 
-export interface ILoginUser {
-  email: string;
-  password: string;
-}
-
-export interface ISignupUser {
-  username: string;
-  email: string;
-  password: string;
-}
-
 export const coursesApi = createApi({
   reducerPath: 'courses/api',
   baseQuery: fetchBaseQuery({

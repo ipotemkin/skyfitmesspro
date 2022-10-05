@@ -10,7 +10,6 @@ import { getAuth } from "firebase/auth";
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
   projectId: projectId,
-  apiKey: "AIzaSyADzEwdRjcwMitDfmmBd9GdSvKwSQlc9hQ"
 };
 
 const app = initializeApp(firebaseConfig);

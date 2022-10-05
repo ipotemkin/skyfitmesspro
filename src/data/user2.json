@@ -1,0 +1,29 @@
+{
+  "123": {
+    "uid": "123",
+    "courses": {
+      "0": {
+        "id": 0,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 5 }
+            ]
+          }
+        ]
+      },
+      "2": {
+        "id": 2,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 1 }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

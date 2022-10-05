@@ -6,24 +6,35 @@ export interface User {
 
 export interface CourseMainData {
   id?: number;
-  name: string;
-  coverUrl: string;
+  name?: string;
+  coverUrl?: string;
 }
 
 export type CourseData = {
-  description: string;
-  suitableFor: string[];
-  lines: string[];
-  workouts: Workout[];
+  description?: string;
+  suitableFor?: string[];
+  lines?: string[];
+  workouts?: Workout[];
 } & CourseMainData;
 
 export type Workout = {
   id: number;
+  name?: string;
+  video_url?: string;
+  exercises?: Exercise[];
+  done: boolean;
+};
+
+export type Exercise = {
+  id: number;
   name: string;
-  video_url: string;
-  exercises: {
-    id: number;
-    name: string;
-    retriesCount: number;
-  }[];
+  retriesCount: number;
+  userProgress?: number;
+};
+
+// username & password are stored in a closed Firebase table. We cannot change it
+// uid is to link UserData to a specified user in the closed Firebase table
+export type UserData = {
+  uid: string;
+  courses: CourseData[];
 };
