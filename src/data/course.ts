@@ -1,6 +1,13 @@
 // все курсы
+
+import { CourseData } from '../types'
+
 // для настройки фронта, не ответ API!
-export const mockCourses = {
+type coursesType = {
+  [index: string]: CourseData
+}
+
+export const mockCourses: coursesType = {
   1: {
     id: 1,
     name: 'Йога',
