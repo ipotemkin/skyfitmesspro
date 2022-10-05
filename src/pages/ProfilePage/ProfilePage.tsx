@@ -1,17 +1,17 @@
-import React, { FC } from 'react';
-import { cn } from '@bem-react/classname';
+import React, { FC } from 'react'
+import { cn } from '@bem-react/classname'
 
-import { LOGO_COLOR_DARK } from '../../constants';
-import { Logo } from '../../components/Logo/Logo';
-import { UserInfo } from '../../components/UserInfo/UserInfo';
-import { mockUserResponse } from '../../data/user';
-import { UserCourses } from '../../components/UserCourses/UserCourses';
-import { ReactComponent as ReactLogo } from './assets/arrow.svg';
+import { LOGO_COLOR_DARK } from '../../constants'
+import { Logo } from '../../components/Logo/Logo'
+import { UserInfo } from '../../components/UserInfo/UserInfo'
+import { mockUserResponse } from '../../data/user'
+import { UserCourses } from '../../components/UserCourses/UserCourses'
+import { ReactComponent as ReactLogo } from './assets/arrow.svg'
 
-import './ProfilePage.css';
+import './ProfilePage.css'
 
-const cnProfilePage = cn('ProfilePage');
-const cnNav = cn('Nav');
+const cnProfilePage = cn('ProfilePage')
+const cnNav = cn('Nav')
 
 export const ProfilePage: FC = () => (
   <div className={cnProfilePage()}>
@@ -21,11 +21,11 @@ export const ProfilePage: FC = () => (
         <div className={cnNav('User')}>
           <div className={cnNav('UserAvatar')} />
           <div className={cnNav('UserName')}>{mockUserResponse.username}</div>
-          <ReactLogo className={cnNav('Icon')}/>
+          <ReactLogo className={cnNav('Icon')} />
         </div>
       </nav>
       <UserInfo />
       <UserCourses />
     </div>
   </div>
-);
+)
