@@ -15,9 +15,6 @@ export const UserInfo: FC = () => (
       <p
         className={cnUserInfo('User')}
       >{`Логин: ${mockUserResponse.username}`}</p>
-      <p
-        className={cnUserInfo('User')}
-      >{`Пароль: ${mockUserResponse.password}`}</p>
     </div>
     <div className={cnUserInfo('EditBlock')}>
       <Button buttonText="Редактировать логин" />
