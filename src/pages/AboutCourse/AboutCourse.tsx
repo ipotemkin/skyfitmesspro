@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
 import { LOGO_COLOR_DARK } from '../../constants'
-import { mockCourses, mockCoursesList } from '../../data/course'
+import { mockCourses } from '../../data/course'
 
 import styles from './AboutCourse.module.css'
 
