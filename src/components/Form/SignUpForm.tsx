@@ -29,9 +29,10 @@ const SignUpForm = () => {
     isValid && navigate('/')
   }
 
-  const inputPasswordStyle = classNames(styles.formInput, {
-    [styles.password]: styles.password,
-  })
+  const inputPasswordStyle = classNames(
+    styles.formInput,
+    styles.formInputPassword
+  )
 
   return (
     <div className={styles.formWrapper}>
