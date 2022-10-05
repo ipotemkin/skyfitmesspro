@@ -1,10 +1,10 @@
-import { cn } from '@bem-react/classname';
-import { mockCoursesList } from '../../data/course';
-import { Card } from '../Card/Card';
+import { cn } from '@bem-react/classname'
+import { mockCoursesList } from '../../data/course'
+import { Card } from '../Card/Card'
 
-import './Gallery.css';
+import './Gallery.css'
 
-const cnGallery = cn('Gallery');
+const cnGallery = cn('Gallery')
 
 export const Gallery = () => {
   return (
@@ -15,5 +15,5 @@ export const Gallery = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
