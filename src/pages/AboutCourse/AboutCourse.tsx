@@ -54,7 +54,7 @@ export const AboutCourse: FC<Props> = ({ id }) => {
               выбором направления и тренера, с которым тренировки принесут
               здоровье и радость!
             </p>
-            <Button buttonText="Записаться на тренировку" />
+            <Button>Записаться на тренировку</Button>
           </footer>
         </main>
       </div>

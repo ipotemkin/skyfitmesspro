@@ -9,14 +9,18 @@ export type ButtonProps = {
   type?: 'action' | 'outlined' | 'secondary' | 'tertiary'
   size?: 's' | 'm' | 'l'
   buttonStatus?: 'normal' | 'disabled'
-  buttonText?: string
+  children?: string
+  btnType?: 'button' | 'submit' | 'reset'
+  onClick?: VoidFunction
 }
 
 export const Button: FC<ButtonProps> = ({
   type = 'action',
   buttonStatus = 'normal',
   size = 'l',
-  buttonText,
+  children,
+  btnType,
+  onClick,
 }) => {
   return (
     <button
@@ -25,8 +29,10 @@ export const Button: FC<ButtonProps> = ({
         status: buttonStatus,
         size: size,
       })}
+      onClick={onClick}
+      type={btnType}
     >
-      {buttonText ? buttonText : ''}
+      {children ? children : ''}
     </button>
   )
 }

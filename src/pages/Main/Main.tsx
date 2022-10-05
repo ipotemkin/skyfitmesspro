@@ -11,8 +11,10 @@ export const Main = () => {
       <div className={styles.wrapper}>
         <header className={styles.header}>
           <nav className={styles.nav}>
-            <Logo color={LOGO_COLOR_LIGHT}></Logo>
-            <Button type="tertiary" size="s" buttonText="Войти"></Button>
+            <Logo color={LOGO_COLOR_LIGHT} />
+            <Button type="tertiary" size="s">
+              Войти
+            </Button>
           </nav>
           <h2 className={styles.subtitle}>
             Онлайн-тренировки для занятий дома
@@ -29,12 +31,9 @@ export const Main = () => {
         <main className={styles.main}>
           <Gallery></Gallery>
           <a href="#top">
-            <Button
-              type="secondary"
-              buttonStatus="normal"
-              size="m"
-              buttonText="Наверх ↑"
-            />
+            <Button type="secondary" buttonStatus="normal" size="m">
+              Наверх ↑
+            </Button>
           </a>
         </main>
       </div>
