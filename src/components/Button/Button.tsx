@@ -1,9 +1,7 @@
 import { FC } from 'react'
-import { cn } from '@bem-react/classname'
+import cn from 'classnames'
 
-import './Button.css'
-
-const cnButton = cn('Button')
+import styles from './Button.module.css'
 
 export type ButtonProps = {
   type?: 'action' | 'outlined' | 'secondary' | 'tertiary'
@@ -22,16 +20,15 @@ export const Button: FC<ButtonProps> = ({
   btnType,
   onClick,
 }) => {
+  const buttonClassName = cn(
+    styles.button,
+    styles[`${type}`],
+    styles[`${buttonStatus}`],
+    styles[`${size}`]
+  )
+
   return (
-    <button
-      className={cnButton({
-        type: type,
-        status: buttonStatus,
-        size: size,
-      })}
-      onClick={onClick}
-      type={btnType}
-    >
+    <button className={buttonClassName} onClick={onClick} type={btnType}>
       {children ? children : ''}
     </button>
   )
