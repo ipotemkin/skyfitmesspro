@@ -1,4 +1,4 @@
-.ProfilePage {
+.profilePage {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +8,7 @@
   background-color: #fff;
 }
 
-.ProfilePage-Wrapper {
+.wrapper {
   display: flex;
   flex-direction: column;
 
@@ -16,7 +16,7 @@
   max-width: 1160px;
 }
 
-.ProfilePage-Nav {
+.nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,17 +24,17 @@
   padding-top: 30px;
 }
 
-.Nav-User {
+.navUser {
   display: flex;
   gap: 14px;
   align-items: center;
 }
 
-.Nav-User:hover {
+.navUser:hover {
   cursor: pointer;
 }
 
-.Nav-UserAvatar {
+.navUserAvatar {
   width: 50px;
   height: 50px;
 
@@ -44,7 +44,7 @@
   background-size: 50px 50px;
 }
 
-.Nav-UserName {
+.navUserName {
   font-weight: 400;
   font-size: 24px;
   line-height: 1.333;

@@ -1,22 +1,19 @@
 import React, { FC } from 'react'
-import { cn } from '@bem-react/classname'
 
 import { mockUserCoursesResponse } from '../../data/user'
 import { Card } from '../Card/Card'
 import { Button } from '../Button/Button'
 
-import './UserCourses.css'
-
-const cnUserCourses = cn('UserCourses')
+import styles from './UserCourses.module.css'
 
 export const UserCourses: FC = () => (
-  <div className={cnUserCourses()}>
-    <h4 className={cnUserCourses('Title')}>Мои курсы</h4>
-    <div className={cnUserCourses('Gallery')}>
+  <div >
+    <h4 className={styles.title}>Мои курсы</h4>
+    <div className={styles.gallery}>
       {mockUserCoursesResponse.map((item) => (
-        <div className={cnUserCourses('Wrapper')} key={item.id}>
+        <div className={styles.wrapper} key={item.id}>
           <Card item={item} key={item.id} />
-          <div className={cnUserCourses('Button')}>
+          <div className={styles.button}>
             <Button buttonText="Перейти →" type="secondary" size="m" />
           </div>
         </div>

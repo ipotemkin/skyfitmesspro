@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { cn } from '@bem-react/classname'
 
 import { LOGO_COLOR_DARK } from '../../constants'
 import { Logo } from '../../components/Logo/Logo'
@@ -8,20 +7,17 @@ import { mockUserResponse } from '../../data/user'
 import { UserCourses } from '../../components/UserCourses/UserCourses'
 import { ReactComponent as ReactLogo } from './assets/arrow.svg'
 
-import './ProfilePage.css'
-
-const cnProfilePage = cn('ProfilePage')
-const cnNav = cn('Nav')
+import styles from './ProfilePage.module.css'
 
 export const ProfilePage: FC = () => (
-  <div className={cnProfilePage()}>
-    <div className={cnProfilePage('Wrapper')}>
-      <nav className={cnProfilePage('Nav', [cnNav()])}>
+  <div className={styles.profilePage}>
+    <div className={styles.wrapper}>
+      <nav className={styles.nav}>
         <Logo color={LOGO_COLOR_DARK} />
-        <div className={cnNav('User')}>
-          <div className={cnNav('UserAvatar')} />
-          <div className={cnNav('UserName')}>{mockUserResponse.username}</div>
-          <ReactLogo className={cnNav('Icon')} />
+        <div className={styles.navUser}>
+          <div className={styles.navUserAvatar} />
+          <div className={styles.navUserName}>{mockUserResponse.username}</div>
+          <ReactLogo />
         </div>
       </nav>
       <UserInfo />

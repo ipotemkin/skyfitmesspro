@@ -1,4 +1,4 @@
-.UserCourses-Title {
+.title {
   margin: 0;
   margin-bottom: 60px;
 
@@ -7,7 +7,7 @@
   line-height: 1.16;
 }
 
-.UserCourses-Gallery {
+.gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 37px;
@@ -19,24 +19,25 @@
   margin-bottom: 34px;
 }
 
-.UserCourses-Wrapper {
+.wrapper {
   position: relative;
 }
 
-.UserCourses-Button {
+.button {
   position: absolute;
   bottom: 30px;
   left: 30px;
 }
 
 @media (max-width: 1200px) {
-  .UserCourses-Gallery {
+  .gallery {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 860px) {
-  .UserCourses-Gallery {
+  .gallery {
     grid-template-columns: 1fr;
   }
 }
+
