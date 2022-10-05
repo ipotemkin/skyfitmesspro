@@ -1,4 +1,3 @@
-import { cn } from '@bem-react/classname'
 import { Button } from '../../components/Button/Button'
 import { Gallery } from '../../components/Gallery/Gallery'
 import { Logo } from '../../components/Logo/Logo'
@@ -6,35 +5,28 @@ import { LOGO_COLOR_LIGHT } from '../../constants'
 
 import styles from './Main.module.css'
 
-const cnMainPage = cn('MainPage')
-const cnMain = cn('Main')
-const cnHeader = cn('Header')
-const cnNav = cn('Nav')
-const cnTitle = cn('Title')
-const cnSubtitle = cn('Subtitle')
-
 export const Main = () => {
   return (
-    <div className={styles[cnMainPage()]}>
-      <div className={styles[cnMainPage('Wrapper')]}>
-        <header className={styles[cnHeader()]}>
-          <nav className={styles[cnNav()]}>
+    <div className={styles.mainPage}>
+      <div className={styles.wrapper}>
+        <header className={styles.header}>
+          <nav className={styles.nav}>
             <Logo color={LOGO_COLOR_LIGHT}></Logo>
             <Button type="tertiary" size="s" buttonText="Войти"></Button>
           </nav>
-          <h2 className={styles[cnSubtitle()]}>
+          <h2 className={styles.subtitle}>
             Онлайн-тренировки для занятий дома
           </h2>
-          <div className={styles[cnTitle('Wrapper')]}>
-            <h1 className={styles[cnTitle()]} id="top">
+          <div className={styles.titleWrapper}>
+            <h1 className={styles.title} id="top">
               Начните заниматься спортом и&nbsp;улучшите качество жизни
             </h1>
-            <div className={styles[cnHeader('Sticker')]}>
+            <div className={styles.sticker}>
               Измени своё тело&nbsp;за&nbsp;полгода
             </div>
           </div>
         </header>
-        <main className={styles[cnMain()]}>
+        <main className={styles.main}>
           <Gallery></Gallery>
           <a href="#top">
             <Button

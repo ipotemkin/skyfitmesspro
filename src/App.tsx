@@ -1,4 +1,3 @@
-import './App.css'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { Main } from './pages/Main/Main'
 

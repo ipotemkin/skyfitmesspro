@@ -1,4 +1,4 @@
-.Card {
+.card {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -20,7 +20,7 @@
   cursor: pointer;
 }
 
-.Card-Title {
+.title {
   /* font-family: 'Abhaya Libre ExtraBold'; */
   font-style: normal;
   font-weight: 800;
