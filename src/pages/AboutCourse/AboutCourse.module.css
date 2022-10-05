@@ -1,4 +1,4 @@
-.AboutCourse {
+.aboutCourse {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@
   background-color: #fafafa;
 }
 
-.AboutCourse-Wrapper {
+.aboutCourseWrapper {
   display: flex;
   flex-direction: column;
 
@@ -17,12 +17,12 @@
   max-width: 1160px;
 }
 
-.Header {
+.header {
   margin: 0;
   margin-top: 30px;
 }
 
-.Nav {
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +30,7 @@
   margin-bottom: 75px;
 }
 
-.Title-Wrapper {
+.titleWrapper {
   box-sizing: border-box;
   padding: 30px;
   width: 1190px;
@@ -45,7 +45,7 @@
   border-radius: 30px;
 }
 
-.Title {
+.title {
   font-style: normal;
   font-weight: 400;
   font-size: 64px;
@@ -64,7 +64,7 @@
   padding: 0;
 }
 
-.Main {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,8 +72,8 @@
   margin-bottom: 60px;
 }
 
-.Suitable-Header,
-.Lines-Header {
+.suitableHeader,
+.linesHeader {
   align-self: flex-start;
 
   font-style: normal;
@@ -88,15 +88,15 @@
   padding: 0;
 }
 
-.Suitable-Header {
+.suitableHeader {
   margin-bottom: 40px;
 }
 
-.Lines-Header {
+.linesHeader {
   margin-bottom: 22px;
 }
 
-.Suitable-List {
+.suitableList {
   display: flex;
   justify-content: space-between;
   align-self: flex-start;
@@ -108,14 +108,14 @@
   margin-bottom: 75px;
 }
 
-.Suitable-Item {
+.suitableItem {
   display: flex;
 
   box-sizing: border-box;
   max-width: 335px;
 }
 
-.Suitable-Number {
+.suitableNumber {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,7 +135,7 @@
   border-radius: 50%;
 }
 
-.Suitable-Text {
+.suitableText {
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -148,7 +148,7 @@
   margin: 0;
 }
 
-.Lines-List {
+.linesList {
   align-self: flex-start;
   display: grid;
   grid-auto-flow: column;
@@ -158,7 +158,7 @@
   margin-bottom: 75px;
 }
 
-.Lines-Item {
+.linesItem {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -174,11 +174,11 @@
   margin: 0;
 }
 
-.Lines-Text {
+.linesText {
   margin: 0;
 }
 
-.AboutCourse-Description {
+.description {
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -190,7 +190,7 @@
   padding: 0;
 }
 
-.Footer {
+.footer {
   background-color: #f9ebff;
 
   padding: 46px 285px 48px 52px;
@@ -204,7 +204,7 @@
   margin-bottom: 95px;
 }
 
-.Footer-Text {
+.footerText {
   font-style: normal;
   font-weight: 400;
   font-size: 32px;
