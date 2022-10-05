@@ -25,5 +25,21 @@
         ]
       }
     }
+  },
+  "WQiqftpsjvYVM7j4nlWo0bg9c6F2": {
+    "uid": "WQiqftpsjvYVM7j4nlWo0bg9c6F2",
+    "courses": {
+      "0": {
+        "id": 0,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      }
+    }
   }
 }

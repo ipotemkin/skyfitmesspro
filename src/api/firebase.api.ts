@@ -3,21 +3,33 @@ import { getFirestore, collection, getDocs, Firestore, getDoc, doc } from 'fireb
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
 import { projectId } from '../env';
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // console.log('projectID -->', projectId);
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
   projectId: projectId,
+  apiKey: "AIzaSyADzEwdRjcwMitDfmmBd9GdSvKwSQlc9hQ",
+  authDomain: "skyfitnesspro-202210.firebaseapp.com",
+  storageBucket: "skyfitnesspro-202210.appspot.com",
+  messagingSenderId: "145031793249",
+  appId: "1:145031793249:web:1a74ded7242c3bb89e3820",
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-const auth = getAuth();
+export const auth = getAuth();
 const user = auth.currentUser;
 console.log('user -->', user);
+
+onAuthStateChanged(auth, (user) => {
+  console.log('onAuthStateChanged')
+  if (user) {
+    console.log('user -->', user)
+  } else console.log(user)
+})
 
 // Get a list of courses from the database
 export async function getCourses(db: Firestore) {

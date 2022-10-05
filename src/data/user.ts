@@ -7,6 +7,7 @@ export const mockUsers = {
     id: 1,
     username: "user1@example.com",
     password: "MySecret12345",
+    uid: 'kwtEgq2ylcZI0iUjgDAWlRqHixB3',
     courses: [ 
       {
         id: 1,
@@ -18,6 +19,7 @@ export const mockUsers = {
     id: 2,
     username: "user2@example.com",
     password: "MySecret6789",
+    uid: 'B8s8cplekcY11gSQtEsZfFO8hH93',
     courses: [ 
       {
         id: 1,
@@ -38,6 +40,7 @@ export const mockUserResponse = {
   id: 1,
   username: "user1@example.com",
   password: "MySecret12345",
+  uid: 'kwtEgq2ylcZI0iUjgDAWlRqHixB3',
   courses: [ 
     {
       id: 1,
