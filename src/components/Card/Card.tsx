@@ -1,20 +1,17 @@
-import { cn } from '@bem-react/classname'
 import { FC } from 'react'
 import { CourseMainData } from '../../types'
 
-import './Card.css'
-
-const cnCard = cn('Card')
+import styles from './Card.module.css'
 
 type Props = { item: CourseMainData }
 
 export const Card: FC<Props> = ({ item }) => {
   return (
     <div
-      className={cnCard()}
+      className={styles.card}
       style={{ backgroundImage: `url(${item.coverUrl})` }}
     >
-      <p className={cnCard('Title')}>{item.name}</p>
+      <p className={styles.title}>{item.name}</p>
     </div>
   )
 }

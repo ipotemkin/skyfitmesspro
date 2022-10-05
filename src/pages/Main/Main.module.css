@@ -1,4 +1,4 @@
-.MainPage {
+.mainPage {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +8,7 @@
   background-color: #271a58;
 }
 
-.MainPage-Wrapper {
+.wrapper {
   display: flex;
   flex-direction: column;
 
@@ -16,12 +16,12 @@
   max-width: 1160px;
 }
 
-.Header {
+.header {
   margin-top: 30px;
   margin-bottom: 52px;
 }
 
-.Nav {
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,7 +29,7 @@
   margin-bottom: 35px;
 }
 
-.Subtitle {
+.subtitle {
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -45,11 +45,11 @@
   padding: 0;
 }
 
-.Title-Wrapper {
+.titleWrapper {
   position: relative;
 }
 
-.Title {
+.title {
   font-style: normal;
   font-weight: 400;
   font-size: 60px;
@@ -67,7 +67,7 @@
   padding: 0;
 }
 
-.Header-Sticker {
+.sticker {
   position: absolute;
   top: -15px;
   right: -65px;
@@ -98,7 +98,7 @@
   transform: rotate(15.96deg);
 }
 
-.Main {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,27 +107,27 @@
 }
 
 @media (max-width: 1440px) {
-  .Header-Sticker {
+  .sticker {
     right: 0;
   }
 }
 
 @media (max-width: 1200px) {
-  .MainPage-Wrapper {
+  .wrapper {
     max-width: 800px;
   }
 
-  .Title {
+  .title {
     max-width: 600px;
   }
 }
 
 @media (max-width: 860px) {
-  .Header-Sticker {
+  .sticker {
     right: -100px;
   }
 
-  .Title {
+  .title {
     max-width: 400px;
   }
 }

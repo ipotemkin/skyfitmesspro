@@ -20,7 +20,7 @@ export type CourseData = {
 export type Workout = {
   id: number
   name: string
-  video_url: string
+  videoUrl: string
   exercises: {
     id: number
     name: string
