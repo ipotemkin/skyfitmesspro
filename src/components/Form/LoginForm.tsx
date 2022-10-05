@@ -1,13 +1,11 @@
-import './Form.css'
+import styles from './style.module.css'
 
-import block from 'bem-cn-lite'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { FormData } from '../../types'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
-import { useNavigate } from 'react-router-dom'
-
-const form = block('form')
+import classNames from 'classnames'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
@@ -30,15 +28,19 @@ const LoginForm = () => {
     navigate('/register')
   }
 
+  const inputPasswordStyle = classNames(styles.formInput, {
+    [styles.password]: styles.password,
+  })
+
   return (
-    <div className="form-wrapper">
-      <form className={form()} onSubmit={handleSubmit(onSubmit)}>
-        <div className={form('logo')}>
+    <div className={styles.formWrapper}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.formLogo}>
           <Logo />
         </div>
-        <div className={form('inputs')}>
+        <div className={styles.formInputs}>
           <input
-            className={form('input', { email: true })}
+            className={styles.formInput}
             placeholder="Email"
             {...register('email', {
               required: 'Email is required',
@@ -48,12 +50,12 @@ const LoginForm = () => {
               },
             })}
           />
-          <p className={form('error')}>
+          <p className={styles.formError}>
             {errors.email && <span>{errors.email.message}</span>}
           </p>
 
           <input
-            className={form('input', { password: true })}
+            className={inputPasswordStyle}
             placeholder="Password"
             type="password"
             {...register('password', {
@@ -64,11 +66,11 @@ const LoginForm = () => {
               },
             })}
           />
-          <p className={form('error')}>
+          <p className={styles.formError}>
             {errors.password && <span>{errors.password.message}</span>}
           </p>
         </div>
-        <div className={form('buttons')}>
+        <div className={styles.formButtons}>
           <Button buttonText="Войти" />
           <Button
             buttonText="Зарегистрироваться"

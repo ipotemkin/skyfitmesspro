@@ -1,4 +1,4 @@
-.form-wrapper {
+.formWrapper {
   min-height: 100vh;
 
   display: flex;
@@ -22,19 +22,19 @@
   border-radius: 12px;
 }
 
-.form__logo {
+.formLogo {
   margin: 0;
   margin: 0 auto;
   margin-bottom: 38px;
 }
 
-.form__inputs {
+.formInputs {
   display: flex;
   flex-direction: column;
   margin-bottom: 40px;
 }
 
-.form__input {
+.formInput {
   font-family: inherit;
   font-size: 18px;
   line-height: 24px;
@@ -46,19 +46,19 @@
   border-bottom: 1px solid #d0cece;
 }
 
-.form__input::placeholder {
+.formInput::placeholder {
   color: #d0cece;
 }
 
-.form__input:focus {
+.formInput:focus {
   border-bottom: 1px solid #580ea2;
 }
 
-.form__input_password {
+.password {
   margin-top: 20px;
 }
 
-.form__error {
+.formError {
   height: 19px;
   margin: 0;
   padding-left: 2px;
@@ -68,12 +68,12 @@
   color: #ff6b6b;
 }
 
-.form__error span::before {
+.formError span::before {
   display: inline;
   content: '⚠ ';
 }
 
-.form__buttons {
+.formButtons {
   display: flex;
   flex-direction: column;
   gap: 20px;
