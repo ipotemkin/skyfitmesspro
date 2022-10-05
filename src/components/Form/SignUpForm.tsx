@@ -29,20 +29,17 @@ const SignUpForm = () => {
     isValid && navigate('/')
   }
 
-  const inputPasswordStyle = classNames(
-    styles.formInput,
-    styles.formInputPassword
-  )
+  const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
 
   return (
     <div className={styles.formWrapper}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.formLogo}>
+        <div className={styles.logo}>
           <Logo />
         </div>
-        <div className={styles.formInputs}>
+        <div className={styles.inputs}>
           <input
-            className={styles.formInput}
+            className={styles.input}
             placeholder="Email"
             {...register('email', {
               required: 'Email is required',
@@ -52,7 +49,7 @@ const SignUpForm = () => {
               },
             })}
           />
-          <p className={styles.formError}>
+          <p className={styles.error}>
             {errors.email && <span>{errors.email.message}</span>}
           </p>
 
@@ -68,7 +65,7 @@ const SignUpForm = () => {
               },
             })}
           />
-          <p className={styles.formError}>
+          <p className={styles.error}>
             {errors.password && <span>{errors.password.message}</span>}
           </p>
 
@@ -86,13 +83,13 @@ const SignUpForm = () => {
               },
             })}
           />
-          <p className={styles.formError}>
+          <p className={styles.error}>
             {errors.confirmPassword && (
               <span>{errors.confirmPassword.message}</span>
             )}
           </p>
         </div>
-        <div className={styles.formButtons}>
+        <div className={styles.buttons}>
           <Button buttonText="Зарегистрироваться" onClick={clickHandler} />
         </div>
       </form>

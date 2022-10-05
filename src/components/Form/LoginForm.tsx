@@ -28,20 +28,17 @@ const LoginForm = () => {
     navigate('/register')
   }
 
-  const inputPasswordStyle = classNames(
-    styles.formInput,
-    styles.formInputPassword
-  )
+  const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
 
   return (
     <div className={styles.formWrapper}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.formLogo}>
+        <div className={styles.logo}>
           <Logo />
         </div>
-        <div className={styles.formInputs}>
+        <div className={styles.inputs}>
           <input
-            className={styles.formInput}
+            className={styles.input}
             placeholder="Email"
             {...register('email', {
               required: 'Email is required',
@@ -51,7 +48,7 @@ const LoginForm = () => {
               },
             })}
           />
-          <p className={styles.formError}>
+          <p className={styles.error}>
             {errors.email && <span>{errors.email.message}</span>}
           </p>
 
@@ -67,11 +64,11 @@ const LoginForm = () => {
               },
             })}
           />
-          <p className={styles.formError}>
+          <p className={styles.error}>
             {errors.password && <span>{errors.password.message}</span>}
           </p>
         </div>
-        <div className={styles.formButtons}>
+        <div className={styles.buttons}>
           <Button buttonText="Войти" />
           <Button
             buttonText="Зарегистрироваться"
