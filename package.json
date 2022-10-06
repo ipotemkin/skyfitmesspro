@@ -17,6 +17,7 @@
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.36.1",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
@@ -27,7 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:fix": "eslint src/ --fix --max-warnings=0",
+    "lint": "eslint --fix ./src/**/*.{js,jsx,ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +51,8 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "2.7.1",
     "@types/lodash": "^4.14.186"
-  }
+  } 
 }

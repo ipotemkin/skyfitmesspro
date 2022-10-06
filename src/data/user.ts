@@ -3,7 +3,7 @@
 // all users – GET /users
 // список пользователей
 export const mockUsers = {
-  1 : {
+  1: {
     id: 1,
     username: "user1@example.com",
     password: "MySecret12345",
@@ -11,11 +11,11 @@ export const mockUsers = {
     courses: [ 
       {
         id: 1,
-        name: "Йога"
-      }
-    ]
+        name: 'Йога',
+      },
+    ],
   },
-  2 : {
+  2: {
     id: 2,
     username: "user2@example.com",
     password: "MySecret6789",
@@ -23,13 +23,13 @@ export const mockUsers = {
     courses: [ 
       {
         id: 1,
-        name: "Йога"
+        name: 'Йога',
       },
       {
         id: 2,
-        name: "Стретчинг"
-      }
-    ]
+        name: 'Стретчинг',
+      },
+    ],
   },
 }
 
@@ -44,22 +44,22 @@ export const mockUserResponse = {
   courses: [ 
     {
       id: 1,
-      name: "Йога"
-    }
-  ]
+      name: 'Йога',
+    },
+  ],
 }
 
 // get all courses of the specified user – GET /users/id/courses
 // курсы пользователя
 export const mockUserCoursesResponse = [
-  { 
+  {
     id: 1,
-    name: "Йога",
-    coverUrl: "assets/images/card-violet.png", 
+    name: 'Йога',
+    coverUrl: 'assets/images/card-violet.png',
   },
   {
     id: 2,
-    name: "Стретчинг",
-    coverUrl: "assets/images/card-blue.png",
-  }
+    name: 'Стретчинг',
+    coverUrl: 'assets/images/card-blue.png',
+  },
 ]

@@ -1,15 +1,11 @@
 // TODO: нужны стили для сообщений о загрузке и ошибке
 
-import { cn } from '@bem-react/classname'
-import { Card } from '../Card/Card'
+import styles from './Gallery.module.css'
 
-import './Gallery.css'
 import { useEffect, useState } from 'react'
 import { DataSnapshot, off, onValue, ref } from 'firebase/database'
 import db from '../../db/db'
 import { CourseData } from '../../types'
-
-const cnGallery = cn('Gallery')
 
 const colRef = ref(db, '/courses')
 

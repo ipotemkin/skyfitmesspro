@@ -1,17 +1,14 @@
-import { cn } from '@bem-react/classname';
-import logo from './logo.svg';
-import { LOGO_COLOR_DARK } from '../../constants';
-import { FC } from 'react';
+import logo from './logo.svg'
+import { LOGO_COLOR_DARK } from '../../constants'
+import { FC } from 'react'
 
-import './Logo.css';
+import styles from './Logo.module.css'
 
-type Props = { color: string };
-
-const cnLogo = cn('Logo');
+type Props = { color?: string }
 
 export const Logo: FC<Props> = ({ color = LOGO_COLOR_DARK }) => {
   return (
-    <div className={cnLogo()}>
+    <div className={styles.logo}>
       <img src={logo} alt="logo" />
       <svg
         width="184"
@@ -74,5 +71,5 @@ export const Logo: FC<Props> = ({ color = LOGO_COLOR_DARK }) => {
         />
       </svg>
     </div>
-  );
-};
+  )
+}
