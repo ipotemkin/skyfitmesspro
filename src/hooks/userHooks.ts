@@ -3,8 +3,9 @@ import { useGetCourseQuery, useGetCoursesQuery } from "../api/courses.api"
 import { useGetUserCourseQuery, useGetUserCoursesQuery } from "../api/users.api"
 import { CourseData } from "../types"
 import { merge } from 'lodash'
-import { auth } from "../api/firebase.api"
+import { auth, db_rtime } from "../api/firebase.api"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { get, ref } from "firebase/database"
 
 export const useAuth = () => {
   const noop = () => {}  // заглушка для колбэков
@@ -107,4 +108,25 @@ export const useUserCourse = (uid: string, courseId: number) => {
   }, [userCourseData, course, courseId])
 
   return userCourse
+}
+
+export const useUserWorkoutStatus = (uid: string, courseId: number, workoutId: number) => {
+  const [status, setStatus] = useState()
+
+  useEffect(() => {
+
+  }, )
+  
+  const workoutRef = ref(db_rtime, `users/${uid}/courses/${courseId}/workouts/${workoutId}/done`)
+  get(workoutRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      setStatus(snapshot.val())
+    } else {
+      console.warn("No data available")
+    }
+  }).catch((error) => {
+    console.error(error)
+  })
+
+  return status
 }

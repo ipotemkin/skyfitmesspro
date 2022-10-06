@@ -1,4 +1,4 @@
-// import { db, getCourses, getCourseById } from './api/firebase.api';
+import { db, getCourses, getCourseById, getUserWorkoutStatusAsync } from './api/firebase.api';
 // import { api } from './api/firebase2.api';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { useEffect } from 'react';
@@ -7,11 +7,17 @@ import { useGetUserCoursesQuery, useGetUserCourseQuery, useGetUserExercisesQuery
 import './App.css';
 import { AuthDebug } from './components/AuthDebug/AuthDebug';
 import { useAppDispatch } from './hooks/appHooks';
-import { useUserCourse, useUserCourses } from './hooks/userHooks';
+import { useUserCourse, useUserCourses, useUserWorkoutStatus } from './hooks/userHooks';
 import { Main } from './pages/Main/Main';
 
 function App() {
-  // getCourses(db)
+  getCourses(db)
+
+  // getUserWorkoutStatusAsync('123', 0, 0)
+
+  const status = useUserWorkoutStatus('123', 0, 0)
+  console.log('status -->', status)
+
   // getCourseById(db, 3)
 
   // api.getCourses()
