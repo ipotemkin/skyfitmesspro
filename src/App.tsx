@@ -79,10 +79,12 @@ function App() {
   // }
 
   return <>
-    <AuthDebug/>
+    {/* <AuthDebug/> */}
+
     {/* <button onClick={handleSignIn}>Log in</button>
-    <button onClick={handleLogout}>Log out</button>    
-    <Main/> */}
+    <button onClick={handleLogout}>Log out</button>     */}
+
+    <Main/>
   </>
 }
 
