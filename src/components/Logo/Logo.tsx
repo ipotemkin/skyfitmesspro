@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 import styles from './Logo.module.css'
 
-type Props = { color: string }
+type Props = { color?: string }
 
 export const Logo: FC<Props> = ({ color = LOGO_COLOR_DARK }) => {
   return (
