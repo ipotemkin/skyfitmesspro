@@ -27,3 +27,9 @@ export type Workout = {
     retriesCount: number
   }[]
 }
+
+export type FormData = {
+  email: string
+  password: string
+  confirmPassword?: string
+}
