@@ -23,9 +23,6 @@ const SignUpForm = () => {
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
     reset()
-  }
-
-  const clickHandler = () => {
     isValid && navigate('/')
   }
 
@@ -90,7 +87,7 @@ const SignUpForm = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          <Button buttonText="Зарегистрироваться" onClick={clickHandler} />
+          <Button>{'Зарегистрироваться'}</Button>
         </div>
       </form>
     </div>

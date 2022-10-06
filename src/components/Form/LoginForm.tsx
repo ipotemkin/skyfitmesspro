@@ -69,13 +69,10 @@ const LoginForm = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          <Button buttonText="Войти" />
-          <Button
-            buttonText="Зарегистрироваться"
-            type="outlined"
-            btnType="button"
-            onClick={clickHandler}
-          />
+          <Button>{'Войти'}</Button>
+          <Button type="outlined" btnType="button" onClick={clickHandler}>
+            {'Зарегистрироваться'}
+          </Button>
         </div>
       </form>
     </div>
