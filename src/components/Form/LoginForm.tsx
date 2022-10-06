@@ -10,7 +10,7 @@ import classNames from 'classnames'
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const navigate = useNavigate()
   const {
     register,
@@ -78,5 +78,3 @@ const LoginForm = () => {
     </div>
   )
 }
-
-export default LoginForm
