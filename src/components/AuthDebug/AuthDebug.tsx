@@ -1,11 +1,18 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { DataSnapshot, onValue } from "firebase/database";
 import { connectFirestoreEmulator } from "firebase/firestore/lite";
 import { ReactEventHandler, ReactHTML, ReactHTMLElement, useEffect, useState } from "react";
 import { auth } from "../../api/firebase.api";
 import { useGetUserCoursesQuery } from "../../api/users.api";
 import { mockCourses } from "../../data/course";
 import { useAuth, useUserCourses } from "../../hooks/userHooks";
+import UserDataService from "../../services/UserDataService";
+import { UserData } from "../../types";
 import { UserGallery } from "../UserGallery/UserGallery";
+import { UserList } from "../UserList/UserList";
+
+import { off } from 'firebase/database'
+import { once } from "lodash";
 
 type FormData = {
   username: string
@@ -17,19 +24,31 @@ export const AuthDebug = () => {
   const [uid, setUid] = useState<string | undefined>()
   const userCourses = useUserCourses(uid || '')
   const { signUp, signIn, logOut } = useAuth()
+  const [users, setUsers] = useState<UserData[]>()
+
+  // console.log('AuthDebug: users -->', users)
   
-  console.log(mockCourses[2].coverUrl)
+  // console.log(mockCourses[2].coverUrl)
+
+  const onDataChange = (items: DataSnapshot) => {
+    const usersFromDB = items.val()
+    console.log('AuthDebug: usersFromDB -->', usersFromDB)
+    setUsers(usersFromDB)
+  }
 
   useEffect(() => {
     const listener = onAuthStateChanged(auth, async (user) => {
       if (user) setUid(user.uid)
       else setUid(undefined)
     })
-  
+    
+    onValue(UserDataService.getAll(), onDataChange)
+    
     return () => {
       listener()
+      off(UserDataService.getAll(), 'value', onDataChange)
     }
-  }, [])  
+  }, [])
 
   const handleSignIn = () => {
     signIn(form.username, form.password)
@@ -91,6 +110,7 @@ export const AuthDebug = () => {
       <button onClick={handleCurrentUser}>Get current user</button>
       <button onClick={handleCurrentUserCourses}>Get current user courses</button>
     </div>
+    {users && <UserList users={users}/>}
     {uid && <UserGallery uid={uid}/>}
     {/* {<UserGallery uid={'123'}/>} */}
   </>

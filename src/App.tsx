@@ -9,6 +9,7 @@ import { AuthDebug } from './components/AuthDebug/AuthDebug';
 import { useAppDispatch } from './hooks/appHooks';
 import { useUserCourse, useUserCourses, useUserWorkoutStatus } from './hooks/userHooks';
 import { Main } from './pages/Main/Main';
+import { getUserCourse } from './services/UserDataService';
 
 function App() {
   getCourses(db)
@@ -17,6 +18,8 @@ function App() {
 
   const status = useUserWorkoutStatus('123', 0, 0)
   console.log('status -->', status)
+
+  getUserCourse('123', 0)
 
   // getCourseById(db, 3)
 
