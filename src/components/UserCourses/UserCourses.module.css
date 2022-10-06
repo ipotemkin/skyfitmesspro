@@ -23,10 +23,22 @@
   position: relative;
 }
 
-.button {
+.wrapper:hover {
+  cursor: pointer;
+}
+
+.link {
+  background-color: #c7e957;
+  border: 1px solid #c7e957;
+  border-radius: 80px;
+
+  padding: 10px 20px;
+
   position: absolute;
-  bottom: 30px;
+  bottom: 27px;
   left: 30px;
+
+  font-size: 20px;
 }
 
 @media (max-width: 1200px) {

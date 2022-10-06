@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 
 import { mockUserCoursesResponse } from '../../data/user'
 import { Card } from '../Card/Card'
-import { Button } from '../Button/Button'
 
 import styles from './UserCourses.module.css'
 
@@ -13,11 +12,7 @@ export const UserCourses: FC = () => (
       {mockUserCoursesResponse.map((item) => (
         <div className={styles.wrapper} key={item.id}>
           <Card item={item} key={item.id} />
-          <div className={styles.button}>
-            <Button type="secondary" size="m">
-              Перейти →
-            </Button>
-          </div>
+          <div className={styles.link}>Перейти →</div>
         </div>
       ))}
     </div>
