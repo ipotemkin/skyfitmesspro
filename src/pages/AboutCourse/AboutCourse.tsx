@@ -1,10 +1,9 @@
-import { DataSnapshot, off, onValue, ref } from 'firebase/database'
-import { FC, useEffect, useState } from 'react'
+import { DataSnapshot, off, onValue } from 'firebase/database'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
 import { LOGO_COLOR_DARK } from '../../constants'
-import { mockCourses } from '../../data/course'
-import db from '../../db/db'
+import { getCourseRef } from '../../db/refs'
 import { CourseData } from '../../types'
 
 import styles from './AboutCourse.module.css'
@@ -15,7 +14,7 @@ export const AboutCourse: FC<Props> = ({ id }) => {
   const [course, setCourse ] = useState<CourseData>()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
-  const colRef = ref(db, '/courses/' + id)
+  const colRef = useMemo(() => getCourseRef(id), [id])
 
   const onDataChange = (item: DataSnapshot) => {
     if (item.exists()) {

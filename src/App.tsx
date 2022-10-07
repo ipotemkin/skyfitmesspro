@@ -1,3 +1,4 @@
+import { AuthDebug } from './components/AuthDebug/AuthDebug'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { Main } from './pages/Main/Main'
 
@@ -6,6 +7,7 @@ function App() {
     <>
       <Main />
       <AboutCourse id={0} />
+      <AuthDebug/>
     </>
   )
 }

@@ -3,21 +3,20 @@
 import styles from './Gallery.module.css'
 
 import { useEffect, useState } from 'react'
-import { DataSnapshot, off, onValue, ref } from 'firebase/database'
-import db from '../../db/db'
-import { CourseData } from '../../types'
+import { DataSnapshot, off, onValue } from 'firebase/database'
+import { CourseMainData } from '../../types'
 import { Card } from '../Card/Card'
-
-const colRef = ref(db, '/courses')
+import { coursesRef } from '../../db/refs'
+import { getCourseList } from '../../db/service'
 
 export const Gallery = () => {
-  const [courses, setCourses ] = useState<CourseData[]>()
+  const [courses, setCourses ] = useState<CourseMainData[]>()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
-
+  
   const onDataChange = (items: DataSnapshot) => {
     if (items.exists()) {
-      setCourses(items.val())
+      setCourses(getCourseList(items))
     } else {
       setError('Упс... Ошибка загрузки')
       console.error('Data not found')
@@ -26,16 +25,16 @@ export const Gallery = () => {
   }
   
   useEffect(() => {
-    onValue(colRef, onDataChange)
+    onValue(coursesRef, onDataChange)
     
     return () => {
-      off(colRef, 'value', onDataChange)
+      off(coursesRef, 'value', onDataChange)
     }
   }, [])
 
   return (
     <div className={styles.gallery}>
-      {courses && Object.values(courses).map((item) => (
+      {courses && courses.map((item) => (
         <Card item={item} key={item.id}></Card>
       ))}
       {isLoading && <h1 style={{ color: 'white' }}>Загрузка...</h1>}
