@@ -22,7 +22,7 @@ export type Workout = {
   name?: string;
   videoUrl?: string;
   exercises?: Exercise[];
-  done: boolean;
+  done?: boolean;
 };
 
 export type Exercise = {
@@ -38,3 +38,9 @@ export type UserData = {
   uid: string;
   courses: CourseData[];
 };
+
+export type FormData = {
+  email: string
+  password: string
+  confirmPassword?: string
+}

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { DataSnapshot, off, onValue, ref } from 'firebase/database'
 import db from '../../db/db'
 import { CourseData } from '../../types'
+import { Card } from '../Card/Card'
 
 const colRef = ref(db, '/courses')
 
@@ -33,7 +34,7 @@ export const Gallery = () => {
   }, [])
 
   return (
-    <div className={cnGallery()}>
+    <div className={styles.gallery}>
       {courses && Object.values(courses).map((item) => (
         <Card item={item} key={item.id}></Card>
       ))}

@@ -1,10 +1,7 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { DataSnapshot, onValue } from "firebase/database";
-import { connectFirestoreEmulator } from "firebase/firestore/lite";
-import { ReactEventHandler, ReactHTML, ReactHTMLElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../../api/firebase.api";
-import { useGetUserCoursesQuery } from "../../api/users.api";
-import { mockCourses } from "../../data/course";
 import { useAuth, useUserCourses } from "../../hooks/userHooks";
 import UserDataService from "../../services/UserDataService";
 import { UserData } from "../../types";
@@ -12,7 +9,6 @@ import { UserGallery } from "../UserGallery/UserGallery";
 import { UserList } from "../UserList/UserList";
 
 import { off } from 'firebase/database'
-import { once } from "lodash";
 
 type FormData = {
   username: string
@@ -75,10 +71,6 @@ export const AuthDebug = () => {
    }
   }
 
-  // useEffect(() => {
-  //   if (userCourses) console.log('useEffect: userCourses -->', userCourses)
-  // }, [userCourses])
-
   const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     const username = e.target.value
     setForm(prev => ({...prev, username}))
@@ -112,6 +104,5 @@ export const AuthDebug = () => {
     </div>
     {users && <UserList users={users}/>}
     {uid && <UserGallery uid={uid}/>}
-    {/* {<UserGallery uid={'123'}/>} */}
   </>
 }

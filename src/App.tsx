@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Main />
-      <AboutCourse id={1} />
+      <AboutCourse id={0} />
     </>
   )
 }
