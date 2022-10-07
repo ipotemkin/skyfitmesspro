@@ -1,0 +1,10 @@
+.container {
+  position: relative;
+  height: 640px;
+}
+
+.player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

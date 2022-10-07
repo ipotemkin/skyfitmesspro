@@ -1,4 +1,5 @@
 import { FC } from 'react'
+
 import { Workout } from '../../types'
 import classNames from 'classnames'
 

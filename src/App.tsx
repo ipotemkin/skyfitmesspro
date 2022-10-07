@@ -7,7 +7,7 @@ function App() {
     <>
       <Main />
       <AboutCourse id={1} />
-      <Workout courseId={1} day={1} />
+      <Workout courseId={1} day={2} />
     </>
   )
 }
