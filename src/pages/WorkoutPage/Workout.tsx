@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { User } from '../../components/User/User'
 import { Header } from '../../components/Header/Header'
@@ -9,15 +10,15 @@ import { mockCourses } from '../../data/course'
 
 import styles from './style.module.css'
 
-type WorkoutProps = {
-  courseId: number
-  day: number
-}
+export const Workout: FC = () => {
+  const { id, day } = useParams()
 
-export const Workout: FC<WorkoutProps> = ({ courseId, day }) => {
+  const courseId = Number(id) || 0
+  const courseDay = Number(day) || 0
+
   const course = mockCourses[courseId]
   const { name: courseName, workouts } = course
-  const workout = workouts[day - 1]
+  const workout = workouts[courseDay - 1]
   const { exercises } = workout
 
   return (

@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 import { mockUserResponse } from '../../data/user'
 import { Button } from '../Button/Button'
 
-import styles from './UserInfo.module.css'
+import styles from './style.module.css'
 
 export const UserInfo: FC = () => (
   <div className={styles.userInfo}>

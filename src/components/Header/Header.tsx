@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 import { Logo } from '../Logo/Logo'
 
@@ -13,7 +14,9 @@ export const Header: FC<HeaderProps> = ({ logoColor, children }) => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <Logo color={logoColor} />
+        <Link to="/">
+          <Logo color={logoColor} />
+        </Link>
         {children}
       </nav>
     </header>

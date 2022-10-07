@@ -16,7 +16,11 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 34px;
+  margin-bottom: 140px;
+}
+
+.link {
+  text-decoration: none;
 }
 
 .wrapper {
@@ -27,7 +31,7 @@
   cursor: pointer;
 }
 
-.link {
+.go {
   background-color: #c7e957;
   border: 1px solid #c7e957;
   border-radius: 80px;
@@ -52,4 +56,3 @@
     grid-template-columns: 1fr;
   }
 }
-

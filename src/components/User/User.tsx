@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { mockUserResponse } from '../../data/user'
 import { ReactComponent as Arrow } from './arrow-down.svg'
 

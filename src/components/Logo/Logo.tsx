@@ -1,8 +1,9 @@
-import logo from './logo.svg'
-import { LOGO_COLOR_DARK } from '../../constants'
 import { FC } from 'react'
 
-import styles from './Logo.module.css'
+import logo from './logo.svg'
+import { LOGO_COLOR_DARK } from '../../constants'
+
+import styles from './style.module.css'
 
 type Props = { color?: string }
 

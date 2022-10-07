@@ -1,10 +1,11 @@
 import { FC } from 'react'
-
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { FormData } from '../../types'
-import { Button } from '../Button/Button'
-import { Logo } from '../Logo/Logo'
+import { Link } from 'react-router-dom'
 import classNames from 'classnames'
+
+import { FormData } from '../../types'
+import { Button } from '../../components/Button/Button'
+import { Logo } from '../../components/Logo/Logo'
 
 import styles from './style.module.css'
 
@@ -36,7 +37,7 @@ export const SignUpForm: FC = () => {
         <div className={styles.inputs}>
           <input
             className={styles.input}
-            placeholder="Электронная почта"
+            placeholder="E-mail"
             {...register('email', {
               required: 'Введите адрес эл. почты',
               pattern: {
@@ -86,7 +87,9 @@ export const SignUpForm: FC = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          <Button>{'Зарегистрироваться'}</Button>
+          <Link to="/profile">
+            <Button>{'Зарегистрироваться'}</Button>
+          </Link>
         </div>
       </form>
     </div>

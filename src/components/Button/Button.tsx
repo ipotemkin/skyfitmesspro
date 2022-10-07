@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import cn from 'classnames'
 
-import styles from './Button.module.css'
+import styles from './style.module.css'
 
 export type ButtonProps = {
   type?: 'action' | 'outlined' | 'secondary' | 'tertiary'
