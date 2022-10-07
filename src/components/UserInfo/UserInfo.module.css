@@ -1,0 +1,34 @@
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-bottom: 75px;
+}
+
+.title {
+  margin: 0;
+
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: ;
+}
+
+.user {
+  margin: 0;
+
+  font-size: 24px;
+  line-height: 1.333;
+}
+
+.editBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
