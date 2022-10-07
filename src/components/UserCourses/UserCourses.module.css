@@ -16,7 +16,7 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 34px;
+  margin-bottom: 140px;
 }
 
 .wrapper {
@@ -52,4 +52,3 @@
     grid-template-columns: 1fr;
   }
 }
-
