@@ -1,0 +1,208 @@
+.container {
+  padding-left: calc(50% - 580px);
+  padding-right: calc(50% - 580px);
+}
+
+.header {
+  padding: 24px 0;
+}
+
+.nav {
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navUser {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navUser:hover {
+  cursor: pointer;
+}
+
+.navUserAvatar {
+  width: 50px;
+  height: 50px;
+
+  background-image: radial-gradient(circle 25px, #d9d9d9 100%, transparent 0%);
+  background-repeat: no-repeat;
+  background-position: 0;
+  background-size: 50px 50px;
+}
+
+.navUserName {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.333;
+}
+
+.main {
+  padding-top: 42px;
+  padding-bottom: 94px;
+}
+
+.heading {
+  margin: 0 0 40px;
+
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 56px;
+}
+
+.title {
+  margin: 0 0 40px;
+
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.exercises {
+  display: flex;
+  justify-content: space-between;
+  gap: 94px;
+
+  margin-top: 75px;
+}
+
+.exercisesTitle {
+  margin: 0 0 30px;
+
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.exercisesList {
+  max-width: 410px;
+  margin-bottom: 40px;
+}
+
+.exercisesListItem {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.progress {
+  padding: 36px 44px;
+  background-color: #f2f2f2;
+  border-radius: 30px;
+}
+
+.progressTitle {
+  margin: 0 0 40px;
+
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+
+  text-align: center;
+}
+
+.progressList {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.progressListItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.exerciseName {
+  max-width: 278px;
+}
+
+.progressbar {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  min-width: 278px;
+  height: 36px;
+
+  background-color: #f9ebff;
+  border: 2px solid #9a48f1;
+  border-radius: 22px;
+}
+
+.progressbarDone {
+  position: absolute;
+
+  height: 100%;
+
+  background-color: #9a48f1;
+}
+
+.progressbarPercent {
+  position: absolute;
+  z-index: 1;
+
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+
+  color: #fff;
+}
+
+.color1 {
+  background-color: #565eef;
+}
+
+.colorBg1 {
+  background-color: #edecff;
+  border: 2px solid #565eef;
+}
+
+.color2 {
+  background-color: #ff6d00;
+}
+
+.colorBg2 {
+  background-color: #fff2e0;
+  border: 2px solid #ff6d00;
+}
+
+.color3 {
+  background-color: #9a48f1;
+}
+
+.colorBg3 {
+  background-color: #f9ebff;
+  border: 2px solid #9a48f1;
+}
+
+.color4 {
+  background-color: #a9d42b;
+}
+
+.colorBg4 {
+  background-color: #f2fbd6;
+  border: 2px solid #a9d42b;
+}
+
+.color5 {
+  background-color: #00c1ff;
+}
+
+.colorBg5 {
+  background-color: #e6f9ff;
+  border: 2px solid #00c1ff;
+}

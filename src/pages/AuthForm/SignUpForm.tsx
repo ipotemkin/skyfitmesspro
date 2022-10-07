@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+import classNames from 'classnames'
 
 import { FormData } from '../../types'
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
-import classNames from 'classnames'
 
 import styles from './style.module.css'
 
@@ -86,7 +87,9 @@ export const SignUpForm: FC = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          <Button>{'Зарегистрироваться'}</Button>
+          <Link to="/profile">
+            <Button>{'Зарегистрироваться'}</Button>
+          </Link>
         </div>
       </form>
     </div>

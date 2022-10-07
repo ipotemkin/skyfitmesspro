@@ -1,7 +1,8 @@
 import { FC } from 'react'
+
 import { CourseMainData } from '../../types'
 
-import styles from './Card.module.css'
+import styles from './style.module.css'
 
 type Props = { item: CourseMainData }
 

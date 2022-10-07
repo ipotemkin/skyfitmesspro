@@ -1,13 +1,7 @@
-import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { AppRoutes } from './routes'
 
 function App() {
-  return (
-    <>
-      <AppRoutes />
-      {/* <AboutCourse></AboutCourse> */}
-    </>
-  )
+  return <AppRoutes />
 }
 
 export default App
