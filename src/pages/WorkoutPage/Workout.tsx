@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { User } from '../../components/User/User'
-import { Header } from '../../components/Header/Header'
+import { Navigation } from '../../components/Navigation/Header'
 import { Progress } from '../../components/Progress/Progress'
 import { Exercises } from '../../components/Exercises/Exercises'
 import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
@@ -13,8 +13,8 @@ import styles from './style.module.css'
 export const Workout: FC = () => {
   const { id, day } = useParams()
 
-  const courseId = Number(id) || 0
-  const courseDay = Number(day) || 0
+  const courseId = Number(id) || 1
+  const courseDay = Number(day) || 1
 
   const course = mockCourses[courseId]
   const { name: courseName, workouts } = course
@@ -23,7 +23,7 @@ export const Workout: FC = () => {
 
   return (
     <div className={styles.container}>
-      <Header children={<User />} />
+      <Navigation children={<User />} />
 
       <main className={styles.main}>
         <h1 className={styles.heading}>{courseName}</h1>
@@ -31,10 +31,12 @@ export const Workout: FC = () => {
 
         <VideoPlayer url={workout.videoUrl} />
 
-        <div className={styles.exercises}>
-          <Exercises exercises={exercises} />
-          <Progress exercises={exercises} workoutId={workout.id} />
-        </div>
+        {exercises.length > 0 && (
+          <div className={styles.exercises}>
+            <Exercises exercises={exercises} />
+            <Progress exercises={exercises} workoutId={workout.id} />
+          </div>
+        )}
       </main>
     </div>
   )
