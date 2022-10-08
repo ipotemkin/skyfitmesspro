@@ -7,7 +7,7 @@ import styles from './style.module.css'
 
 type ProgressProps = {
   exercises: Workout['exercises']
-  workoutId: Workout['id']
+  workoutId: number
 }
 
 export const Progress: FC<ProgressProps> = ({ exercises, workoutId }) => {

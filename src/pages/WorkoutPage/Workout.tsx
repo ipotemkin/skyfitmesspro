@@ -13,8 +13,8 @@ import styles from './style.module.css'
 export const Workout: FC = () => {
   const { id, day } = useParams()
 
-  const courseId = Number(id) || 1
-  const courseDay = Number(day) || 1
+  const courseId = Number(id) || 0
+  const courseDay = Number(day) || 0
 
   const course = mockCourses[courseId]
   const { name: courseName, workouts } = course

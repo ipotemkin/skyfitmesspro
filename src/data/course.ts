@@ -458,7 +458,7 @@ export const mockUserWorkout = {
 }
 
 // все тренировки пользователя по выбранному курсу
-export const moskUserWorkouts = [
+export const mockUserWorkouts = [
   {
     id: 1,
     name: 'Утренняя практика / Йога на каждый день / 1 день / Алексей Казубский',
