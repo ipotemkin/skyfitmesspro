@@ -1,6 +1,7 @@
 // TODO: нужны стили для сообщений о загрузке и ошибке
+import { Link } from 'react-router-dom'
 
-import styles from './Gallery.module.css'
+import styles from './style.module.css'
 
 import { useEffect, useState } from 'react'
 import { DataSnapshot, off, onValue } from 'firebase/database'
@@ -38,7 +39,9 @@ export const Gallery = () => {
   return (
     <div className={styles.gallery}>
       {courses && courses.map((item) => (
-        <Card item={item} key={item.id}></Card>
+        <Link to={`/aboutcourse/${item.id}`} className={styles.link}>
+          <Card item={item} key={item.id}></Card>
+        </Link>
       ))}
       {isLoading && <h1 style={{ color: 'white' }}>Загрузка...</h1>}
       {error && <h1 style={{ color: 'white' }}>{error}</h1>}

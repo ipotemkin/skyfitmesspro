@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom'
+
 import { Button } from '../../components/Button/Button'
 import { Gallery } from '../../components/Gallery/Gallery'
 import { Logo } from '../../components/Logo/Logo'
 import { LOGO_COLOR_LIGHT } from '../../constants'
 
-import styles from './Main.module.css'
+import styles from './style.module.css'
 
 export const Main = () => {
   return (
@@ -11,10 +13,14 @@ export const Main = () => {
       <div className={styles.wrapper}>
         <header className={styles.header}>
           <nav className={styles.nav}>
-            <Logo color={LOGO_COLOR_LIGHT} />
-            <Button type="tertiary" size="s">
-              Войти
-            </Button>
+            <Link to="/">
+              <Logo color={LOGO_COLOR_LIGHT} />
+            </Link>
+            <Link to="/login">
+              <Button type="tertiary" size="s">
+                Войти
+              </Button>
+            </Link>
           </nav>
           <h2 className={styles.subtitle}>
             Онлайн-тренировки для занятий дома

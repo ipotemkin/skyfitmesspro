@@ -1,20 +1,23 @@
 import { DataSnapshot, off, onValue } from 'firebase/database'
 import { FC, useEffect, useMemo, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
 import { LOGO_COLOR_DARK } from '../../constants'
 import { getCourseRef } from '../../db/refs'
 import { CourseData } from '../../types'
 
-import styles from './AboutCourse.module.css'
+import styles from './style.module.css'
 
-type Props = { id: number }
+export const AboutCourse: FC = () => {
+  const { id } = useParams()
+  const courseId = Number(id) || 0
 
-export const AboutCourse: FC<Props> = ({ id }) => {
   const [course, setCourse ] = useState<CourseData>()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
-  const colRef = useMemo(() => getCourseRef(id), [id])
+  const colRef = useMemo(() => getCourseRef(courseId), [id])
 
   const onDataChange = (item: DataSnapshot) => {
     if (item.exists()) {
@@ -34,12 +37,14 @@ export const AboutCourse: FC<Props> = ({ id }) => {
     }
   }, [])
 
-    return (
+  return (
     <div className={styles.aboutCourse}>
       <div className={styles.aboutCourseWrapper}>
         <header className={styles.header}>
           <nav className={styles.nav}>
-            <Logo color={LOGO_COLOR_DARK} />
+            <Link to="/">
+              <Logo color={LOGO_COLOR_DARK} />
+            </Link>
           </nav>
           <div
             className={styles.titleWrapper}

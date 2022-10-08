@@ -1,11 +1,13 @@
-body {
-  margin: 0;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
-  color: #000000;
+@font-face {
+  font-family: 'Stratos';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/public/assets/fonts/Stratos-Regular.woff2) format('woff2'),
+    url(/public/assets/fonts/Stratos-Regular.woff) format('woff');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  font-family: 'Stratos', sans-serif;
+  color: #000000;
 }
