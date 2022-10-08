@@ -7,6 +7,7 @@ import { Main } from './pages/Main/Main'
 import { NotFound } from './pages/NotFound/NotFound'
 import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 import { Workout } from './pages/WorkoutPage/Workout'
+import { Admin } from './components/Admin/Admin'
 
 export const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ export const AppRoutes = () => {
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/workout/:id/:day" element={<Workout />} />
+      <Route path="/admin" element={<Admin />} />      
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 
 import { FormData } from '../../types'
@@ -15,18 +15,27 @@ const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
   const { signIn } = useAuth()
+  let navigate = useNavigate()
   
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ mode: 'onBlur' })
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
-    signIn(data.email, data.password)
-    reset()
+    signIn(data.email, data.password,
+      // при успехе
+      () => {
+        navigate('/profile')
+      },
+      // при ошибке
+      () => {
+        console.log('Неверный логин или пароль')
+        reset()
+    })
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
@@ -70,9 +79,9 @@ export const LoginForm: FC = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          <Link to="/profile">
+          {/* <Link to="/profile"> */}
             <Button>{'Войти'}</Button>
-          </Link>
+          {/* </Link> */}
           <Link to="/signup">
             <Button type="outlined" btnType="button">
               {'Зарегистрироваться'}

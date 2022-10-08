@@ -1,12 +1,12 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { DataSnapshot, onValue } from "firebase/database";
-import { useEffect, useState } from "react";
-import { auth } from "../../api/firebase.api";
-import { useAuth, useUserCourses } from "../../hooks/userHooks";
-import UserDataService from "../../services/UserDataService";
-import { UserData } from "../../types";
-import { UserGallery } from "../PUserGallery/PUserGallery";
-import { UserList } from "../PUserList/PUserList";
+import { onAuthStateChanged } from "firebase/auth"
+import { DataSnapshot, onValue } from "firebase/database"
+import { useEffect, useState } from "react"
+import { auth } from "../../api/firebase.api"
+import { useAuth, useUserCourses } from "../../hooks/userHooks"
+import UserDataService from "../../services/UserDataService"
+import { UserData } from "../../types"
+import { UserGallery } from "../PUserGallery/PUserGallery"
+import { UserList } from "../PUserList/PUserList"
 
 import { off } from 'firebase/database'
 
@@ -15,7 +15,7 @@ type FormData = {
   password: string
 }
 
-export const AuthDebug = () => {
+export const Admin = () => {
   const [form, setForm] = useState<FormData>({ username: '', password: ''})
   const [uid, setUid] = useState<string | undefined>()
   const userCourses = useUserCourses(uid || '')
