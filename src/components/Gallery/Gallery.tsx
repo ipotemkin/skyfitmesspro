@@ -14,6 +14,7 @@ export const Gallery = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
   
+  // что делаем с данными, полученными из БД
   const onDataChange = (items: DataSnapshot) => {
     if (items.exists()) {
       setCourses(getCourseList(items))
@@ -25,9 +26,11 @@ export const Gallery = () => {
   }
   
   useEffect(() => {
+    // подписка на данные из БД
     onValue(coursesRef, onDataChange)
     
     return () => {
+      // отключаем подписку на данные из БД
       off(coursesRef, 'value', onDataChange)
     }
   }, [])

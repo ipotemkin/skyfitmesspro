@@ -3,9 +3,10 @@ import { useGetCourseQuery, useGetCoursesQuery } from "../api/courses.api"
 import { useGetUserCourseQuery, useGetUserCoursesQuery } from "../api/users.api"
 import { CourseData } from "../types"
 import { merge } from 'lodash'
-import { auth, db_rtime } from "../api/firebase.api"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { get, ref } from "firebase/database"
+import auth from "../db/auth"
+import db from "../db/db"
 
 export const useAuth = () => {
   const noop = () => {}  // заглушка для колбэков
@@ -117,7 +118,7 @@ export const useUserWorkoutStatus = (uid: string, courseId: number, workoutId: n
 
   }, )
   
-  const workoutRef = ref(db_rtime, `users/${uid}/courses/${courseId}/workouts/${workoutId}/done`)
+  const workoutRef = ref(db, `users/${uid}/courses/${courseId}/workouts/${workoutId}/done`)
   get(workoutRef).then((snapshot) => {
     if (snapshot.exists()) {
       setStatus(snapshot.val())

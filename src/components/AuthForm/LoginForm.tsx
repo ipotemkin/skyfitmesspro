@@ -7,20 +7,24 @@ import { Logo } from '../Logo/Logo'
 import classNames from 'classnames'
 
 import styles from './style.module.css'
+import { useAuth } from '../../hooks/userHooks'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
+  const { signIn } = useAuth()
+  
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({ mode: 'onBlur' })
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
+    signIn(data.email, data.password)
     reset()
   }
 

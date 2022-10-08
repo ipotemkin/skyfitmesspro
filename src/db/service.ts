@@ -2,6 +2,7 @@ import { DataSnapshot, get } from "firebase/database"
 import { CourseData, CourseMainData } from "../types"
 import { coursesRef } from "./refs"
 
+// получить список курсов из снапшота
 export const getCourseList = (data: DataSnapshot) => {
   const coursesMainData: CourseMainData[] = []
   data.forEach(item => {
