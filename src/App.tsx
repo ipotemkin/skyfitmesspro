@@ -1,4 +1,4 @@
-import { AuthDebug } from './components/AuthDebug/AuthDebug'
+import { AuthDebug } from './components/PAuthDebug/PAuthDebug'
 import { LoginForm } from './components/AuthForm/LoginForm'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { Main } from './pages/Main/Main'

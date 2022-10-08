@@ -5,8 +5,8 @@ import { auth } from "../../api/firebase.api";
 import { useAuth, useUserCourses } from "../../hooks/userHooks";
 import UserDataService from "../../services/UserDataService";
 import { UserData } from "../../types";
-import { UserGallery } from "../UserGallery/UserGallery";
-import { UserList } from "../UserList/UserList";
+import { UserGallery } from "../PUserGallery/PUserGallery";
+import { UserList } from "../PUserList/PUserList";
 
 import { off } from 'firebase/database'
 
