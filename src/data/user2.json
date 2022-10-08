@@ -1,0 +1,61 @@
+{
+  "123": {
+    "uid": "123",
+    "courses": {
+      "0": {
+        "id": 0,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 5 }
+            ]
+          }
+        ]
+      },
+      "2": {
+        "id": 2,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 1 }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "kwtEgq2ylcZI0iUjgDAWlRqHixB3": {
+    "uid": "kwtEgq2ylcZI0iUjgDAWlRqHixB3",
+    "courses": {
+      "0": {
+        "id": 0,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "WQiqftpsjvYVM7j4nlWo0bg9c6F2": {
+    "uid": "WQiqftpsjvYVM7j4nlWo0bg9c6F2",
+    "courses": {
+      "0": {
+        "id": 0,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+// TODO связать с БД
+
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -18,14 +20,14 @@ export const Workout: FC = () => {
 
   const course = mockCourses[courseId]
   const { name: courseName, workouts } = course
-  const workout = workouts[courseDay - 1]
-  const { exercises } = workout
+  // const workout = workouts[courseDay - 1]
+  // const { exercises } = workout
 
   return (
     <div className={styles.container}>
       <Navigation children={<User />} />
 
-      <main className={styles.main}>
+      {/* <main className={styles.main}>
         <h1 className={styles.heading}>{courseName}</h1>
         <h2 className={styles.title}>{workout.name}</h2>
 
@@ -37,7 +39,7 @@ export const Workout: FC = () => {
             <Progress exercises={exercises} workoutId={workout.id} />
           </div>
         )}
-      </main>
+      </main> */}
     </div>
   )
 }

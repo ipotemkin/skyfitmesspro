@@ -5,9 +5,10 @@
 export const mockUsers = {
   1: {
     id: 1,
-    username: 'user1@example.com',
-    password: 'MySecret12345',
-    courses: [
+    username: "user1@example.com",
+    password: "MySecret12345",
+    uid: 'kwtEgq2ylcZI0iUjgDAWlRqHixB3',
+    courses: [ 
       {
         id: 1,
         name: 'Йога',
@@ -16,9 +17,10 @@ export const mockUsers = {
   },
   2: {
     id: 2,
-    username: 'user2@example.com',
-    password: 'MySecret6789',
-    courses: [
+    username: "user2@example.com",
+    password: "MySecret6789",
+    uid: 'B8s8cplekcY11gSQtEsZfFO8hH93',
+    courses: [ 
       {
         id: 1,
         name: 'Йога',
@@ -36,9 +38,10 @@ export const mockUsers = {
 // информация о пользователе
 export const mockUserResponse = {
   id: 1,
-  username: 'user1@example.com',
-  password: 'MySecret12345',
-  courses: [
+  username: "user1@example.com",
+  password: "MySecret12345",
+  uid: 'kwtEgq2ylcZI0iUjgDAWlRqHixB3',
+  courses: [ 
     {
       id: 1,
       name: 'Йога',

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 
 import { FormData } from '../../types'
@@ -8,11 +8,15 @@ import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
 
 import styles from './style.module.css'
+import { useAuth } from '../../hooks/userHooks'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
+  const { signIn } = useAuth()
+  let navigate = useNavigate()
+  
   const {
     register,
     handleSubmit,
@@ -22,7 +26,16 @@ export const LoginForm: FC = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
-    reset()
+    signIn(data.email, data.password,
+      // при успехе
+      () => {
+        navigate('/profile')
+      },
+      // при ошибке
+      () => {
+        console.log('Неверный логин или пароль')
+        reset()
+    })
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
@@ -66,9 +79,9 @@ export const LoginForm: FC = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          <Link to="/profile">
+          {/* <Link to="/profile"> */}
             <Button>{'Войти'}</Button>
-          </Link>
+          {/* </Link> */}
           <Link to="/signup">
             <Button type="outlined" btnType="button">
               {'Зарегистрироваться'}
