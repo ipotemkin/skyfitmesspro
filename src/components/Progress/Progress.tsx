@@ -17,7 +17,7 @@ export const Progress: FC<ProgressProps> = ({ exercises, workoutId }) => {
     <div className={styles.progress}>
       <h2 className={styles.title}>Мой прогресс по тренировке {workoutId}:</h2>
       <ul className={styles.list}>
-        {exercises.map((exercise) => (
+        {exercises?.map((exercise) => (
           <li key={exercise.id} className={styles.listItem}>
             <span className={styles.name}>{exercise.name}</span>
             <div

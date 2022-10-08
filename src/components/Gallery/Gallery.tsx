@@ -39,8 +39,8 @@ export const Gallery = () => {
   return (
     <div className={styles.gallery}>
       {courses && courses.map((item) => (
-        <Link to={`/aboutcourse/${item.id}`} className={styles.link}>
-          <Card item={item} key={item.id}></Card>
+        <Link key={item.id} to={`/aboutcourse/${item.id}`} className={styles.link}>
+          <Card item={item}></Card>
         </Link>
       ))}
       {isLoading && <h1 style={{ color: 'white' }}>Загрузка...</h1>}

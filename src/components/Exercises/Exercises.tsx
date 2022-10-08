@@ -14,7 +14,7 @@ export const Exercises: FC<ExercisesProps> = ({ exercises }) => {
     <div className={styles.content}>
       <h2 className={styles.title}>Упражнения</h2>
       <ul className={styles.list}>
-        {exercises.map((exercise) => (
+        {exercises?.map((exercise) => (
           <li key={exercise.id} className={styles.listItem}>
             <span>{exercise.name} </span>
             <span>({exercise.retriesCount}&nbsp;повторений)</span>
