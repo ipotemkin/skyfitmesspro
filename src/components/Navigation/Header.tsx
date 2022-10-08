@@ -5,12 +5,12 @@ import { Logo } from '../Logo/Logo'
 
 import styles from './style.module.css'
 
-type HeaderProps = {
+type NavigationProps = {
   logoColor?: string
   children?: ReactNode
 }
 
-export const Header: FC<HeaderProps> = ({ logoColor, children }) => {
+export const Navigation: FC<NavigationProps> = ({ logoColor, children }) => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
