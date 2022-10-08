@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react"
-import { useGetCourseQuery, useGetCoursesQuery } from "../api/courses.api"
-import { useGetUserCourseQuery, useGetUserCoursesQuery } from "../api/users.api"
-import { CourseData } from "../types"
+import { useEffect, useState } from 'react'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { get, ref } from 'firebase/database'
 import { merge } from 'lodash'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
-import { get, ref } from "firebase/database"
+
 import auth from "../db/auth"
 import db from "../db/db"
+import { useGetCourseQuery, useGetCoursesQuery } from '../api/courses.api'
+import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
+import { CourseData } from '../types'
 
 export const useAuth = () => {
   const noop = () => {}  // заглушка для колбэков
