@@ -7,27 +7,20 @@ import { Card } from '../Card/Card'
 import { CourseMainData } from '../../types'
 import { coursesRef } from '../../db/refs'
 import { getCourseList } from '../../db/service'
+import { useGetCoursesQuery } from '../../api/courses.api'
 
 import styles from './style.module.css'
-import { useGetCoursesQuery } from '../../api/courses.api'
-import { useAppSelector } from '../../hooks/appHooks'
-import { selectCoursesListener } from '../../slices/listenerSlice'
-import { useDispatch } from 'react-redux'
-import { setCoursesListener } from '../../slices/listenerSlice'
 
 export const Gallery = () => {
-  const [flag, setFlag] = useState(false)
-  
+  // для работы через firebase
   const [courses, setCourses ] = useState<CourseMainData[]>()
+  // для работы через RTK Query
   // const { data: courses } = useGetCoursesQuery()
   
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
-
-  // const coursesListener = useAppSelector(selectCoursesListener)
-  const dispatch = useDispatch()
   
-
+  // для работы через firebase
   // что делаем с данными, полученными из БД
   const onDataChange = (items: DataSnapshot) => {
     if (items.exists()) {
@@ -39,20 +32,16 @@ export const Gallery = () => {
     setIsLoading(false)
   }
   
+  // для работы через firebase
   useEffect(() => {
     // подписка на данные из БД
-    console.log('flag -->', flag)
-
-    // console.log('coursesListener -->', coursesListener)
-    // if(!flag) onValue(coursesRef, onDataChange)
-    // setFlag(true)
-
-    const listener = onValue(coursesRef, onDataChange)
-    dispatch(setCoursesListener(listener))
+    onValue(coursesRef, onDataChange)
     
     return () => {
-      console.log('destroying Gallery')
       // отключаем подписку на данные из БД
+      // если отключить подписку, то при возврате на эту страницу данные будут снова
+      // загружаться из базы данных
+      // ?? можно ли работать, не отклюая здесь подписку, чтобы брать данные из кэша?
       // off(coursesRef, 'value', onDataChange)
     }
   }, [])

@@ -104,8 +104,3 @@ export const getUserWorkoutStatusAsync = async (uid: string, courseId: number, w
     console.error(error)
   }
 }
-
-// onValue(starCountRef, (snapshot) => {
-//   const data = snapshot.val();
-//   updateStarCount(postElement, data);
-// });
