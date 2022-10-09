@@ -13,13 +13,16 @@ import styles from './style.module.css'
 
 export const ProfilePage: FC = () => {
   const [currentUser, setCurrentUser] = useState<User>()
+  const [isLoading, setIsLoading] = useState(true)
   
   useEffect(() => {
     const listener = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setCurrentUser(user)
+        setIsLoading(false)
       } else {
         setCurrentUser(undefined)
+        setIsLoading(false)
       }
     })
         
@@ -28,7 +31,9 @@ export const ProfilePage: FC = () => {
     }
   }, [])
 
-  if(!currentUser) return <p>ERROR: No currentUser</p>
+  if(isLoading) return <h2>Загрузка...</h2>
+
+  if(!currentUser) return <h2>Пользователь в системе не зарегистирован</h2>
 
   return (
     <div className={styles.profilePage}>

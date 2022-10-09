@@ -16,7 +16,7 @@ export const Main = () => {
             <Link to="/">
               <Logo color={LOGO_COLOR_LIGHT} />
             </Link>
-            <Link to="/login">
+            <Link to="/profile">
               <Button type="tertiary" size="s">
                 Войти
               </Button>
