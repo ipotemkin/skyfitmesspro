@@ -1,7 +1,8 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { DataSnapshot, onValue } from "firebase/database"
 import { useEffect, useState } from "react"
-import { auth } from "../../api/firebase.api"
+
+import auth from "../../db/auth"
 import { useAuth, useUserCourses } from "../../hooks/userHooks"
 import UserDataService from "../../services/UserDataService"
 import { UserData } from "../../types"
