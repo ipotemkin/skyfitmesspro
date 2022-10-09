@@ -1,14 +1,14 @@
 // TODO: нужны стили для сообщений о загрузке и ошибке
-import { Link } from 'react-router-dom'
-
-import styles from './style.module.css'
-
-import { useEffect, useState } from 'react'
 import { DataSnapshot, off, onValue } from 'firebase/database'
-import { CourseMainData } from '../../types'
+import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+
 import { Card } from '../Card/Card'
+import { CourseMainData } from '../../types'
 import { coursesRef } from '../../db/refs'
 import { getCourseList } from '../../db/service'
+
+import styles from './style.module.css'
 
 export const Gallery = () => {
   const [courses, setCourses ] = useState<CourseMainData[]>()
