@@ -4,12 +4,12 @@ import { useEffect, useState } from "react"
 
 import auth from "../../db/auth"
 import { useAuth, useUserCourses } from "../../hooks/userHooks"
-import UserDataService from "../../services/UserDataService"
 import { UserData } from "../../types"
 import { UserGallery } from "../PUserGallery/PUserGallery"
 import { UserList } from "../PUserList/PUserList"
 
 import { off } from 'firebase/database'
+import { usersRef } from "../../db/refs"
 
 type FormData = {
   username: string
@@ -39,11 +39,11 @@ export const Admin = () => {
       else setUid(undefined)
     })
     
-    onValue(UserDataService.getAll(), onDataChange)
+    onValue(usersRef, onDataChange)
     
     return () => {
       listener()
-      off(UserDataService.getAll(), 'value', onDataChange)
+      off(usersRef, 'value', onDataChange)
     }
   }, [])
 
@@ -103,7 +103,7 @@ export const Admin = () => {
       <button onClick={handleCurrentUser}>Get current user</button>
       <button onClick={handleCurrentUserCourses}>Get current user courses</button>
     </div>
-    {users && <UserList users={users}/>}
+    {/* {users && <UserList users={users}/>} */}
     {uid && <UserGallery uid={uid}/>}
   </>
 }

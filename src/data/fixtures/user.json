@@ -57,5 +57,22 @@
         ]
       }
     }
+  },
+  "B8s8cplekcY11gSQtEsZfFO8hH93": {
+    "uid": "B8s8cplekcY11gSQtEsZfFO8hH93",
+    "courses": {
+      "1": {
+        "id": 1,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      }
+    }
   }
+
 }
