@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 
 import { FormData } from '../../types'
@@ -15,18 +15,20 @@ const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
   const { signIn } = useAuth()
-  let navigate = useNavigate()
-  
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>({ mode: 'onBlur' })
+  } = useForm<FormData>({ mode: 'onTouched' })
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
-    signIn(data.email, data.password,
+    signIn(
+      data.email,
+      data.password,
       // при успехе
       () => {
         navigate('/profile')
@@ -35,7 +37,12 @@ export const LoginForm: FC = () => {
       () => {
         console.log('Неверный логин или пароль')
         reset()
-    })
+      }
+    )
+  }
+
+  const clickHandler = () => {
+    navigate('/signup')
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
@@ -79,14 +86,10 @@ export const LoginForm: FC = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          {/* <Link to="/profile"> */}
-            <Button>{'Войти'}</Button>
-          {/* </Link> */}
-          <Link to="/signup">
-            <Button type="outlined" btnType="button">
-              {'Зарегистрироваться'}
-            </Button>
-          </Link>
+          <Button>{'Войти'}</Button>
+          <Button type="outlined" btnType="button" onClick={clickHandler}>
+            {'Зарегистрироваться'}
+          </Button>
         </div>
       </form>
     </div>
