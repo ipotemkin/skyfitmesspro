@@ -24,7 +24,7 @@ export const useAuth = () => {
         const user = userCredential.user;
         console.log('User signed in: ', user)
         successCallback() // на всякий случай
-      })  
+      })
       .catch((error) => {
         console.error(
           `sign-in failed: error.code=${error.code}, error.message=${error.message}`

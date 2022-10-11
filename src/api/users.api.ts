@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_URL } from '../constants';
 import { CourseData, UserData } from '../types';
 
 export interface ILoginUser {
@@ -37,7 +38,7 @@ export type ExercisesPayload = {
 export const usersApi = createApi({
   reducerPath: 'users/api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://skyfitnesspro-202210-default-rtdb.europe-west1.firebasedatabase.app/users',
+    baseUrl: API_URL + '/users',
   }),
   endpoints: build => ({
     getUsersWithCourses: build.query<UserData[], void> ({
