@@ -31,29 +31,30 @@ export const Workout: FC = () => {
     return () => {
       listener()
     }
-  }, [])  
-  
+  }, []) 
   
   if (!user) return <h2>Пользоваль не зашел в программу</h2>
   
   if (!userCourse) return <h2>Нет такого курса у текущего пользователя</h2>
 
+  const workout = userCourse.workouts![courseDay-1]
+  
   return (
     <div className={styles.container}>
       <Navigation children={<User user={user}/>} />
 
       <main className={styles.main}>
         <h1 className={styles.heading}>{userCourse.name}</h1>
-        <h2 className={styles.title}>{userCourse.workouts![courseDay-1].name}</h2>
+        <h2 className={styles.title}>{workout.name}</h2>
 
-        <VideoPlayer url={userCourse.workouts![courseDay-1].videoUrl || ''} />
+        <VideoPlayer url={workout.videoUrl || ''} />
 
-        {userCourse.workouts![courseDay-1].exercises!.length > 0 && (
+        {workout.exercises!.length > 0 && (
           <div className={styles.exercises}>
-            <Exercises exercises={userCourse.workouts![courseDay-1].exercises} />
+            <Exercises exercises={workout.exercises} />
             <Progress
-              exercises={userCourse.workouts![courseDay-1].exercises}
-              workoutId={userCourse.workouts![courseDay-1].id} />
+              exercises={workout.exercises}
+              workoutId={workout.id} />
           </div>
         )}
       </main>
