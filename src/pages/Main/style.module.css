@@ -13,7 +13,10 @@
   flex-direction: column;
 
   box-sizing: border-box;
-  max-width: 1160px;
+  min-width: 100%;
+
+  padding-right: calc(50% - 580px);
+  padding-left: calc(50% - 580px);
 }
 
 .header {
@@ -114,7 +117,8 @@
 
 @media (max-width: 1200px) {
   .wrapper {
-    max-width: 800px;
+    padding-right: calc(50% - 400px);
+    padding-left: calc(50% - 400px);
   }
 
   .title {

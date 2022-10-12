@@ -13,7 +13,10 @@
   flex-direction: column;
 
   box-sizing: border-box;
-  max-width: 1160px;
+  min-width: 100%;
+
+  padding-right: calc(50% - 580px);
+  padding-left: calc(50% - 580px);
 }
 
 .nav {
@@ -48,4 +51,11 @@
   font-weight: 400;
   font-size: 24px;
   line-height: 1.333;
+}
+
+@media (max-width: 1200px) {
+  .wrapper {
+    padding-right: calc(50% - 400px);
+    padding-left: calc(50% - 400px);
+  }
 }
