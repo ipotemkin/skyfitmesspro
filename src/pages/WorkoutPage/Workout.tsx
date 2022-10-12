@@ -23,7 +23,7 @@ export const Workout: FC = () => {
   
   if (isLoading) return <h2>Загрузка...</h2> 
   
-  if (!user) return <h2>Пользоваль не зашел на сайт</h2>
+  if (!user) return <h2>Пользоваль не авторизован</h2>
   
   if (!userCourse) return <h2>Нет такого курса у текущего пользователя</h2>
 
