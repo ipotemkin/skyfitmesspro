@@ -8,11 +8,13 @@ import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
 
 import styles from './style.module.css'
+import { useAuth } from '../../hooks/userHooks'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
 
 export const SignUpForm: FC = () => {
+  const { signUp } = useAuth()
   const navigate = useNavigate()
 
   const {
@@ -23,10 +25,26 @@ export const SignUpForm: FC = () => {
     formState: { errors, isValid },
   } = useForm<FormData>({ mode: 'onTouched' })
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = data => {
     console.log(data)
-    isValid && navigate('/profile')
-    reset()
+    
+    if (!isValid) {
+      return reset()
+    }
+    
+    signUp(
+      data.email,
+      data.password,
+      // при успехе
+      () => {
+        navigate('/login')
+      },
+      // при ошибке
+      () => {
+        console.log('Что-то пошло не так')
+        reset()
+      }
+    )
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)

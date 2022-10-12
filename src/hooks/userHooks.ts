@@ -8,9 +8,12 @@ import db from "../db/db"
 import { useGetCourseQuery, useGetCoursesQuery } from '../api/courses.api'
 import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
 import { CourseData } from '../types'
+import { useDispatch } from 'react-redux'
+import { initialState, setUser } from '../slices/userSlice'
 
 export const useAuth = () => {
   const noop = () => {}  // заглушка для колбэков
+  const dispatch = useDispatch()
 
   // залогиниться
   const signIn = (
@@ -19,10 +22,19 @@ export const useAuth = () => {
     successCallback = noop,
     errorCallback = noop
     ) => {
+    dispatch(setUser({
+      ...initialState, isLoading: true
+    }))
     signInWithEmailAndPassword(auth, username, password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log('User signed in: ', user)
+        dispatch(setUser({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          isLoading: true
+        }))
         successCallback() // на всякий случай
       })
       .catch((error) => {
@@ -94,22 +106,49 @@ export const useUserCourses = (uid: string) => {
   return userCourses
 }
 
-export const useUserCourse = (uid: string, courseId: number) => {
+export const useUserCourse = (uid: string | null, courseId: number) => {
   const { data: course } = useGetCourseQuery(courseId)
-  const { data: userCourseData } = useGetUserCourseQuery({ uid, courseId })
+  const { data: userCourseData, error, isLoading: isUserCourseLoading } = useGetUserCourseQuery({
+    uid: uid || '',
+    courseId
+  })
   const [userCourse, setUserCourse] = useState<CourseData>()
+  const [isLoading, setIsLoading] = useState(true)
 
   console.log('course -->', course)
 
+  console.group('useGetUserCourseQuery result -->')
+  console.log('userCourseData -->', userCourseData)
+  console.log('error -->', error)
+  console.log('isUserCourseLoading -->', isUserCourseLoading)
+  console.groupEnd()
+
   useEffect(() => {
-    if (userCourseData && course) {
+
+    // если загрузка идет или нет uid
+    if (isUserCourseLoading || !uid ) {
+      setIsLoading(true)
+      return
+    }
+
+    // если загрузка завершена но нет данных
+    if (!isUserCourseLoading && !userCourseData) {
+      setIsLoading(false)
+      return    
+    }
+    
+    // если есть все данные, то ставим загрузку в false
+    if (userCourseData && course && uid) {
       const res = {}
       merge(res, course, userCourseData)
       setUserCourse(res)
+      setIsLoading(false)
+      return
     }
-  }, [userCourseData, course, courseId])
-
-  return userCourse
+      
+  }, [userCourseData, course, courseId, isUserCourseLoading, uid])
+  
+  return { userCourse, isLoading, error }
 }
 
 export const useUserWorkoutStatus = (uid: string, courseId: number, workoutId: number) => {
