@@ -13,39 +13,15 @@
   flex-direction: column;
 
   box-sizing: border-box;
-  max-width: 1160px;
+  min-width: 100%;
+
+  padding-right: calc(50% - 580px);
+  padding-left: calc(50% - 580px);
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 75px;
-  padding-top: 30px;
-}
-
-.navUser {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-}
-
-.navUser:hover {
-  cursor: pointer;
-}
-
-.navUserAvatar {
-  width: 50px;
-  height: 50px;
-
-  background-image: radial-gradient(circle 25px, #d9d9d9 100%, transparent 0%);
-  background-repeat: no-repeat;
-  background-position: 0;
-  background-size: 50px 50px;
-}
-
-.navUserName {
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1.333;
+@media (max-width: 1200px) {
+  .wrapper {
+    padding-right: calc(50% - 400px);
+    padding-left: calc(50% - 400px);
+  }
 }
