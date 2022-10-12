@@ -15,6 +15,7 @@ import styles from './style.module.css'
 export const Workout: FC = () => {
   const { id, day } = useParams()
   const [user, setUser] = useState<FirebaseUser>()
+  const [isUserLoading, setIsUserLoading] = useState(true)
 
   const courseId = Number(id) || 0
   const courseDay = Number(day) || 0
@@ -25,13 +26,15 @@ export const Workout: FC = () => {
     const listener = onAuthStateChanged(auth, async (user) => {
       if (user) setUser(user)
       else setUser(undefined)
-
+      setIsUserLoading(false)
     })
     
     return () => {
       listener()
     }
   }, []) 
+  
+  if (!user && isUserLoading) return <></>
   
   if (!user) return <h2>Пользоваль не зашел в программу</h2>
   
