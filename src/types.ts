@@ -44,3 +44,12 @@ export type FormData = {
   password: string
   confirmPassword?: string
 }
+
+export type FirebaseUser = {
+  email: string | null
+  displayName: string | null
+  uid: string | null
+  isLoading: boolean
+  // accessToken: string | null
+  // refreshToken: string | null
+}

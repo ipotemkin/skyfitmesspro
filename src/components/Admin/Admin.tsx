@@ -1,15 +1,16 @@
-import { onAuthStateChanged } from "firebase/auth"
+import { onAuthStateChanged, User } from "firebase/auth"
 import { DataSnapshot, onValue } from "firebase/database"
 import { useEffect, useState } from "react"
 
 import auth from "../../db/auth"
 import { useAuth, useUserCourses } from "../../hooks/userHooks"
-import { UserData } from "../../types"
 import { UserGallery } from "../PUserGallery/PUserGallery"
-import { UserList } from "../PUserList/PUserList"
 
 import { off } from 'firebase/database'
 import { usersRef } from "../../db/refs"
+import { useAppSelector } from "../../hooks/appHooks"
+import { selectUser, setUser } from "../../slices/userSlice"
+import { useDispatch } from "react-redux"
 
 type FormData = {
   username: string
@@ -21,21 +22,26 @@ export const Admin = () => {
   const [uid, setUid] = useState<string | undefined>()
   const userCourses = useUserCourses(uid || '')
   const { signUp, signIn, logOut } = useAuth()
-  const [users, setUsers] = useState<UserData[]>()
+  const dispatch = useDispatch()
 
-  // console.log('AuthDebug: users -->', users)
-  
-  // console.log(mockCourses[2].coverUrl)
+  const testUser = useAppSelector(selectUser)
 
   const onDataChange = (items: DataSnapshot) => {
     const usersFromDB = items.val()
     console.log('AuthDebug: usersFromDB -->', usersFromDB)
-    setUsers(usersFromDB)
   }
 
   useEffect(() => {
-    const listener = onAuthStateChanged(auth, async (user) => {
-      if (user) setUid(user.uid)
+    const listener = onAuthStateChanged(auth, async (user: User | null) => {
+      if (user) {
+        setUid(user.uid)
+        dispatch(setUser({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          isLoading: false
+        }))
+      }
       else setUid(undefined)
     })
     
@@ -45,6 +51,7 @@ export const Admin = () => {
       listener()
       off(usersRef, 'value', onDataChange)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleSignIn = () => {
@@ -62,6 +69,8 @@ export const Admin = () => {
   const handleCurrentUser = () => {
     console.log('handleCurrentUser')
     console.log(auth.currentUser)
+    console.log(typeof auth.currentUser)
+    console.log('testUser -->', testUser)
   }
 
   const handleCurrentUserCourses = () => {
