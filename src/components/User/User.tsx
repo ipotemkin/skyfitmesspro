@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { User as FirebaseUser } from 'firebase/auth'
 
+import { FirebaseUser } from '../../types'
 import { ReactComponent as Arrow } from './arrow-down.svg'
 
 import styles from './style.module.css'
