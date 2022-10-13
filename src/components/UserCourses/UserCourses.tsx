@@ -1,18 +1,18 @@
-import { User } from 'firebase/auth'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { useUserCourses } from '../../hooks/userHooks'
 import { Card } from '../Card/Card'
+import { FirebaseUser } from '../../types'
+import { useUserCourses } from '../../hooks/userHooks'
 
 import styles from './style.module.css'
 
 type Props = {
-  user: User
+  user: FirebaseUser
 }
 
 export const UserCourses: FC<Props> = ({ user }) => {
-  const userCourses = useUserCourses(user.uid)
+  const userCourses = useUserCourses(user.uid || '')
   
   return (
     <div>
