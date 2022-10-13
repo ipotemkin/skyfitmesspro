@@ -1,4 +1,6 @@
 import { FC, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../hooks/userHooks'
 
 import { FirebaseUser } from '../../types'
 import { ReactComponent as Arrow } from './arrow-down.svg'
@@ -11,9 +13,23 @@ type Props = {
 
 export const User: FC<Props> = ({ user }) => {
   const [isShowNav, setIsShowNav] = useState(false)
+  const { logOut } = useAuth()
+  const navigate = useNavigate()
 
   const handleShowNav = () => {
     setIsShowNav((prev) => !prev)
+  }
+
+  const handleLogout = () => {
+    logOut(
+      () => {
+        navigate('/')
+      }
+    )
+  }
+
+  const handleProfile = () => {
+    navigate('/profile')
   }
 
   return (
@@ -25,8 +41,8 @@ export const User: FC<Props> = ({ user }) => {
       </div>
       {isShowNav && (
         <div className={styles.nav}>
-          <div className={styles.link}>Профиль</div>
-          <div className={styles.link}>Выйти</div>
+          <div className={styles.link} onClick={handleProfile}>Профиль</div>
+          <div className={styles.link} onClick={handleLogout}>Выйти</div>
         </div>
       )}
     </div>
