@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Logo } from '../Logo/Logo'
 
@@ -10,13 +9,12 @@ type NavigationProps = {
   children?: ReactNode
 }
 
-export const Navigation: FC<NavigationProps> = ({ logoColor, children }) => {
+
+export const Navigation: FC<NavigationProps> = ({ logoColor, children }) => {  
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <Link to="/">
-          <Logo color={logoColor} />
-        </Link>
+        <Logo color={logoColor} />
         {children}
       </nav>
     </header>
