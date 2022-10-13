@@ -1,12 +1,12 @@
 import { FC } from 'react'
-import { User } from 'firebase/auth'
 
 import { Button } from '../Button/Button'
+import { FirebaseUser } from '../../types'
 
 import styles from './style.module.css'
 
 type Props = {
-  user: User
+  user: FirebaseUser
 }
 
 export const UserInfo: FC<Props> = ({ user }) => {
