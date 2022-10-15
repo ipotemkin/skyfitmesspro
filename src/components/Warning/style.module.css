@@ -1,0 +1,16 @@
+.container {
+  padding-left: calc(50% - 580px);
+  padding-right: calc(50% - 580px);
+}
+
+.message {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 55px;
+
+  letter-spacing: -1.16878px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+
+  color: #000000;
+}

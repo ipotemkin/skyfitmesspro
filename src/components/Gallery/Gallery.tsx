@@ -33,7 +33,11 @@ export const Gallery = () => {
             key={index.toString()}
           />
         ))}
-      {error && <h1 style={{ color: 'white' }}>{JSON.stringify(error)}</h1>}
+      {error && (
+        <p className={styles.errorMessage}>
+          Извините, произошла ошибка! {JSON.stringify(error)}
+        </p>
+      )}
     </div>
   )
 }
