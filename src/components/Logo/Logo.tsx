@@ -2,10 +2,10 @@ import { FC } from 'react'
 
 import logo from './logo.svg'
 import { LOGO_COLOR_DARK } from '../../constants'
-
-import styles from './style.module.css'
 import { useAuth } from '../../hooks/userHooks'
 import { useNavigate } from 'react-router-dom'
+
+import styles from './style.module.css'
 
 type Props = { color?: string }
 
@@ -13,11 +13,11 @@ export const Logo: FC<Props> = ({ color = LOGO_COLOR_DARK }) => {
   const { logOut } = useAuth()
   const navigate = useNavigate()
 
-  const handleLogo = () =>logOut(() => navigate('/'))
+  const handleLogo = () => logOut(() => navigate('/'))
 
   return (
     <div className={styles.logo} onClick={handleLogo}>
-      <img src={logo} alt="logo" />
+      <img src={logo} alt="logo" width="29px" />
       <svg
         width="184"
         height="30"
