@@ -20,7 +20,7 @@ export const Workout: FC = () => {
 
   if (isLoading) return <WarningPage text="Загрузка..." user={user} />
 
-  if (!user) return <WarningPage text="Вы не авторизованы!" user={user} />
+  if (!user) return <WarningPage text="Вы не авторизованы!" />
 
   if (!userCourse)
     return (

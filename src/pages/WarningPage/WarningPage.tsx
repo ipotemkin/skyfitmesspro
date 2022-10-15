@@ -8,14 +8,14 @@ import { FirebaseUser } from '../../types'
 import styles from './style.module.css'
 
 type Props = {
-  user: FirebaseUser
   text: string
+  user?: FirebaseUser
 }
 
 export const WarningPage: FC<Props> = ({ user, text }) => {
   return (
     <div className={styles.container}>
-      <Navigation children={!!user.uid && <User user={user} />} />
+      <Navigation children={!!user?.uid && <User user={user} />} />
       <Warning text={text} />
     </div>
   )
