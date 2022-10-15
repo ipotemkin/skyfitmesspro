@@ -35,7 +35,7 @@ export const Main = () => {
           </div>
         </header>
         <main className={styles.main}>
-          <Gallery></Gallery>
+          <Gallery />
           <a href="#top">
             <Button type="secondary" buttonStatus="normal" size="m">
               Наверх ↑

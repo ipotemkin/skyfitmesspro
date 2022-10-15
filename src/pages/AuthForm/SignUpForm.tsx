@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 
 import { FormData } from '../../types'
@@ -8,22 +8,43 @@ import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
 
 import styles from './style.module.css'
+import { useAuth } from '../../hooks/userHooks'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
 
 export const SignUpForm: FC = () => {
+  const { signUp } = useAuth()
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
     reset,
     getValues,
-    formState: { errors },
-  } = useForm<FormData>({ mode: 'onBlur' })
+    formState: { errors, isValid },
+  } = useForm<FormData>({ mode: 'onTouched' })
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = data => {
     console.log(data)
-    reset()
+    
+    if (!isValid) {
+      return reset()
+    }
+    
+    signUp(
+      data.email,
+      data.password,
+      // при успехе
+      () => {
+        navigate('/login')
+      },
+      // при ошибке
+      () => {
+        console.log('Что-то пошло не так')
+        reset()
+      }
+    )
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
@@ -87,9 +108,7 @@ export const SignUpForm: FC = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          <Link to="/profile">
-            <Button>{'Зарегистрироваться'}</Button>
-          </Link>
+          <Button>{'Зарегистрироваться'}</Button>
         </div>
       </form>
     </div>

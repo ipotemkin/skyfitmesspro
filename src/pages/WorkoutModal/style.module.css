@@ -1,0 +1,49 @@
+.layout {
+  position: absolute;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
+  width: 100%;
+}
+
+.background {
+  position: absolute;
+  z-index: -1;
+
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.modal {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 36px 53px;
+
+  width: 444px;
+  height: 626px;
+
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 40px;
+
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+}

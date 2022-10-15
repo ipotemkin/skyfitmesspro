@@ -1,30 +1,39 @@
-import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { FC, useState } from 'react'
 
-import { LOGO_COLOR_DARK } from '../../constants'
-import { Logo } from '../../components/Logo/Logo'
-import { UserInfo } from '../../components/UserInfo/UserInfo'
-import { mockUserResponse } from '../../data/user'
+import { Navigation } from '../../components/Navigation/Header'
+import { selectUser } from '../../slices/userSlice'
+import { useAppSelector } from '../../hooks/appHooks'
+import { User as UserNav } from '../../components/User/User'
 import { UserCourses } from '../../components/UserCourses/UserCourses'
-import { ReactComponent as ReactLogo } from './assets/arrow.svg'
+import { UserInfo } from '../../components/UserInfo/UserInfo'
 
 import styles from './style.module.css'
+import { WorkoutModal } from '../WorkoutModal/WorkoutModal'
 
-export const ProfilePage: FC = () => (
-  <div className={styles.profilePage}>
-    <div className={styles.wrapper}>
-      <nav className={styles.nav}>
-        <Link to="/">
-          <Logo color={LOGO_COLOR_DARK} />
-        </Link>
-        <div className={styles.navUser}>
-          <div className={styles.navUserAvatar} />
-          <div className={styles.navUserName}>{mockUserResponse.username}</div>
-          <ReactLogo />
+export const ProfilePage: FC = () => {
+  const currentUser = useAppSelector(selectUser)
+  const [isWorkoutsShown, setIsWorkoutsShown] = useState(false)
+
+  const handleWorkouts = () => {
+    setIsWorkoutsShown(true)
+  }
+
+  if (!currentUser) return <h2>Пользователь в системе не зарегистирован</h2>
+
+  return (
+    <>
+    {isWorkoutsShown && <WorkoutModal />}
+    
+    <div className={styles.profilePage}>
+        
+        <div className={styles.wrapper}>
+          <Navigation>
+            <UserNav user={currentUser} />
+          </Navigation>
+          <UserInfo user={currentUser} />
+          <UserCourses user={currentUser} handleWorkouts={handleWorkouts}/>
         </div>
-      </nav>
-      <UserInfo />
-      <UserCourses />
-    </div>
-  </div>
-)
+      </div>
+    </>    
+  )
+}

@@ -1,14 +1,50 @@
-import { mockUserResponse } from '../../data/user'
+import { FC, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../hooks/userHooks'
+
+import { FirebaseUser } from '../../types'
 import { ReactComponent as Arrow } from './arrow-down.svg'
 
 import styles from './style.module.css'
 
-export const User = () => {
+type Props = {
+  user: FirebaseUser
+}
+
+export const User: FC<Props> = ({ user }) => {
+  const [isShowNav, setIsShowNav] = useState(false)
+  const { logOut } = useAuth()
+  const navigate = useNavigate()
+
+  const handleShowNav = () => {
+    setIsShowNav((prev) => !prev)
+  }
+
+  const handleLogout = () => {
+    logOut(
+      () => {
+        navigate('/')
+      }
+    )
+  }
+
+  const handleProfile = () => {
+    navigate('/profile')
+  }
+
   return (
-    <div className={styles.user}>
-      <div className={styles.avatar} />
-      <div className={styles.name}>{mockUserResponse.username}</div>
-      <Arrow />
+    <div className={styles.wrapper} onClick={handleShowNav}>
+      <div className={styles.user}>
+        <div className={styles.avatar} />
+        <div className={styles.name}>{user.displayName || user.email}</div>
+        <Arrow />
+      </div>
+      {isShowNav && (
+        <div className={styles.nav}>
+          <div className={styles.link} onClick={handleProfile}>Профиль</div>
+          <div className={styles.link} onClick={handleLogout}>Выйти</div>
+        </div>
+      )}
     </div>
   )
 }

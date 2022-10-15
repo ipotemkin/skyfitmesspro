@@ -7,18 +7,23 @@ import styles from './style.module.css'
 
 type ProgressProps = {
   exercises: Workout['exercises']
-  workoutId: Workout['id']
+  workoutId: number
 }
 
 export const Progress: FC<ProgressProps> = ({ exercises, workoutId }) => {
-  const percent = 45
+  const title = `Мой прогресс по тренировке ${workoutId}:${JSON.stringify(exercises)}` // for DEBUG
 
+  // [{"id":1,"name":"Приветствие солнца","retriesCount":10,"userProgress":0}]
+  
   return (
     <div className={styles.progress}>
-      <h2 className={styles.title}>Мой прогресс по тренировке {workoutId}:</h2>
+      <h2 className={styles.title}>{title}</h2>
       <ul className={styles.list}>
-        {exercises.map((exercise) => (
-          <li key={exercise.id} className={styles.listItem}>
+        {exercises?.map((exercise) => {
+          const percent = Math.round((exercise.userProgress || 0)/exercise.retriesCount * 100)
+          
+          return (
+            <li key={exercise.id} className={styles.listItem}>
             <span className={styles.name}>{exercise.name}</span>
             <div
               className={classNames(
@@ -41,7 +46,10 @@ export const Progress: FC<ProgressProps> = ({ exercises, workoutId }) => {
               </div>
             </div>
           </li>
-        ))}
+
+          ) 
+        } 
+      )}
       </ul>
     </div>
   )

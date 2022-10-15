@@ -2,39 +2,47 @@ import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { User } from '../../components/User/User'
-import { Header } from '../../components/Header/Header'
+import { Navigation } from '../../components/Navigation/Header'
 import { Progress } from '../../components/Progress/Progress'
 import { Exercises } from '../../components/Exercises/Exercises'
 import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
-import { mockCourses } from '../../data/course'
+import { useUserCourse } from '../../hooks/userHooks'
+import { useAppSelector } from '../../hooks/appHooks'
+import { selectUser } from '../../slices/userSlice'
 
 import styles from './style.module.css'
 
 export const Workout: FC = () => {
-  const { id, day } = useParams()
+  const { id, day } = useParams()  
+  const user = useAppSelector(selectUser)
+  const { userCourse, isLoading } = useUserCourse(user?.uid, Number(id))
+  
+  if (isLoading) return <h2>Загрузка...</h2>
+  
+  if (!user) return <h2>Пользоваль не авторизован</h2>
+  
+  if (!userCourse) return <h2>Нет такого курса у текущего пользователя</h2>
 
-  const courseId = Number(id) || 0
-  const courseDay = Number(day) || 0
-
-  const course = mockCourses[courseId]
-  const { name: courseName, workouts } = course
-  const workout = workouts[courseDay - 1]
-  const { exercises } = workout
-
+  const workout = userCourse.workouts![Number(day)-1]
+  
   return (
     <div className={styles.container}>
-      <Header children={<User />} />
+      <Navigation children={<User user={user}/>} />
 
       <main className={styles.main}>
-        <h1 className={styles.heading}>{courseName}</h1>
+        <h1 className={styles.heading}>{userCourse.name}</h1>
         <h2 className={styles.title}>{workout.name}</h2>
 
-        <VideoPlayer url={workout.videoUrl} />
+        <VideoPlayer url={workout?.videoUrl || ''} />
 
-        <div className={styles.exercises}>
-          <Exercises exercises={exercises} />
-          <Progress exercises={exercises} workoutId={workout.id} />
-        </div>
+        {workout.exercises!.length > 0 && (
+          <div className={styles.exercises}>
+            <Exercises exercises={workout.exercises} />
+            <Progress
+              exercises={workout.exercises}
+              workoutId={workout.id} />
+          </div>
+        )}
       </main>
     </div>
   )
