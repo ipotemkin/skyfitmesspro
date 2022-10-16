@@ -24,7 +24,7 @@ export const ProfilePage: FC = () => {
 
   return (
     <>
-      {isWorkoutsShown && <WorkoutModal />}
+      {isWorkoutsShown && <WorkoutModal setIsOpened={setIsWorkoutsShown} />}
 
       <div className={styles.profilePage}>
         <div className={styles.wrapper}>
