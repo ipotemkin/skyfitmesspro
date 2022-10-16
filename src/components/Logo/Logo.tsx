@@ -6,8 +6,6 @@ import { useAuth } from '../../hooks/userHooks'
 import { useNavigate } from 'react-router-dom'
 
 import styles from './style.module.css'
-import { useAuth } from '../../hooks/userHooks'
-import { useNavigate } from 'react-router-dom'
 
 type Props = { color?: string }
 
