@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import { FC } from 'react'
+
 import { ReactComponent as Done } from './sberbank.svg'
 
 import styles from './style.module.css'

@@ -39,6 +39,17 @@
             ]
           }
         ]
+      },
+      "3": {
+        "id": 3,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
       }
     }
   },
@@ -46,6 +57,17 @@
     "uid": "WQiqftpsjvYVM7j4nlWo0bg9c6F2",
     "courses": {
       "0": {
+        "id": 0,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      },
+      "1": {
         "id": 0,
         "workouts": [
           {
@@ -71,8 +93,18 @@
             ]
           }
         ]
+      },
+      "3": {
+        "id": 3,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
       }
     }
   }
-
 }

@@ -2,41 +2,17 @@ import { DataSnapshot, off, onValue } from 'firebase/database'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
+import { useGetCourseQuery } from '../../api/courses.api'
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
 import { LOGO_COLOR_DARK } from '../../constants'
-import { getCourseRef } from '../../db/refs'
-import { CourseData } from '../../types'
 
 import styles from './style.module.css'
 
 export const AboutCourse: FC = () => {
   const { id } = useParams()
-  const courseId = Number(id) || 0
-
-  const [course, setCourse ] = useState<CourseData>()
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
-  const colRef = useMemo(() => getCourseRef(courseId), [id])
-
-  const onDataChange = (item: DataSnapshot) => {
-    if (item.exists()) {
-      setCourse(item.val())
-    } else {
-      setError('Упс... Ошибка загрузки')
-      console.error('Data not found')
-    }
-    setIsLoading(false)
-  }
-
-  useEffect(() => {
-    onValue(colRef, onDataChange)
-    
-    return () => {
-      off(colRef, 'value', onDataChange)
-    }
-  }, [])
-
+  const { data: course } = useGetCourseQuery(Number(id) || 0)
+  
   return (
     <div className={styles.aboutCourse}>
       <div className={styles.aboutCourseWrapper}>
@@ -75,7 +51,9 @@ export const AboutCourse: FC = () => {
             ))}
           </ul>
 
-          <p className={styles.description}>{course?.description}</p>
+          <div className={styles.description} >
+            {course?.description?.split('\n').map((chunk) => (<p key={chunk}>{chunk}</p>))}
+          </div>
 
           <footer className={styles.footer}>
             <p className={styles.footerText}>

@@ -21,11 +21,9 @@ export const User: FC<Props> = ({ user }) => {
   }
 
   const handleLogout = () => {
-    logOut(
-      () => {
-        navigate('/')
-      }
-    )
+    logOut(() => {
+      navigate('/')
+    })
   }
 
   const handleProfile = () => {
@@ -41,8 +39,12 @@ export const User: FC<Props> = ({ user }) => {
       </div>
       {isShowNav && (
         <div className={styles.nav}>
-          <div className={styles.link} onClick={handleProfile}>Профиль</div>
-          <div className={styles.link} onClick={handleLogout}>Выйти</div>
+          <div className={styles.link} onClick={handleProfile}>
+            Профиль
+          </div>
+          <div className={styles.link} onClick={handleLogout}>
+            Выйти
+          </div>
         </div>
       )}
     </div>

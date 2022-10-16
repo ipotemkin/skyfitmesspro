@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import { Navigation } from '../../components/Navigation/Header'
 import { selectUser } from '../../slices/userSlice'
@@ -6,23 +6,35 @@ import { useAppSelector } from '../../hooks/appHooks'
 import { User as UserNav } from '../../components/User/User'
 import { UserCourses } from '../../components/UserCourses/UserCourses'
 import { UserInfo } from '../../components/UserInfo/UserInfo'
+import { WorkoutModal } from '../WorkoutModal/WorkoutModal'
+import { WarningPage } from '../WarningPage/WarningPage'
 
 import styles from './style.module.css'
 
 export const ProfilePage: FC = () => {
   const currentUser = useAppSelector(selectUser)
+  const [isWorkoutsShown, setIsWorkoutsShown] = useState(false)
 
-  if (!currentUser) return <h2>Пользователь в системе не зарегистирован</h2>
+  const handleWorkouts = () => {
+    setIsWorkoutsShown(true)
+  }
+
+  if (!currentUser.uid)
+    return <WarningPage text="Пользователь в системе не зарегистрирован!" />
 
   return (
-    <div className={styles.profilePage}>
-      <div className={styles.wrapper}>
-        <Navigation>
-          <UserNav user={currentUser} />
-        </Navigation>
-        <UserInfo user={currentUser} />
-        <UserCourses user={currentUser} />
+    <>
+      {isWorkoutsShown && <WorkoutModal />}
+
+      <div className={styles.profilePage}>
+        <div className={styles.wrapper}>
+          <Navigation>
+            <UserNav user={currentUser} />
+          </Navigation>
+          <UserInfo user={currentUser} />
+          <UserCourses user={currentUser} handleWorkouts={handleWorkouts} />
+        </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -1,4 +1,5 @@
 import { FC } from 'react'
+
 import { mockUserWorkouts } from '../../data/course'
 import { WorkoutListItem } from './WorkoutListItem'
 

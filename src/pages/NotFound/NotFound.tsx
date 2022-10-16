@@ -1,3 +1,9 @@
+import styles from './style.module.css'
+
 export const NotFound = () => {
-  return <h2>Ой! Такой страницы нет!</h2>
+  return (
+    <div className={styles.notFound}>
+      <p>Ой! Такой страницы нет!</p>
+    </div>
+  )
 }
