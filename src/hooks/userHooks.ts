@@ -108,47 +108,46 @@ export const useUserCourses = (uid: string) => {
 
 export const useUserCourse = (uid: string | null, courseId: number) => {
   const { data: course } = useGetCourseQuery(courseId)
-  const { data: userCourseData, error, isLoading: isUserCourseLoading } = useGetUserCourseQuery({
+  const { 
+    data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
+  } = useGetUserCourseQuery({
     uid: uid || '',
     courseId
   })
   const [userCourse, setUserCourse] = useState<CourseData>()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
 
+  // for DEBUG!
   console.log('course -->', course)
-
   console.group('useGetUserCourseQuery result -->')
+  console.log('uid -->', uid)
+  console.log('courseId -->', courseId)
   console.log('userCourseData -->', userCourseData)
   console.log('error -->', error)
   console.log('isUserCourseLoading -->', isUserCourseLoading)
+  console.log('isError -->', isError)
   console.groupEnd()
 
   useEffect(() => {
+    if (isErrorQuery) setIsError(true)
+    else setIsError(false)
+  }, [isErrorQuery])
 
-    // если загрузка идет или нет uid
-    if (isUserCourseLoading || !uid ) {
-      setIsLoading(true)
-      return
-    }
-
-    // если загрузка завершена но нет данных
-    if (!isUserCourseLoading && !userCourseData) {
-      setIsLoading(false)
-      return    
-    }
+  useEffect(() => {
+    
+    // если загрузка завершена но нет данных или пользователя
+    if (!isUserCourseLoading && (!userCourseData || !uid)) setIsError(true)
     
     // если есть все данные, то ставим загрузку в false
-    if (userCourseData && course && uid) {
+    else if (userCourseData && course && uid) {
       const res = {}
       merge(res, course, userCourseData)
       setUserCourse(res)
-      setIsLoading(false)
-      return
     }
       
-  }, [userCourseData, course, courseId, isUserCourseLoading, uid])
+  }, [userCourseData, course, isUserCourseLoading, uid])
   
-  return { userCourse, isLoading, error }
+  return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }
 
 export const useUserWorkoutStatus = (uid: string, courseId: number, workoutId: number) => {

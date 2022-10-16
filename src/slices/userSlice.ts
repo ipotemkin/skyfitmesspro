@@ -6,7 +6,7 @@ export const initialState: FirebaseUser = {
   email: null,
   displayName: null,
   uid: null,
-  isLoading: false
+  isLoading: true
 
   // accessToken: null,
   // refreshToken: null
