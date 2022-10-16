@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import { DataSnapshot, off, onValue } from 'firebase/database'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { useGetCourseQuery } from '../../api/courses.api'

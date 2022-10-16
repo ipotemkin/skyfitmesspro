@@ -9,6 +9,7 @@ import { NotFound } from './pages/NotFound/NotFound'
 import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 import { WorkoutModal } from './pages/WorkoutModal/WorkoutModal'
 import { Workout } from './pages/WorkoutPage/Workout'
+import { Admin } from './components/Admin/Admin'
 
 export const AppRoutes = () => {
   return (

@@ -7,7 +7,7 @@ import { deleteUser, initialState, setUser } from './slices/userSlice'
 
 function App() {
   const dispatch = useDispatch()
-
+  
   // устанавливаем слушателя для событий login/logout
   useEffect(() => {
     const listener = onAuthStateChanged(auth, async (user: User | null) => {

@@ -29,6 +29,8 @@ export const Workout: FC = () => {
 
   const workout = userCourse.workouts![Number(day) - 1]
 
+  const workout = userCourse.workouts![courseDay-1]
+  
   return (
     <div className={styles.container}>
       <Navigation children={<User user={user} />} />
