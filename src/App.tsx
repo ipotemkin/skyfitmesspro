@@ -12,8 +12,9 @@ function App() {
   useEffect(() => {
     const listener = onAuthStateChanged(auth, async (user: User | null) => {
       dispatch(setUser({
-        ...initialState, isLoading: true
+        ...initialState
       }))
+      
       if (user) {
         dispatch(setUser({
           uid: user.uid,
@@ -24,6 +25,9 @@ function App() {
       }
       else {
         dispatch(deleteUser())
+        dispatch(setUser({
+          ...initialState, isLoading: false
+        }))
       }
     })
 
