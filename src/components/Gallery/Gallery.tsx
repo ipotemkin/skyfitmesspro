@@ -17,7 +17,7 @@ export const Gallery = () => {
         courses.map((item) => (
           <Link
             key={item.id}
-            to={`/aboutcourse/${item.id}`}
+            to={`/aboutcourse/${Number(item.id) + 1}`}
             className={styles.link}
           >
             <Card item={item} />

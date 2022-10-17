@@ -1,5 +1,4 @@
-import { DataSnapshot, off, onValue } from 'firebase/database'
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { useGetCourseQuery } from '../../api/courses.api'
@@ -11,7 +10,7 @@ import styles from './style.module.css'
 
 export const AboutCourse: FC = () => {
   const { id } = useParams()
-  const { data: course } = useGetCourseQuery(Number(id) || 0)
+  const { data: course } = useGetCourseQuery(Number(id) - 1 || 0)
   
   return (
     <div className={styles.aboutCourse}>
