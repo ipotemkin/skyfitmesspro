@@ -9,7 +9,7 @@ import { Warning } from '../Warning/Warning'
 
 type Props = {
   user: FirebaseUser
-  handleWorkouts?: VoidFunction
+  handleWorkouts?: Function
 }
 
 export const UserCourses: FC<Props> = ({

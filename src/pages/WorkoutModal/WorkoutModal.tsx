@@ -1,21 +1,27 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { WorkoutList } from '../../components/WorkoutList/WorkoutList'
+import { useAppSelector } from '../../hooks/appHooks'
+import { useUserCourse } from '../../hooks/userHooks'
+import { selectUser } from '../../slices/userSlice'
 import { Workout } from '../../types'
 
 import styles from './style.module.css'
 
 type WorkoutModalProps = {
   // setIsOpened: React.Dispatch<React.SetStateAction<boolean>>
-  workouts: Workout[]
   setIsOpened: Function
+  courseId: number
 }
 
-export const WorkoutModal: FC<WorkoutModalProps> = ({ workouts, setIsOpened }) => {
+export const WorkoutModal: FC<WorkoutModalProps> = ({ setIsOpened, courseId }) => {
+  const user = useAppSelector(selectUser)
+  const { data } = useUserCourse(user.uid, courseId) 
+    
   return (
     <div className={styles.modal} onClick={() => setIsOpened(false)}>
       <div className={styles.content} onClick={(e) => e.stopPropagation()}>
         <h2 className={styles.title}>Выберите тренировку</h2>
-        <WorkoutList workouts={workouts}/>
+        {data && data.workouts && <WorkoutList workouts={data.workouts}/>}
       </div>
     </div>
   )

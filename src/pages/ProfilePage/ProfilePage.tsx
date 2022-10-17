@@ -14,8 +14,10 @@ import styles from './style.module.css'
 export const ProfilePage: FC = () => {
   const currentUser = useAppSelector(selectUser)
   const [isWorkoutsShown, setIsWorkoutsShown] = useState(false)
+  const [activeCourseId, setActiveCourseId] = useState<number>(1)
 
-  const handleWorkouts = () => {
+  const handleWorkouts = (courseId: number) => {
+    setActiveCourseId(courseId)
     setIsWorkoutsShown(true)
   }
 
@@ -31,7 +33,9 @@ export const ProfilePage: FC = () => {
         <UserInfo user={currentUser} />
         <UserCourses user={currentUser} handleWorkouts={handleWorkouts} />
       </div>
-      {isWorkoutsShown && <WorkoutModal setIsOpened={setIsWorkoutsShown} />}
+      {isWorkoutsShown && <WorkoutModal
+        setIsOpened={setIsWorkoutsShown}
+        courseId={activeCourseId}/>}
     </div>
   )
 }
