@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { User } from '../../components/User/User'
@@ -6,16 +6,20 @@ import { Navigation } from '../../components/Navigation/Header'
 import { Progress } from '../../components/Progress/Progress'
 import { Exercises } from '../../components/Exercises/Exercises'
 import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
+import { ProgressModal } from '../../components/ProgressModal/ProgressModal'
 import { WarningPage } from '../WarningPage/WarningPage'
 import { useUserCourse } from '../../hooks/userHooks'
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectUser } from '../../slices/userSlice'
 
 import styles from './style.module.css'
+import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
 
 export const Workout: FC = () => {
   const { id, day } = useParams()
   const user = useAppSelector(selectUser)
+  const [isModalOneShown, setIsModalOneShown] = useState(false)
+  const [isModalTwoShown, setIsModalTwoShown] = useState(false)
   const { data, isLoading, isError } = useUserCourse(user?.uid, Number(id) - 1)
 
   console.log('Workout: user -->', user)  // for DEBUG!
@@ -39,6 +43,15 @@ export const Workout: FC = () => {
       <WarningPage text="Нет такой тренировки на этом курсе!" user={user} />
     )
 
+  const handleClick = () => {
+    setIsModalOneShown(true)
+  }
+
+  const handleSendClick = () => {
+    setIsModalOneShown(false)
+    setIsModalTwoShown(true)
+  }
+
   const workout = data.workouts[workoutIdx]
   
   return (
@@ -52,11 +65,25 @@ export const Workout: FC = () => {
 
         {workout.exercises!.length > 0 && (
           <div className={styles.exercises}>
-            <Exercises exercises={workout.exercises} />
+            <Exercises exercises={workout.exercises} onClick={handleClick} />
             <Progress exercises={workout.exercises} workoutId={workout.id} />
           </div>
         )}
       </main>
+      {isModalOneShown && (
+        <ProgressModal
+          setIsOpened={setIsModalOneShown}
+          exercises={workout.exercises}
+          onClick={handleSendClick}
+        />
+      )}
+      {isModalTwoShown && (
+        <SuccessModal
+          setIsOpened={setIsModalTwoShown}
+          text="Ваш прогресс
+          засчитан!"
+        />
+      )}
     </div>
   )
 }

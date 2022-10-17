@@ -62,11 +62,15 @@
   position: absolute;
   z-index: 1;
 
+  width: 60px;
+  left: calc(50% - 22px);
+
   font-weight: 400;
   font-size: 24px;
   line-height: 32px;
 
-  color: #fff;
+  color: #000;
+  text-align: center;
 }
 
 .color1 {
