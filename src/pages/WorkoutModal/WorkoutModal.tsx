@@ -1,9 +1,8 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { WorkoutList } from '../../components/WorkoutList/WorkoutList'
 import { useAppSelector } from '../../hooks/appHooks'
 import { useUserCourse } from '../../hooks/userHooks'
 import { selectUser } from '../../slices/userSlice'
-import { Workout } from '../../types'
 
 import styles from './style.module.css'
 
