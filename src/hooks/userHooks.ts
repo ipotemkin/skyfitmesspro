@@ -22,9 +22,7 @@ export const useAuth = () => {
     successCallback = noop,
     errorCallback = noop
     ) => {
-    dispatch(setUser({
-      ...initialState, isLoading: true
-    }))
+    dispatch(setUser({ ...initialState }))
     signInWithEmailAndPassword(auth, username, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -33,7 +31,7 @@ export const useAuth = () => {
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
-          isLoading: true
+          isLoading: false
         }))
         successCallback() // на всякий случай
       })

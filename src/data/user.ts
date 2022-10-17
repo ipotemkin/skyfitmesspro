@@ -31,6 +31,39 @@ export const mockUsers = {
       },
     ],
   },
+  3: {
+    id: 3,
+    username: "user3@example.com",
+    password: "MySecret6789",
+    uid: 'kmPXkGrE1dU4nviV9LRLM0V333H2',
+    courses: [ 
+      {
+        id: 1,
+        name: 'Йога',
+        coverUrl: 'assets/images/card-violet.png',
+      },
+      {
+        id: 2,
+        name: 'Стретчинг',
+        coverUrl: 'assets/images/card-blue.png',
+      },
+      {
+        id: 3,
+        name: 'Бодифлекс',
+        coverUrl: 'assets/images/card-lightblue.png',
+      },
+      {
+        id: 4,
+        name: 'Танцевальный фитнес',
+        coverUrl: 'assets/images/card-orange.png',
+      },
+      {
+        id: 5,
+        name: 'Степ-аэробика',
+        coverUrl: 'assets/images/card-lightgreen.png',
+      },
+    ],
+  },
 }
 
 // get the specified user – GET /users/id
