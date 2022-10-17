@@ -22,7 +22,7 @@ export const Workout: FC = () => {
   const [isModalTwoShown, setIsModalTwoShown] = useState(false)
   const { data, isLoading, isError } = useUserCourse(user?.uid, Number(id) - 1)
 
-  console.log('Workout: user -->', user)  // for DEBUG!
+  console.log('Workout: user -->', user) // for DEBUG!
 
   if (isLoading || user.isLoading || (!data && !isError))
     return <WarningPage text="Загрузка..." user={user} />
@@ -30,15 +30,15 @@ export const Workout: FC = () => {
   if (!user.uid) return <WarningPage text="Вы не авторизованы!" />
 
   if (!data) {
-    console.log('Вы не зарегистрированы на этот курс!')  // for DEBUG!
+    console.log('Вы не зарегистрированы на этот курс!') // for DEBUG!
     return (
       <WarningPage text="Вы не зарегистрированы на этот курс!" user={user} />
     )
   }
-  
+
   const workoutIdx = Number(day) - 1
 
-  if (!data.workouts || (workoutIdx < 0 || workoutIdx >= data.workouts?.length))
+  if (!data.workouts || workoutIdx < 0 || workoutIdx >= data.workouts?.length)
     return (
       <WarningPage text="Нет такой тренировки на этом курсе!" user={user} />
     )
@@ -53,7 +53,8 @@ export const Workout: FC = () => {
   }
 
   const workout = data.workouts[workoutIdx]
-  
+  console.log(workout)
+
   return (
     <div className={styles.container}>
       <Navigation children={<User user={user} />} />
@@ -63,7 +64,7 @@ export const Workout: FC = () => {
 
         <VideoPlayer url={workout.videoUrl || ''} />
 
-        {workout.exercises!.length > 0 && (
+        {workout.exercises!.length > 1 && (
           <div className={styles.exercises}>
             <Exercises exercises={workout.exercises} onClick={handleClick} />
             <Progress exercises={workout.exercises} workoutId={workout.id} />
