@@ -53,7 +53,7 @@ export const Workout: FC = () => {
   }
 
   const workout = data.workouts[workoutIdx]
-  console.log(workout)
+  console.log('workout -->', workout)
 
   return (
     <div className={styles.container}>
@@ -64,7 +64,7 @@ export const Workout: FC = () => {
 
         <VideoPlayer url={workout.videoUrl || ''} />
 
-        {workout.exercises!.length > 1 && (
+        {workout.exercises && workout.exercises.length > 1 && (
           <div className={styles.exercises}>
             <Exercises exercises={workout.exercises} onClick={handleClick} />
             <Progress exercises={workout.exercises} workoutId={workout.id} />
