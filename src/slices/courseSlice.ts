@@ -17,6 +17,6 @@ export const courseSlice = createSlice({
 
 export const { setActiveCourse, deleteActiveCourse } = courseSlice.actions
 
-export const selectUser = (state: RootState) => state.user
+export const selectActiveCourse = (state: RootState) => state.activeCourse
 
 export default courseSlice.reducer
