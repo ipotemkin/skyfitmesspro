@@ -4,19 +4,21 @@ import { mockUserWorkouts } from '../../data/course'
 import { WorkoutListItem } from './WorkoutListItem'
 
 import styles from './style.module.css'
+import { Workout } from '../../types'
 
 type WorkoutListProps = {
-  courseId?: number
+  // courseId?: number
+  workouts: Workout[]
 }
 
-export const WorkoutList: FC<WorkoutListProps> = ({ courseId }) => {
+export const WorkoutList: FC<WorkoutListProps> = ({ workouts }) => {
   return (
     <div className={styles.wrapper}>
       <ul className={styles.list}>
-        {mockUserWorkouts.map((workout) => (
-          <WorkoutListItem
+        {workouts.map((workout) => (
+          workout && workout.name && <WorkoutListItem
             key={workout.id}
-            done={workout.done}
+            done={workout.done || false}
             title={workout.name.split('/')[0]}
             text={`${workout.name.split('/')[1]}/${workout.name.split('/')[2]}`}
           />

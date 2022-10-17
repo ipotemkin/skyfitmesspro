@@ -1,12 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 import userReducer from './slices/userSlice'
+import courseReducer from './slices/courseSlice'
 import { coursesApi } from './api/courses.api'
 import { usersApi } from './api/users.api'
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    activeCourse: courseReducer,
     [coursesApi.reducerPath]: coursesApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
   },
