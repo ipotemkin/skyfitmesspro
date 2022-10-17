@@ -1,5 +1,4 @@
-import React, { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { FC } from 'react'
 
 import { Card } from '../Card/Card'
 import { FirebaseUser } from '../../types'
