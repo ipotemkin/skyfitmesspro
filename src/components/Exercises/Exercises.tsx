@@ -7,9 +7,10 @@ import styles from './style.module.css'
 
 type ExercisesProps = {
   exercises: Workout['exercises']
+  onClick?: VoidFunction
 }
 
-export const Exercises: FC<ExercisesProps> = ({ exercises }) => {
+export const Exercises: FC<ExercisesProps> = ({ exercises, onClick }) => {
   return (
     <div className={styles.content}>
       <h2 className={styles.title}>Упражнения</h2>
@@ -21,7 +22,7 @@ export const Exercises: FC<ExercisesProps> = ({ exercises }) => {
           </li>
         ))}
       </ul>
-      <Button>Заполнить свой прогресс</Button>
+      <Button onClick={onClick}>Заполнить свой прогресс</Button>
     </div>
   )
 }

@@ -23,18 +23,15 @@ export const ProfilePage: FC = () => {
     return <WarningPage text="Пользователь в системе не зарегистрирован!" />
 
   return (
-    <>
-      {isWorkoutsShown && <WorkoutModal setIsOpened={setIsWorkoutsShown} />}
-
-      <div className={styles.profilePage}>
-        <div className={styles.wrapper}>
-          <Navigation>
-            <UserNav user={currentUser} />
-          </Navigation>
-          <UserInfo user={currentUser} />
-          <UserCourses user={currentUser} handleWorkouts={handleWorkouts} />
-        </div>
+    <div className={styles.profilePage}>
+      <div className={styles.wrapper}>
+        <Navigation>
+          <UserNav user={currentUser} />
+        </Navigation>
+        <UserInfo user={currentUser} />
+        <UserCourses user={currentUser} handleWorkouts={handleWorkouts} />
       </div>
-    </>
+      {isWorkoutsShown && <WorkoutModal setIsOpened={setIsWorkoutsShown} />}
+    </div>
   )
 }
