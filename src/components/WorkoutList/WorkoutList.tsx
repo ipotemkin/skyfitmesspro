@@ -12,8 +12,6 @@ type WorkoutListProps = {
 }
 
 export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId }) => {
-  console.log(workouts)
-
   const scrollRef = useRef<HTMLInputElement>(null)
   const scrollContent = useRef<HTMLUListElement>(null)
 
@@ -31,6 +29,7 @@ export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId }) => {
         {workouts.map((workout) => {
           return (
             <Link
+              key={workout.id}
               className={styles.link}
               to={`/courses/${courseId + 1}/workouts/${workout.id}`}
               style={{ textDecoration: 'none' }}
