@@ -11,11 +11,13 @@ function App() {
   // устанавливаем слушателя для событий login/logout
   useEffect(() => {
     const listener = onAuthStateChanged(auth, async (user: User | null) => {
-      dispatch(setUser({
-        ...initialState
-      }))
+      console.log('App: onAuthStateChanged')
+      // dispatch(setUser({
+      //   ...initialState
+      // }))
       
       if (user) {
+        console.log('App: onAuthStateChanged: user -->', user)
         dispatch(setUser({
           uid: user.uid,
           email: user.email,
@@ -24,6 +26,7 @@ function App() {
         }))
       }
       else {
+        console.log('App: onAuthStateChanged: no user -->', user)
         dispatch(deleteUser())
         dispatch(setUser({
           ...initialState, isLoading: false

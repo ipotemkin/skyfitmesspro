@@ -106,5 +106,57 @@
         ]
       }
     }
+  },
+  "kmPXkGrE1dU4nviV9LRLM0V333H2": {
+    "uid": "kmPXkGrE1dU4nviV9LRLM0V333H2",
+    "courses": {
+      "0": {
+        "id": 0,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      },
+      "1": {
+        "id": 1,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      },
+      "2": {
+        "id": 2,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      },
+      "3": {
+        "id": 3,
+        "workouts": [
+          {
+            "done": false,
+            "exercises": [
+              { "userProgress": 0 }
+            ]
+          }
+        ]
+      },
+      "4": {
+        "id": 4
+      }
+    }
   }
 }
