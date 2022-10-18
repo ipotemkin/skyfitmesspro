@@ -1,30 +1,24 @@
 import React, { FC, useState } from 'react'
+import { Exercise } from '../../types'
 
 import styles from './style.module.css'
 
 type ProgressInputProps = {
   name: string
-  amount: number
+  value: number
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const ProgressInput: FC<ProgressInputProps> = ({ name, amount }) => {
-  const [value, setValue] = useState('')
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target
-    let inputValue = value.replace(/\D/gi, '')
-    if (Number(inputValue) > amount) inputValue = amount.toString()
-    setValue(inputValue)
-  }
-
+export const ProgressInput: FC<ProgressInputProps> = ({ name, value, onChange}) => {
   return (
     <label className={styles.text}>
       Сколько раз вы сделали "{name}"?
       <input
         className={styles.input}
+        type="number"
         placeholder="Введите значение"
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
       />
     </label>
   )
