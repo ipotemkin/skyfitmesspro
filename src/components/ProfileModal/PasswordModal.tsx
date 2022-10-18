@@ -1,75 +1,46 @@
 import { FC } from 'react'
 import classNames from 'classnames'
-import { FormData } from '../../types'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../hooks/userHooks'
-import { Logo } from '../../components/Logo/Logo'
-import { Button } from '../../components/Button/Button'
+import { Logo } from '../Logo/Logo'
+import { Button } from '../Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './style.module.css'
 
-const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
+type PasswordModalProps = {
+  setIsOpened: Function
+}
+
+type PasswordData = {
+  password: string
+  confirmPassword: string
+}
+
 const validPasswordLength = 6
 
-export const SignUpForm: FC = () => {
-  const { signUp } = useAuth()
-  const navigate = useNavigate()
-
+export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
   const {
     register,
     handleSubmit,
-    reset,
     getValues,
-    formState: { errors, isValid },
-  } = useForm<FormData>({ mode: 'onTouched' })
+    formState: { errors },
+  } = useForm<PasswordData>({ mode: 'onTouched' })
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<PasswordData> = (data) => {
     console.log(data)
-
-    if (!isValid) {
-      return reset()
-    }
-
-    signUp(
-      data.email,
-      data.password,
-      // при успехе
-      () => {
-        navigate('/login')
-      },
-      // при ошибке
-      () => {
-        console.log('Что-то пошло не так')
-        reset()
-      }
-    )
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
 
   return (
-    <div className={styles.formWrapper}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.logo}>
-          <Logo />
-        </div>
+    <div className={styles.modal} onClick={() => setIsOpened(false)}>
+      <form
+        className={styles.content}
+        onClick={(e) => e.stopPropagation()}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Logo />
+        <h3 className={styles.title}>Новый пароль:</h3>
         <div className={styles.inputs}>
-          <input
-            className={styles.input}
-            placeholder="E-mail"
-            {...register('email', {
-              required: 'Введите e-mail',
-              pattern: {
-                value: validEmail,
-                message: 'Введите корректный e-mail',
-              },
-            })}
-          />
-          <p className={styles.error}>
-            {errors.email && <span>{errors.email.message}</span>}
-          </p>
-
           <input
             className={inputPasswordStyle}
             placeholder="Пароль"
@@ -106,9 +77,8 @@ export const SignUpForm: FC = () => {
             )}
           </p>
         </div>
-        <div className={styles.buttons}>
-          <Button>Зарегистрироваться</Button>
-        </div>
+
+        <Button>Сохранить</Button>
       </form>
     </div>
   )

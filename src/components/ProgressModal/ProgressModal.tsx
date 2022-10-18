@@ -7,7 +7,7 @@ import { ProgressInput } from './ProgressInput'
 import styles from './style.module.css'
 
 type ProgressModalProps = {
-  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>
+  setIsOpened: Function
   exercises: Workout['exercises']
   onClick?: VoidFunction
 }

@@ -1,14 +1,13 @@
 import { FC } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
-
 import { FormData } from '../../types'
-import { Button } from '../../components/Button/Button'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../hooks/userHooks'
 import { Logo } from '../../components/Logo/Logo'
+import { Button } from '../../components/Button/Button'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './style.module.css'
-import { useAuth } from '../../hooks/userHooks'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
@@ -58,10 +57,10 @@ export const LoginForm: FC = () => {
             className={styles.input}
             placeholder="E-mail"
             {...register('email', {
-              required: 'Введите адрес эл. почты',
+              required: 'Введите e-mail',
               pattern: {
                 value: validEmail,
-                message: 'Введите корректный адрес',
+                message: 'Введите корректный e-mail',
               },
             })}
           />
@@ -86,9 +85,9 @@ export const LoginForm: FC = () => {
           </p>
         </div>
         <div className={styles.buttons}>
-          <Button>{'Войти'}</Button>
+          <Button>Войти</Button>
           <Button type="outlined" btnType="button" onClick={clickHandler}>
-            {'Зарегистрироваться'}
+            Зарегистрироваться
           </Button>
         </div>
       </form>
