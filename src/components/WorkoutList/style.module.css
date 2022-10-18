@@ -50,13 +50,22 @@
 }
 
 .scrollbarInput::-webkit-slider-thumb {
-  -webkit-appearance: none;
   appearance: none;
 
   height: 6px;
   width: 116px;
 
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.149);
+  border-radius: 10px;
+}
+
+/***firefox scrollbar****/
+.scrollbarInput::-moz-range-thumb {
+  height: 6px;
+  width: 116px;
+
+  background: rgba(0, 0, 0, 0.149);
+  border: none;
   border-radius: 10px;
 }
 
@@ -64,6 +73,11 @@
 .link:active,
 .link:visited {
   color: currentColor;
+  transition: color 0.2s ease-in-out;
+}
+
+.link:hover {
+  color: #580ea2;
 }
 
 .listItem {
