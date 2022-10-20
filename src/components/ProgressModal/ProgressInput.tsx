@@ -1,5 +1,4 @@
-import React, { FC, useState } from 'react'
-import { Exercise } from '../../types'
+import React, { FC } from 'react'
 
 import styles from './style.module.css'
 

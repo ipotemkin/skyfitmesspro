@@ -30,13 +30,14 @@ export type ExerciseProgress = {
   userProgress: number
 }
 
-export type ExercisesPayload = {
+export type ExercisePayload = {
   arg: ExerciseArg
   body: ExerciseProgress
 }
 
 export const usersApi = createApi({
   reducerPath: 'users/api',
+  tagTypes: ['UserData'],
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL + '/users',
   }),
@@ -49,17 +50,19 @@ export const usersApi = createApi({
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
       query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
+      providesTags: () => ([{ type: 'UserData' as const }])
     }),
     getUserExercises: build.query<UserData, WorkoutArg>({
       query: ({ uid, courseId, workoutId }) =>
         `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
     }),
-    updateUserExerciseProgress: build.mutation<void, ExercisesPayload>({
+    updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
         url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json`,
         method: 'PATCH',
         body: body,
       }),
+      invalidatesTags: [{ type: 'UserData' }]
     }),
   }),
 })
