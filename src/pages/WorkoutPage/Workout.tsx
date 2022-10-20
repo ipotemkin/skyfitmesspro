@@ -17,10 +17,11 @@ import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
 
 export const Workout: FC = () => {
   const { id, day } = useParams()
+  const courseId = Number(id) - 1
   const user = useAppSelector(selectUser)
   const [isModalOneShown, setIsModalOneShown] = useState(false)
   const [isModalTwoShown, setIsModalTwoShown] = useState(false)
-  const { data, isLoading, isError } = useUserCourse(user?.uid, Number(id) - 1)
+  const { data, isLoading, isError } = useUserCourse(user?.uid, courseId)
 
   console.log('Workout: user -->', user) // for DEBUG!
 
@@ -64,7 +65,7 @@ export const Workout: FC = () => {
 
         <VideoPlayer url={workout.videoUrl || ''} />
 
-        {workout.exercises && workout.exercises.length > 1 && (
+        {workout.exercises && workout.exercises.length > 0 && (
           <div className={styles.exercises}>
             <Exercises exercises={workout.exercises} onClick={handleClick} />
             <Progress exercises={workout.exercises} workoutId={workout.id} />
@@ -74,6 +75,8 @@ export const Workout: FC = () => {
       {isModalOneShown && (
         <ProgressModal
           setIsOpened={setIsModalOneShown}
+          courseId={courseId}
+          workoutId={workout.id}
           exercises={workout.exercises}
           onClick={handleSendClick}
         />
