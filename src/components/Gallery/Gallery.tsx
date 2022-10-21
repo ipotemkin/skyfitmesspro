@@ -7,6 +7,7 @@ import { useGetCoursesQuery } from '../../api/courses.api'
 import styles from './style.module.css'
 import { Skeleton } from '@mui/material'
 import { NUMBER_OF_SKELETONS, SKELETON_COLOR } from '../../constants'
+import { ROUTES } from '../../routes'
 
 export const Gallery = () => {
   const { data: courses, isLoading, error } = useGetCoursesQuery()
@@ -17,7 +18,7 @@ export const Gallery = () => {
         courses.map((item) => (
           <Link
             key={item.id}
-            to={`/aboutcourse/${Number(item.id) + 1}`}
+            to={`${ROUTES.aboutCourse}/${Number(item.id) + 1}`}
             className={styles.link}
           >
             <Card item={item} />

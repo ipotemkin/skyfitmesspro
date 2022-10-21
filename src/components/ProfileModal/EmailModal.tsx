@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { selectUser, setUser } from '../../slices/userSlice'
 import { useAppSelector } from '../../hooks/appHooks'
+import { ROUTES } from '../../routes'
 
 type EmailModalProps = {
   setIsOpened: Function
@@ -42,7 +43,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
         setIsOpened(false)
       },
       () => {
-        navigate('/login')
+        navigate(ROUTES.login)
       }
       )
     console.log(data)
