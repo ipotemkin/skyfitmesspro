@@ -3,8 +3,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  getAuth,
-  updateEmail as firebaseUpdateEmail
+  updateEmail as firebaseUpdateEmail,
+  updatePassword as firebaseUpdatePassword
 } from 'firebase/auth'
 import { get, ref } from 'firebase/database'
 import { merge } from 'lodash'
@@ -16,6 +16,7 @@ import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
 import { CourseData } from '../types'
 import { useDispatch } from 'react-redux'
 import { initialState, setUser } from '../slices/userSlice'
+import { addEmitHelper } from 'typescript'
 
 export const useAuth = () => {
   const noop = () => {}  // заглушка для колбэков
@@ -102,11 +103,30 @@ export const useManageUser = () => {
           `update email failed: error.code=${error.code}, error.message=${error.message}`
         )
         errorCallback()
-      });
+      })
+    }
+  }
+
+  const updatePassword = (
+    newPassword: string,
+    successCallback = noop,
+    errorCallback = noop
+  ) => {
+    if (auth.currentUser) {
+      firebaseUpdatePassword(auth.currentUser, newPassword).then(() => {
+        console.log('Password updated')
+        successCallback()
+      }).catch((error) => {
+        console.error(
+          `update password failed: error.code=${error.code}, error.message=${error.message}`
+        )
+        errorCallback()
+      })
+  
     }
   }
   
-  return { updateEmail }
+  return { updateEmail, updatePassword }
 }
 
 const getValidKeys = (obj: object) => {
