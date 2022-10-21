@@ -51,8 +51,8 @@ export const AppRoutes = () => {
       <Route path={ROUTES.login} element={<LoginForm />} />
       <Route path={ROUTES.signup} element={<SignUpForm />} />
       <Route path={ROUTES.admin} element={<Admin />} />
+      <Route path={`${ROUTES.aboutCourse}/:id`} element={<AboutCourse />} />
       <Route element={<ProtectedRoute isAllowed={isLoggedIn} />}>
-        <Route path={`${ROUTES.aboutCourse}/:id`} element={<AboutCourse />} />
         <Route path={ROUTES.profile} element={<ProfilePage />} />
         <Route path={formatString(ROUTES.workout, [':id', ':day'])} element={<Workout />} />
         <Route path="*" element={<NotFound />} />
