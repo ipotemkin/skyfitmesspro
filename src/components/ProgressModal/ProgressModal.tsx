@@ -1,6 +1,11 @@
 import React, { FC, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { ExercisePayload, useUpdateUserExerciseProgressMutation } from '../../api/users.api'
+import {
+  ExercisePayload,
+  useSetWorkoutStatusMutation,
+  useUpdateUserExerciseProgressMutation,
+  WorkoutArg,
+  WorkoutStatusArg
+} from '../../api/users.api'
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectUser } from '../../slices/userSlice'
 import { Exercise, Workout } from '../../types'
@@ -23,16 +28,12 @@ type Form = {
 }
 
 export const ProgressModal: FC<ProgressModalProps> = ({
-  setIsOpened,
-  courseId,
-  workoutId,
-  exercises,
-  onClick,
+  setIsOpened, courseId, workoutId, exercises, onClick,
 }) => {
   const [form, setForm] = useState<Form>({ exercises: [] })
   const user = useAppSelector(selectUser)
-  const dispatch = useDispatch()
   const [updateProgress] = useUpdateUserExerciseProgressMutation()
+  const [ setWorkoutStatus ] = useSetWorkoutStatusMutation()
 
   useEffect(() => {
     setForm({ exercises })
@@ -49,13 +50,20 @@ export const ProgressModal: FC<ProgressModalProps> = ({
   }
 
   const handleSubmit = () => {
+    let workoutStatus = true
     if (form.exercises) {
+      const workoutArg: WorkoutArg = {
+        uid: user.uid as string,
+        courseId: courseId,
+        workoutId: workoutId - 1,
+      }
       form.exercises.forEach((item: Exercise, index: number) => {
+        // проверяем, выполнены ли тренировки 
+        workoutStatus &&= (item.userProgress === item.retriesCount)
+        
         const updateData: ExercisePayload  = {
           arg: {
-            uid: user.uid as string,
-            courseId: courseId,
-            workoutId: workoutId - 1,
+            ...workoutArg,
             exerciseId: index,
           },
           body: {
@@ -64,6 +72,11 @@ export const ProgressModal: FC<ProgressModalProps> = ({
         }
         updateProgress(updateData)
       })
+      const workoutStatusArg: WorkoutStatusArg = {
+        ...workoutArg,
+        done: workoutStatus
+      }
+      setWorkoutStatus(workoutStatusArg)
     }
     if (onClick) onClick()
   }
