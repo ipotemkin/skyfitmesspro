@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
-import { Workout } from '../../types'
+import { Exercise } from '../../types'
 import classNames from 'classnames'
 
 import styles from './style.module.css'
 
 type ProgressProps = {
-  exercises: Workout['exercises']
+  exercises: Exercise[]
   workoutId: number
 }
 
