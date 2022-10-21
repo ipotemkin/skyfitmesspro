@@ -15,7 +15,7 @@ export const UserGallery: FC<Props> = ({ uid }) => {
   // const { data } = useGetCoursesQuery()
   
   // получить все курсы пользователя с uid '123'
-  const data = useUserCourses(uid)
+  const { data } = useUserCourses(uid)
 
   return (
     <div className={cnGallery()}>

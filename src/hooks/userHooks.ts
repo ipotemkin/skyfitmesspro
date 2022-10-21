@@ -88,9 +88,10 @@ const getValidKeys = (obj: object) => {
 }
 
 export const useUserCourses = (uid: string) => {
-  const { data: courses } = useGetCoursesQuery()
-  const { data: userCoursesData } = useGetUserCoursesQuery(uid)
+  const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery(uid)
   const [userCourses, setUserCourses] = useState<CourseData[]>()
+  const [isLoading, setIsloading] = useState(true)
 
   useEffect(() => {
     if (userCoursesData && courses) {
@@ -101,7 +102,13 @@ export const useUserCourses = (uid: string) => {
     }
   }, [userCoursesData, courses])
 
-  return userCourses
+  useEffect(() => {
+    if (!isCoursesLoading && !isUserCoursesLoading) {
+      setIsloading(false)
+    }
+  }, [isCoursesLoading, isUserCoursesLoading])
+
+  return { data: userCourses, isLoading }
 }
 
 export const useUserCourse = (uid: string | null, courseId: number) => {
