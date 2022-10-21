@@ -14,6 +14,7 @@ import { selectUser } from '../../slices/userSlice'
 
 import styles from './style.module.css'
 import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
+import { WorkoutArg } from '../../api/users.api'
 
 export const Workout: FC = () => {
   const { id, day } = useParams()
@@ -56,6 +57,12 @@ export const Workout: FC = () => {
   const workout = data.workouts[workoutIdx]
   console.log('workout -->', workout)
 
+  const workoutArg: WorkoutArg = {
+    uid: user.uid,
+    courseId,
+    workoutId: workoutIdx
+  }
+
   return (
     <div className={styles.container}>
       <Navigation children={<User user={user} />} />
@@ -75,8 +82,7 @@ export const Workout: FC = () => {
       {isModalOneShown && (
         <ProgressModal
           setIsOpened={setIsModalOneShown}
-          courseId={courseId}
-          workoutId={workout.id}
+          workoutArg={workoutArg}
           exercises={workout.exercises}
           onClick={handleSendClick}
         />

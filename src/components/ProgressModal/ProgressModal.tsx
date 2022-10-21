@@ -6,9 +6,7 @@ import {
   WorkoutArg,
   WorkoutStatusArg
 } from '../../api/users.api'
-import { useAppSelector } from '../../hooks/appHooks'
-import { selectUser } from '../../slices/userSlice'
-import { Exercise, Workout } from '../../types'
+import { Exercise } from '../../types'
 import { Button } from '../Button/Button'
 
 import { ProgressInput } from './ProgressInput'
@@ -17,9 +15,8 @@ import styles from './style.module.css'
 
 type ProgressModalProps = {
   setIsOpened: Function
-  courseId: number
-  workoutId: number
-  exercises: Workout['exercises']
+  workoutArg: WorkoutArg
+  exercises?: Exercise[]
   onClick?: VoidFunction
 }
 
@@ -28,10 +25,9 @@ type Form = {
 }
 
 export const ProgressModal: FC<ProgressModalProps> = ({
-  setIsOpened, courseId, workoutId, exercises, onClick,
+  setIsOpened, workoutArg, exercises, onClick,
 }) => {
   const [form, setForm] = useState<Form>({ exercises: [] })
-  const user = useAppSelector(selectUser)
   const [updateProgress] = useUpdateUserExerciseProgressMutation()
   const [ setWorkoutStatus ] = useSetWorkoutStatusMutation()
 
@@ -52,13 +48,8 @@ export const ProgressModal: FC<ProgressModalProps> = ({
   const handleSubmit = () => {
     let workoutStatus = true
     if (form.exercises) {
-      const workoutArg: WorkoutArg = {
-        uid: user.uid as string,
-        courseId: courseId,
-        workoutId: workoutId - 1,
-      }
       form.exercises.forEach((item: Exercise, index: number) => {
-        // проверяем, выполнены ли тренировки 
+        // проверяем, выполнены ли упражнения
         workoutStatus &&= (item.userProgress === item.retriesCount)
         
         const updateData: ExercisePayload  = {
