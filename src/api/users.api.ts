@@ -41,32 +41,35 @@ export type ExercisePayload = {
 
 export const usersApi = createApi({
   reducerPath: 'users/api',
-  tagTypes: ['UserData'],
+  tagTypes: ['UserData', 'UserCourse'],
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL + '/users',
   }),
   endpoints: (build) => ({
     getUsersWithCourses: build.query<UserData[], void>({
       query: () => '.json',
+      providesTags: () => ([{ type: 'UserCourse' as const }])
     }),
     getUserCourses: build.query<CourseData[], string>({
       query: (uid: string) => `/${uid}/courses.json`,
+      providesTags: () => ([{ type: 'UserCourse' as const }])
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
       query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
-      providesTags: () => ([{ type: 'UserData' as const }])
+      providesTags: () => ([{ type: 'UserCourse' as const }])
     }),
     getUserExercises: build.query<UserData, WorkoutArg>({
       query: ({ uid, courseId, workoutId }) =>
         `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
-    }),
+      providesTags: () => ([{ type: 'UserCourse' as const }])
+      }),
     updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
         url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json`,
         method: 'PATCH',
         body: body,
       }),
-      invalidatesTags: [{ type: 'UserData' }]
+      invalidatesTags: [{ type: 'UserCourse' }]
     }),
     setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
       query: ({ uid, courseId, workoutId, done }) => ({
@@ -82,7 +85,7 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: { done: true },
       }),
-      invalidatesTags: [{ type: 'UserData' }]
+      invalidatesTags: [{ type: 'UserCourse' }]
     }),
     setWorkoutUndone: build.mutation<void, WorkoutArg>({
       query: ({ uid, courseId, workoutId }) => ({
@@ -90,7 +93,7 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: { done: false },
       }),
-      invalidatesTags: [{ type: 'UserData' }]
+      invalidatesTags: [{ type: 'UserCourse' }]
     }),
   }),
 })
