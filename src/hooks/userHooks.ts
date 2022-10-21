@@ -16,7 +16,6 @@ import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
 import { CourseData } from '../types'
 import { useDispatch } from 'react-redux'
 import { initialState, setUser } from '../slices/userSlice'
-import { addEmitHelper } from 'typescript'
 
 export const useAuth = () => {
   const noop = () => {}  // заглушка для колбэков
