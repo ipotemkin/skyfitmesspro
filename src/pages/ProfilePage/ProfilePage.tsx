@@ -21,7 +21,10 @@ export const ProfilePage: FC = () => {
     setIsWorkoutsShown(true)
   }
 
-  if (!currentUser.uid)
+  if (currentUser.isLoading)
+    return <WarningPage text="Загрузка..." />
+  
+  if (!currentUser.uid && !currentUser.isLoading)
     return <WarningPage text="Пользователь в системе не зарегистрирован!" />
 
   return (
