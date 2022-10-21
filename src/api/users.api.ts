@@ -18,9 +18,13 @@ type CourseArg = {
   courseId: number
 }
 
-type WorkoutArg = {
+export type WorkoutArg = {
   workoutId: number
 } & CourseArg
+
+export type WorkoutStatusArg = {
+  done: boolean
+} & WorkoutArg
 
 export type ExerciseArg = {
   exerciseId: number
@@ -64,6 +68,30 @@ export const usersApi = createApi({
       }),
       invalidatesTags: [{ type: 'UserData' }]
     }),
+    setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
+      query: ({ uid, courseId, workoutId, done }) => ({
+        url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
+        method: 'PATCH',
+        body: { done: done },
+      }),
+      invalidatesTags: [{ type: 'UserData' }]
+    }),
+    setWorkoutDone: build.mutation<void, WorkoutArg>({
+      query: ({ uid, courseId, workoutId }) => ({
+        url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
+        method: 'PATCH',
+        body: { done: true },
+      }),
+      invalidatesTags: [{ type: 'UserData' }]
+    }),
+    setWorkoutUndone: build.mutation<void, WorkoutArg>({
+      query: ({ uid, courseId, workoutId }) => ({
+        url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
+        method: 'PATCH',
+        body: { done: false },
+      }),
+      invalidatesTags: [{ type: 'UserData' }]
+    }),
   }),
 })
 
@@ -73,4 +101,7 @@ export const {
   useGetUserCourseQuery,
   useGetUserExercisesQuery,
   useUpdateUserExerciseProgressMutation,
+  useSetWorkoutDoneMutation,
+  useSetWorkoutUndoneMutation,
+  useSetWorkoutStatusMutation
 } = usersApi
