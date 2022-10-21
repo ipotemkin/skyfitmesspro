@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  getAuth,
+  updateEmail as firebaseUpdateEmail
+} from 'firebase/auth'
 import { get, ref } from 'firebase/database'
 import { merge } from 'lodash'
 
@@ -77,6 +83,30 @@ export const useAuth = () => {
   }
 
   return { signIn, logOut, signUp }
+}
+
+export const useManageUser = () => {
+  const noop = () => {}  // заглушка для колбэков
+
+  const updateEmail = (
+    newEmail: string,
+    successCallback = noop,
+    errorCallback = noop
+  ) => {
+    if (auth.currentUser) {
+      firebaseUpdateEmail(auth.currentUser, newEmail).then(() => {
+        console.log('Email updated')
+        successCallback()
+      }).catch((error) => {
+        console.error(
+          `update email failed: error.code=${error.code}, error.message=${error.message}`
+        )
+        errorCallback()
+      });
+    }
+  }
+  
+  return { updateEmail }
 }
 
 const getValidKeys = (obj: object) => {
