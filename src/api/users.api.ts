@@ -98,7 +98,7 @@ export const usersApi = createApi({
     addUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
         url: `/${uid}/courses/${courseId}.json`,
-        method: 'POST',
+        method: 'PUT',
         body: { id: courseId },
       }),
       invalidatesTags: [{ type: 'UserCourse' }]

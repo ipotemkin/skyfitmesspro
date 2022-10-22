@@ -176,7 +176,7 @@ export const useCoursesWithSubscription = (uid: string) => {
       userCoursesData.forEach((course: CourseData) => {
         coursesTemp.push({
           ...course,
-          subscription: true
+          subscription: (course ? true : false)
         })
       })
       const res: CourseData[] = []
