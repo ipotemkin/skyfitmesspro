@@ -103,6 +103,14 @@ export const usersApi = createApi({
       }),
       invalidatesTags: [{ type: 'UserCourse' }]
     }),
+    delUserCourse: build.mutation<void, CourseArg>({
+      query: ({ uid, courseId }) => ({
+        url: `/${uid}/courses/${courseId}.json`,
+        method: 'DELETE',
+        body: { id: courseId },
+      }),
+      invalidatesTags: [{ type: 'UserCourse' }]
+    }),
   }),
 })
 
@@ -115,5 +123,6 @@ export const {
   useSetWorkoutDoneMutation,
   useSetWorkoutUndoneMutation,
   useSetWorkoutStatusMutation,
-  useAddUserCourseMutation
+  useAddUserCourseMutation,
+  useDelUserCourseMutation
 } = usersApi
