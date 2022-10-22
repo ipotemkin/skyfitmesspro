@@ -2,17 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_URL } from '../constants'
 import { CourseData, UserData } from '../types'
 
-export interface ILoginUser {
-  email: string
-  password: string
-}
-
-export interface ISignupUser {
-  username: string
-  email: string
-  password: string
-}
-
 type CourseArg = {
   uid: string
   courseId: number
@@ -52,16 +41,24 @@ export const usersApi = createApi({
     }),
     getUserCourses: build.query<CourseData[], string>({
       query: (uid: string) => `/${uid}/courses.json`,
-      providesTags: ['UserCourse']
+      providesTags: [{ type: 'UserCourse', id: 'LIST' }]
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
       query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
-      providesTags: ['UserCourse']
+      providesTags: (result, error, arg) => 
+        [
+          { type: 'UserCourse', id: arg.courseId },
+          { type: 'UserCourse', id: 'LIST' },
+        ]
     }),
     getUserExercises: build.query<UserData, WorkoutArg>({
       query: ({ uid, courseId, workoutId }) =>
         `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
-      providesTags: ['UserCourse']
+      providesTags: (result, error, arg) => 
+        [
+          { type: 'UserCourse', id: arg.courseId },
+          { type: 'UserCourse', id: 'LIST' },
+        ]
       }),
     updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
@@ -69,7 +66,11 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: body,
       }),
-      invalidatesTags: ['UserCourse', 'User']
+      invalidatesTags: (result, error, arg) => [
+        { type: 'UserCourse', id: arg.arg.courseId },
+        { type: 'UserCourse', id: 'LIST' },
+        'User'
+      ]
     }),
     setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
       query: ({ uid, courseId, workoutId, done }) => ({
@@ -77,7 +78,12 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: { done: done },
       }),
-      invalidatesTags: ['UserCourse', 'User']
+      invalidatesTags: (result, error, arg) =>
+        [
+          { type: 'UserCourse', id: 'LIST' },
+          { type: 'UserCourse', id:  arg.courseId },
+          'User'
+        ]
     }),
     addUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
@@ -85,7 +91,11 @@ export const usersApi = createApi({
         method: 'PUT',
         body: { id: courseId },
       }),
-      invalidatesTags: ['UserCourse', 'User']
+      invalidatesTags: 
+        [
+          { type: 'UserCourse', id: 'LIST' },
+          'User'
+        ]
     }),
     delUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
@@ -93,7 +103,12 @@ export const usersApi = createApi({
         method: 'DELETE',
         body: { id: courseId },
       }),
-      invalidatesTags: ['UserCourse', 'User']
+      invalidatesTags: (result, error, arg) => 
+        [
+          { type: 'UserCourse', id: 'LIST' },
+          { type: 'UserCourse', id: arg.courseId },
+          'User'
+        ]
     }),
   }),
 })
