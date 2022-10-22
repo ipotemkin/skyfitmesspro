@@ -95,7 +95,12 @@ export const LoginForm: FC = () => {
           <Button buttonStatus={isBlocked ? 'disabled' : 'normal'}>
             Войти
           </Button>
-          <Button type="outlined" btnType="button" onClick={clickHandler}>
+          <Button
+            type="outlined"
+            btnType="button"
+            onClick={clickHandler}
+            buttonStatus={isBlocked ? 'disabled' : 'normal'}
+          >
             Зарегистрироваться
           </Button>
         </div>
