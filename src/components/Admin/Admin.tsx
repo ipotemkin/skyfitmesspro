@@ -3,7 +3,7 @@ import { DataSnapshot, onValue } from 'firebase/database'
 import { useEffect, useState } from 'react'
 
 import auth from '../../db/auth'
-import { useAuth, useUserCourses } from '../../hooks/userHooks'
+import { useAuth, useCoursesWithSubscription, useUserCourses } from '../../hooks/userHooks'
 import { UserGallery } from '../PUserGallery/PUserGallery'
 
 import { off } from 'firebase/database'
@@ -11,6 +11,8 @@ import { usersRef } from '../../db/refs'
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectUser, setUser } from '../../slices/userSlice'
 import { useDispatch } from 'react-redux'
+
+import styles from './style.module.css'
 
 type FormData = {
   username: string
@@ -23,6 +25,7 @@ export const Admin = () => {
   const userCourses = useUserCourses(uid || '')
   const { signUp, signIn, logOut } = useAuth()
   const dispatch = useDispatch()
+  const { data: coursesWithSubscription, isLoading } = useCoursesWithSubscription(uid || '')
 
   const testUser = useAppSelector(selectUser)
 
@@ -77,8 +80,10 @@ export const Admin = () => {
   const handleCurrentUserCourses = () => {
     const user = auth.currentUser
     if (user) {
+      console.group('handleCurrentUserCourses:')
       console.log('current user uid -->', user.uid)
       console.log('user courses -->', userCourses)
+      console.log('courses with subscription -->', coursesWithSubscription)
     }
   }
 
@@ -93,7 +98,7 @@ export const Admin = () => {
   }
 
   return (
-    <>
+    <div className={styles.container}>
       <div
         style={{
           display: 'flex',
@@ -103,8 +108,8 @@ export const Admin = () => {
           margin: 20,
         }}
       >
-        <h3>Auth debug console</h3>
-        <input
+        <h3>Администрирование</h3>
+        {/* <input
           type="text"
           placeholder="username (email)"
           value={form?.username}
@@ -124,10 +129,10 @@ export const Admin = () => {
         <button onClick={handleCurrentUser}>Get current user</button>
         <button onClick={handleCurrentUserCourses}>
           Get current user courses
-        </button>
-      </div>
+        </button>*/}
+      </div> 
       {/* {users && <UserList users={users}/>} */}
       {uid && <UserGallery uid={uid} />}
-    </>
+    </div>
   )
 }
