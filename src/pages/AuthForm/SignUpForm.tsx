@@ -1,5 +1,5 @@
-import { FC } from 'react'
 import classNames from 'classnames'
+import { FC, useState } from 'react'
 import { FormData } from '../../types'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/userHooks'
@@ -15,33 +15,33 @@ const validPasswordLength = 6
 export const SignUpForm: FC = () => {
   const { signUp } = useAuth()
   const navigate = useNavigate()
+  const [error, setError] = useState('')
+  const [isBlocked, setIsBlocked] = useState(false)
 
   const {
     register,
     handleSubmit,
     reset,
     getValues,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ mode: 'onTouched' })
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
 
-    if (!isValid) {
-      return reset()
-    }
-
+    setIsBlocked(true)
     signUp(
       data.email,
       data.password,
       // при успехе
       () => {
         navigate('/login')
+        reset()
       },
       // при ошибке
       () => {
-        console.log('Что-то пошло не так')
-        reset()
+        setError('Что-то пошло не так...')
+        setIsBlocked(false)
       }
     )
   }
@@ -106,8 +106,13 @@ export const SignUpForm: FC = () => {
             )}
           </p>
         </div>
+        <p className={classNames(styles.error, styles.back)}>
+          {error && <span>{error}</span>}
+        </p>
         <div className={styles.buttons}>
-          <Button>Зарегистрироваться</Button>
+          <Button buttonStatus={isBlocked ? 'disabled' : 'normal'}>
+            Зарегистрироваться
+          </Button>
         </div>
       </form>
     </div>

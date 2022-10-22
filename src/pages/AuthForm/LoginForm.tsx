@@ -1,5 +1,5 @@
-import { FC } from 'react'
 import classNames from 'classnames'
+import { FC, useState } from 'react'
 import { FormData } from '../../types'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/userHooks'
@@ -9,12 +9,14 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './style.module.css'
 
-const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
+const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
 const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
   const { signIn } = useAuth()
   const navigate = useNavigate()
+  const [error, setError] = useState('')
+  const [isBlocked, setIsBlocked] = useState(false)
 
   const {
     register,
@@ -24,18 +26,20 @@ export const LoginForm: FC = () => {
   } = useForm<FormData>({ mode: 'onTouched' })
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data)
+    setIsBlocked(true)
+
     signIn(
       data.email,
       data.password,
       // при успехе
       () => {
         navigate('/profile')
+        reset()
       },
       // при ошибке
       () => {
-        console.log('Неверный логин или пароль')
-        reset()
+        setError('Неверный логин или пароль')
+        setIsBlocked(false)
       }
     )
   }
@@ -84,8 +88,13 @@ export const LoginForm: FC = () => {
             {errors.password && <span>{errors.password.message}</span>}
           </p>
         </div>
+        <p className={classNames(styles.error, styles.back)}>
+          {error && <span>{error}</span>}
+        </p>
         <div className={styles.buttons}>
-          <Button>Войти</Button>
+          <Button buttonStatus={isBlocked ? 'disabled' : 'normal'}>
+            Войти
+          </Button>
           <Button type="outlined" btnType="button" onClick={clickHandler}>
             Зарегистрироваться
           </Button>

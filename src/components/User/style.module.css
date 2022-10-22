@@ -16,10 +16,8 @@
   width: 50px;
   height: 50px;
 
-  background-image: radial-gradient(circle 25px, #d9d9d9 100%, transparent 0%);
-  background-repeat: no-repeat;
-  background-position: 0;
-  background-size: 50px 50px;
+  background: #d9d9d9;
+  border-radius: 50%;
 }
 
 .name {

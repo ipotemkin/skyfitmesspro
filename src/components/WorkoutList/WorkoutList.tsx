@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 
 import { WorkoutListItem } from './WorkoutListItem'
 
@@ -12,19 +12,19 @@ type WorkoutListProps = {
 }
 
 export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId }) => {
-  const scrollRef = useRef<HTMLInputElement>(null)
   const scrollContent = useRef<HTMLUListElement>(null)
+  const scrollRef = useRef<HTMLInputElement>(null)
 
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target
-    const total =
-      scrollContent.current!.scrollHeight - scrollContent.current!.offsetHeight
-    const percentage = total * (Number(value) / 100)
-    scrollContent.current!.scrollTop = percentage
-  }
+  useEffect(() => {
+    if (
+      scrollRef.current!.offsetHeight >= scrollContent.current!.scrollHeight
+    ) {
+      scrollRef.current!.style.overflowY = 'hidden'
+    }
+  }, [])
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={scrollRef}>
       <ul className={styles.list} ref={scrollContent}>
         {workouts.map((workout) => {
           return (
@@ -51,16 +51,6 @@ export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId }) => {
           )
         })}
       </ul>
-
-      <div className={styles.scrollbar}>
-        <input
-          ref={scrollRef}
-          className={styles.scrollbarInput}
-          type="range"
-          onChange={changeHandler}
-          defaultValue={0}
-        />
-      </div>
     </div>
   )
 }
