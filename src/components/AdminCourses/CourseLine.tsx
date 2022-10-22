@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 import { FC } from 'react'
-import { useAddUserCourseMutation } from '../../api/users.api'
+import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectUser } from '../../slices/userSlice'
 
@@ -13,6 +13,7 @@ type Props = { item: CourseData }
 export const CourseLine: FC<Props> = ({ item }) => {
   const user = useAppSelector(selectUser)
   const [addCourse] = useAddUserCourseMutation()
+  const [delCourse] = useDelUserCourseMutation()
 
   const handleAddCourse = () => {
     if (user && user.uid && item.id) {
@@ -27,7 +28,15 @@ export const CourseLine: FC<Props> = ({ item }) => {
   }
 
   const handleRemoveCourse = () => {
-    console.log('removing course:', item.id)
+    if (user && user.uid && item.id) {
+      delCourse({
+        uid: user.uid,
+        courseId: item.id
+      })
+      console.log('deleting the course with id:', item.id)
+    } else {
+      console.log('error deleting the course with id:', item.id)
+    }
   }
   
   return (
