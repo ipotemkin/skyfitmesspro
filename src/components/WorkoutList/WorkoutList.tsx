@@ -5,6 +5,8 @@ import { WorkoutListItem } from './WorkoutListItem'
 import styles from './style.module.css'
 import { Workout } from '../../types'
 import { Link } from 'react-router-dom'
+import { formatString } from '../../utils'
+import { ROUTES } from '../../routes'
 
 type WorkoutListProps = {
   workouts: Workout[]
@@ -31,7 +33,7 @@ export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId }) => {
             <Link
               key={workout.id}
               className={styles.link}
-              to={`/courses/${courseId + 1}/workouts/${workout.id}`}
+              to={formatString(ROUTES.workout, [`${courseId + 1}`, `${workout.id}`])}
               style={{ textDecoration: 'none' }}
             >
               {workout && workout.name && (

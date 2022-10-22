@@ -1,21 +1,17 @@
 import { FC } from 'react'
 
-import { Workout } from '../../types'
+import { Exercise } from '../../types'
 import classNames from 'classnames'
 
 import styles from './style.module.css'
 
 type ProgressProps = {
-  exercises: Workout['exercises']
+  exercises: Exercise[]
   workoutId: number
 }
 
 export const Progress: FC<ProgressProps> = ({ exercises, workoutId }) => {
-  const title = `Мой прогресс по тренировке ${workoutId}:${JSON.stringify(
-    exercises
-  )}` // for DEBUG
-
-  // [{"id":1,"name":"Приветствие солнца","retriesCount":10,"userProgress":0}]
+    const title = `Мой прогресс по тренировке ${workoutId}:`
 
   return (
     <div className={styles.progress}>

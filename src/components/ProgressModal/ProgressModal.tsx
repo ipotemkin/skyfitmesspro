@@ -1,5 +1,12 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Exercise, Workout } from '../../types'
+import {
+  ExercisePayload,
+  useSetWorkoutStatusMutation,
+  useUpdateUserExerciseProgressMutation,
+  WorkoutArg,
+  WorkoutStatusArg
+} from '../../api/users.api'
+import { Exercise } from '../../types'
 import { Button } from '../Button/Button'
 
 import { ProgressInput } from './ProgressInput'
@@ -8,7 +15,8 @@ import styles from './style.module.css'
 
 type ProgressModalProps = {
   setIsOpened: Function
-  exercises: Workout['exercises']
+  workoutArg: WorkoutArg
+  exercises?: Exercise[]
   onClick?: VoidFunction
 }
 
@@ -17,11 +25,11 @@ type Form = {
 }
 
 export const ProgressModal: FC<ProgressModalProps> = ({
-  setIsOpened,
-  exercises,
-  onClick,
+  setIsOpened, workoutArg, exercises, onClick,
 }) => {
   const [form, setForm] = useState<Form>({ exercises: [] })
+  const [updateProgress] = useUpdateUserExerciseProgressMutation()
+  const [ setWorkoutStatus ] = useSetWorkoutStatusMutation()
 
   useEffect(() => {
     setForm({ exercises })
@@ -40,12 +48,39 @@ export const ProgressModal: FC<ProgressModalProps> = ({
     setForm({ exercises: newExercises })
   }
 
+  const handleSubmit = () => {
+    let workoutStatus = true
+    if (form.exercises) {
+      form.exercises.forEach((item: Exercise, index: number) => {
+        // проверяем, выполнены ли упражнения
+        workoutStatus &&= (item.userProgress === item.retriesCount)
+        
+        const updateData: ExercisePayload  = {
+          arg: {
+            ...workoutArg,
+            exerciseId: index,
+          },
+          body: {
+            userProgress: item.userProgress || 0
+          }
+        }
+        updateProgress(updateData)
+      })
+      const workoutStatusArg: WorkoutStatusArg = {
+        ...workoutArg,
+        done: workoutStatus
+      }
+      setWorkoutStatus(workoutStatusArg)
+    }
+    if (onClick) onClick()
+  }
+  
   return (
     <div className={styles.modal} onClick={() => setIsOpened(false)}>
       <div className={styles.content} onClick={(e) => e.stopPropagation()}>
         <h2 className={styles.title}>Мой прогресс</h2>
         <div className={styles.fields}>
-          {form.exercises?.map((exercise, index) => (
+          {form.exercises?.map((exercise: Exercise, index: number) => (
             <ProgressInput
               key={exercise.id}
               name={exercise.name}
@@ -55,7 +90,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
             />
           ))}
         </div>
-        <Button onClick={onClick}>Отправить</Button>
+        <Button onClick={handleSubmit}>Отправить</Button>
       </div>
     </div>
   )

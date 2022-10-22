@@ -8,6 +8,7 @@ import { Button } from '../../components/Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './style.module.css'
+import { ROUTES } from '../../routes'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
 const validPasswordLength = 6
@@ -33,8 +34,7 @@ export const LoginForm: FC = () => {
       data.password,
       // при успехе
       () => {
-        navigate('/profile')
-        reset()
+        navigate(ROUTES.profile)
       },
       // при ошибке
       () => {
@@ -45,7 +45,7 @@ export const LoginForm: FC = () => {
   }
 
   const clickHandler = () => {
-    navigate('/signup')
+    navigate(ROUTES.signup)
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)

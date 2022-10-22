@@ -5,6 +5,8 @@ import { Button } from '../Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './style.module.css'
+import { useManageUser } from '../../hooks/userHooks'
+import { useNavigate } from 'react-router-dom'
 
 type PasswordModalProps = {
   setIsOpened: Function
@@ -24,8 +26,19 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
     getValues,
     formState: { errors },
   } = useForm<PasswordData>({ mode: 'onTouched' })
+  const { updatePassword } = useManageUser()
+  const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<PasswordData> = (data) => {
+    updatePassword(
+      data.password,
+      () => {
+        setIsOpened(false)
+      },
+      () => {
+        navigate('/login')
+      }
+    )
     console.log(data)
   }
 

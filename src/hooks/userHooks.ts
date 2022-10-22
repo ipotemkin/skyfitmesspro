@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateEmail as firebaseUpdateEmail,
+  updatePassword as firebaseUpdatePassword
+} from 'firebase/auth'
 import { get, ref } from 'firebase/database'
 import { merge } from 'lodash'
 
@@ -79,6 +85,49 @@ export const useAuth = () => {
   return { signIn, logOut, signUp }
 }
 
+export const useManageUser = () => {
+  const noop = () => {}  // заглушка для колбэков
+
+  const updateEmail = (
+    newEmail: string,
+    successCallback = noop,
+    errorCallback = noop
+  ) => {
+    if (auth.currentUser) {
+      firebaseUpdateEmail(auth.currentUser, newEmail).then(() => {
+        console.log('Email updated')
+        successCallback()
+      }).catch((error) => {
+        console.error(
+          `update email failed: error.code=${error.code}, error.message=${error.message}`
+        )
+        errorCallback()
+      })
+    }
+  }
+
+  const updatePassword = (
+    newPassword: string,
+    successCallback = noop,
+    errorCallback = noop
+  ) => {
+    if (auth.currentUser) {
+      firebaseUpdatePassword(auth.currentUser, newPassword).then(() => {
+        console.log('Password updated')
+        successCallback()
+      }).catch((error) => {
+        console.error(
+          `update password failed: error.code=${error.code}, error.message=${error.message}`
+        )
+        errorCallback()
+      })
+  
+    }
+  }
+  
+  return { updateEmail, updatePassword }
+}
+
 const getValidKeys = (obj: object) => {
   const validKeys = []
   for (let [curKey, curValue] of Object.entries(obj)) {
@@ -88,21 +137,63 @@ const getValidKeys = (obj: object) => {
 }
 
 export const useUserCourses = (uid: string) => {
-  const { data: courses } = useGetCoursesQuery()
-  const { data: userCoursesData } = useGetUserCoursesQuery(uid)
+  const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery(uid)
   const [userCourses, setUserCourses] = useState<CourseData[]>()
+  const [isLoading, setIsloading] = useState(true)
+
+  console.log('useUserCourses: sourses -->', courses)
 
   useEffect(() => {
     if (userCoursesData && courses) {
       const res = []
       const validKeys: string[] = getValidKeys(userCoursesData)
-      for(let i in validKeys) res.push(courses[+validKeys[i]])      
+      for(let i in validKeys) res.push(courses[+validKeys[i]])
       setUserCourses(res)
     }
   }, [userCoursesData, courses])
 
-  return userCourses
+  useEffect(() => {
+    if (!isCoursesLoading && !isUserCoursesLoading) {
+      setIsloading(false)
+    }
+  }, [isCoursesLoading, isUserCoursesLoading])
+
+  return { data: userCourses, isLoading }
 }
+
+export const useCoursesWithSubscription = (uid: string) => {
+  const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery(uid)
+  const [isLoading, setIsloading] = useState(true)
+  const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
+
+  useEffect(() => {
+
+    if (userCoursesData && courses) {    
+      const coursesTemp: CourseData[] = []
+      // добавляем свойство 'subscription'
+      userCoursesData.forEach((course: CourseData) => {
+        coursesTemp.push({
+          ...course,
+          subscription: (course ? true : false)
+        })
+      })
+      const res: CourseData[] = []
+      merge(res, courses, coursesTemp)
+      setCoursesWithSubscription(res)
+    }
+  }, [userCoursesData, courses])
+
+  useEffect(() => {
+    if (!isCoursesLoading && !isUserCoursesLoading) {
+      setIsloading(false)
+    }
+  }, [isCoursesLoading, isUserCoursesLoading])
+
+  return { data: coursesWithSubscription, isLoading }
+}
+
 
 export const useUserCourse = (uid: string | null, courseId: number) => {
   const { data: course } = useGetCourseQuery(courseId)
@@ -116,15 +207,15 @@ export const useUserCourse = (uid: string | null, courseId: number) => {
   const [isError, setIsError] = useState(false)
 
   // for DEBUG!
-  console.log('course -->', course)
-  console.group('useGetUserCourseQuery result -->')
-  console.log('uid -->', uid)
-  console.log('courseId -->', courseId)
-  console.log('userCourseData -->', userCourseData)
-  console.log('error -->', error)
-  console.log('isUserCourseLoading -->', isUserCourseLoading)
-  console.log('isError -->', isError)
-  console.groupEnd()
+  // console.log('course -->', course)
+  // console.group('useGetUserCourseQuery result -->')
+  // console.log('uid -->', uid)
+  // console.log('courseId -->', courseId)
+  // console.log('userCourseData -->', userCourseData)
+  // console.log('error -->', error)
+  // console.log('isUserCourseLoading -->', isUserCourseLoading)
+  // console.log('isError -->', isError)
+  // console.groupEnd()
 
   useEffect(() => {
     if (isErrorQuery) setIsError(true)
@@ -148,6 +239,8 @@ export const useUserCourse = (uid: string | null, courseId: number) => {
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }
 
+
+// TODO убрать, если не используется
 export const useUserWorkoutStatus = (uid: string, courseId: number, workoutId: number) => {
   const [status, setStatus] = useState()
 

@@ -4,8 +4,13 @@ import { useDispatch } from 'react-redux'
 import auth from './db/auth'
 import { AppRoutes } from './routes'
 import { deleteUser, initialState, setUser } from './slices/userSlice'
+import { formatString } from './utils'
 
 function App() {
+  const testString = 'courses/{}/workouts/{}'
+  const formattedString = formatString(testString, ['2', '1'])
+  console.log('formatString -->', formattedString)
+
   const dispatch = useDispatch()
   
   // устанавливаем слушателя для событий login/logout

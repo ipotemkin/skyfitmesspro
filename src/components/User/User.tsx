@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/userHooks'
+import { ROUTES } from '../../routes'
 import { FirebaseUser } from '../../types'
 import { ReactComponent as Arrow } from './arrow-down.svg'
 
@@ -27,7 +28,7 @@ export const User: FC<Props> = ({ user }) => {
   }
 
   const handleProfile = () => {
-    navigate('/profile')
+    navigate(ROUTES.profile)
   }
 
   return (
