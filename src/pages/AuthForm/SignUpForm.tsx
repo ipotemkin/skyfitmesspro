@@ -28,7 +28,7 @@ export const SignUpForm: FC = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
-
+    setError('')
     setIsBlocked(true)
     signUp(
       data.email,

@@ -27,7 +27,7 @@ export const LoginForm: FC = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     setIsBlocked(true)
-
+    setError('')
     signIn(
       data.email,
       data.password,
