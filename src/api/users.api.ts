@@ -95,6 +95,14 @@ export const usersApi = createApi({
       }),
       invalidatesTags: [{ type: 'UserCourse' }]
     }),
+    addUserCourse: build.mutation<void, CourseArg>({
+      query: ({ uid, courseId }) => ({
+        url: `/${uid}/courses/${courseId}.json`,
+        method: 'POST',
+        body: { id: courseId },
+      }),
+      invalidatesTags: [{ type: 'UserCourse' }]
+    }),
   }),
 })
 
@@ -106,5 +114,6 @@ export const {
   useUpdateUserExerciseProgressMutation,
   useSetWorkoutDoneMutation,
   useSetWorkoutUndoneMutation,
-  useSetWorkoutStatusMutation
+  useSetWorkoutStatusMutation,
+  useAddUserCourseMutation
 } = usersApi

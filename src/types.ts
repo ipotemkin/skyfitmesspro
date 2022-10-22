@@ -15,6 +15,7 @@ export type CourseData = {
   suitableFor?: string[];
   lines?: string[];
   workouts?: Workout[];
+  subscription?: boolean;
 } & CourseMainData;
 
 export type Workout = {
