@@ -41,27 +41,27 @@ export type ExercisePayload = {
 
 export const usersApi = createApi({
   reducerPath: 'users/api',
-  tagTypes: ['UserData', 'UserCourse'],
+  tagTypes: ['UserCourse', 'User'],
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL + '/users',
   }),
   endpoints: (build) => ({
     getUsersWithCourses: build.query<UserData[], void>({
       query: () => '.json',
-      providesTags: () => ([{ type: 'UserCourse' as const }])
+      providesTags: ['User']
     }),
     getUserCourses: build.query<CourseData[], string>({
       query: (uid: string) => `/${uid}/courses.json`,
-      providesTags: () => ([{ type: 'UserCourse' as const }])
+      providesTags: ['UserCourse']
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
       query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
-      providesTags: () => ([{ type: 'UserCourse' as const }])
+      providesTags: ['UserCourse']
     }),
     getUserExercises: build.query<UserData, WorkoutArg>({
       query: ({ uid, courseId, workoutId }) =>
         `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
-      providesTags: () => ([{ type: 'UserCourse' as const }])
+      providesTags: ['UserCourse']
       }),
     updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
@@ -69,7 +69,7 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: body,
       }),
-      invalidatesTags: [{ type: 'UserCourse' }]
+      invalidatesTags: ['UserCourse', 'User']
     }),
     setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
       query: ({ uid, courseId, workoutId, done }) => ({
@@ -77,23 +77,7 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: { done: done },
       }),
-      invalidatesTags: [{ type: 'UserData' }]
-    }),
-    setWorkoutDone: build.mutation<void, WorkoutArg>({
-      query: ({ uid, courseId, workoutId }) => ({
-        url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
-        method: 'PATCH',
-        body: { done: true },
-      }),
-      invalidatesTags: [{ type: 'UserCourse' }]
-    }),
-    setWorkoutUndone: build.mutation<void, WorkoutArg>({
-      query: ({ uid, courseId, workoutId }) => ({
-        url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
-        method: 'PATCH',
-        body: { done: false },
-      }),
-      invalidatesTags: [{ type: 'UserCourse' }]
+      invalidatesTags: ['UserCourse', 'User']
     }),
     addUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
@@ -101,7 +85,7 @@ export const usersApi = createApi({
         method: 'PUT',
         body: { id: courseId },
       }),
-      invalidatesTags: [{ type: 'UserCourse' }]
+      invalidatesTags: ['UserCourse', 'User']
     }),
     delUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
@@ -109,7 +93,7 @@ export const usersApi = createApi({
         method: 'DELETE',
         body: { id: courseId },
       }),
-      invalidatesTags: [{ type: 'UserCourse' }]
+      invalidatesTags: ['UserCourse', 'User']
     }),
   }),
 })
@@ -120,8 +104,6 @@ export const {
   useGetUserCourseQuery,
   useGetUserExercisesQuery,
   useUpdateUserExerciseProgressMutation,
-  useSetWorkoutDoneMutation,
-  useSetWorkoutUndoneMutation,
   useSetWorkoutStatusMutation,
   useAddUserCourseMutation,
   useDelUserCourseMutation
