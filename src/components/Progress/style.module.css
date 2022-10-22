@@ -53,7 +53,7 @@
 .done {
   position: absolute;
 
-  height: 100%;
+  height: 101%;
 
   border-radius: 22px 0px 0px 22px;
 }
@@ -79,7 +79,7 @@
 
 .colorBg1 {
   background-color: #edecff;
-  border: 2px solid #565eef;
+  box-shadow: inset 0 0 0px 1px #565eef;
 }
 
 .color2 {
@@ -88,7 +88,7 @@
 
 .colorBg2 {
   background-color: #fff2e0;
-  border: 2px solid #ff6d00;
+  box-shadow: inset 0 0 0px 1px #ff6d00;
 }
 
 .color3 {
@@ -97,7 +97,7 @@
 
 .colorBg3 {
   background-color: #f9ebff;
-  border: 2px solid #9a48f1;
+  box-shadow: inset 0 0 0px 1px #9a48f1;
 }
 
 .color4 {
@@ -106,7 +106,7 @@
 
 .colorBg4 {
   background-color: #f2fbd6;
-  border: 2px solid #a9d42b;
+  box-shadow: inset 0 0 0px 1px #a9d42b;
 }
 
 .color5 {
@@ -115,5 +115,5 @@
 
 .colorBg5 {
   background-color: #e6f9ff;
-  border: 2px solid #00c1ff;
+  box-shadow: inset 0 0 0px 1px #00c1ff;
 }

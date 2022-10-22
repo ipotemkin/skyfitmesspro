@@ -28,7 +28,12 @@ export const Button: FC<ButtonProps> = ({
   )
 
   return (
-    <button className={buttonClassName} onClick={onClick} type={btnType}>
+    <button
+      className={buttonClassName}
+      onClick={onClick}
+      type={btnType}
+      disabled={buttonStatus === 'disabled'}
+    >
       {children ? children : ''}
     </button>
   )

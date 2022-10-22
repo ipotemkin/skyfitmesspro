@@ -21,7 +21,7 @@ type ProgressModalProps = {
 }
 
 type Form = {
-  exercises?: Exercise[]  
+  exercises?: Exercise[]
 }
 
 export const ProgressModal: FC<ProgressModalProps> = ({
@@ -36,8 +36,11 @@ export const ProgressModal: FC<ProgressModalProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const newExercises: Exercise[] = [...form.exercises || []]
+  const handleInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newExercises: Exercise[] = [...(form.exercises || [])]
     newExercises[index].userProgress = Math.max(
       0,
       Math.min(Number(e.target.value), newExercises[index].retriesCount)
@@ -79,9 +82,10 @@ export const ProgressModal: FC<ProgressModalProps> = ({
         <div className={styles.fields}>
           {form.exercises?.map((exercise: Exercise, index: number) => (
             <ProgressInput
-              name={exercise.name}
-              value={exercise?.userProgress || 0}
               key={exercise.id}
+              name={exercise.name}
+              value={exercise?.userProgress || ''}
+              amount={exercise.retriesCount}
               onChange={(e) => handleInput(e, index)}
             />
           ))}

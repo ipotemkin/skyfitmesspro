@@ -4,17 +4,22 @@ import styles from './style.module.css'
 
 type ProgressInputProps = {
   name: string
-  value: number
+  value: number | string
+  amount: number
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const ProgressInput: FC<ProgressInputProps> = ({ name, value, onChange}) => {
+export const ProgressInput: FC<ProgressInputProps> = ({
+  name,
+  value,
+  amount,
+  onChange,
+}) => {
   return (
     <label className={styles.text}>
-      Сколько раз вы сделали "{name}"?
+      Сколько раз вы сделали "{name}"? ({amount}&nbsp;повторений)
       <input
         className={styles.input}
-        type="number"
         placeholder="Введите значение"
         value={value}
         onChange={onChange}
