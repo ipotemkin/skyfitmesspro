@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { apiKey } from '../env'
-import { FirebaseUserRESTAPI } from '../types'
+import { FirebaseUserRESTAPI, RefreshTokenResponse } from '../types'
 
 // const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]'
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1'
@@ -85,6 +85,21 @@ export const authApi = createApi({
         return response;
       }
     }),
+    refreshToken: build.mutation<RefreshTokenResponse, string>({
+      query: (refreshToken: string) => ({
+        url: `token?key=${apiKey}`,
+        method: 'POST',
+        body: {
+          refresh_token: refreshToken,
+          grant_type: 'refresh_token'
+        }
+      }),
+      // for DEBUG. TODO: remove on release!
+      transformResponse: (response: RefreshTokenResponse) => {
+        console.log('changePassword response -->', response)
+        return response;
+      }
+    }),
   }),
 })
 
@@ -92,6 +107,6 @@ export const {
   useSignUpMutation,
   useSignInMutation,
   useChangeEmailMutation,
-  useChangePasswordMutation
+  useChangePasswordMutation,
+  useRefreshTokenMutation
 } = authApi
-

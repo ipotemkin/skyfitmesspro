@@ -77,6 +77,22 @@ export const currentUserSlice = createSlice({
         console.error('changePassword rejected!!!')
       }
     )
+    // refreshToken
+    builder.addMatcher(
+      authApi.endpoints.refreshToken.matchFulfilled,
+      (state, { payload }) => {
+        return state = {
+          ...state,
+          refreshToken: payload.refresh_token
+        }
+      }
+    )
+    builder.addMatcher(
+      authApi.endpoints.refreshToken.matchRejected,
+      (state, { payload }) => {
+        console.error('refreshToken rejected!!!')
+      }
+    )
   }
 })
 
