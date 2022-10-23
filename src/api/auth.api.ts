@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { apiKey } from '../env'
 import { FirebaseUserRESTAPI, RefreshTokenResponse } from '../types'
+import { usersApi } from './users.api'
 
 // const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]'
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1'
@@ -38,7 +39,7 @@ export const authApi = createApi({
       transformResponse: (response: FirebaseUserRESTAPI) => {
         console.log('signUp response -->', response)
         return response;
-      }
+      },
     }),
     signIn: build.mutation<FirebaseUserRESTAPI, SingInArg>({
       query: (arg: SingInArg) => ({

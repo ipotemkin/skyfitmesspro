@@ -170,20 +170,22 @@ export const useCoursesWithSubscription = (uid: string) => {
 
   useEffect(() => {
 
-    if (userCoursesData && courses) {    
+    if (!isUserCoursesLoading && courses) {    
       const coursesTemp: CourseData[] = []
       // добавляем свойство 'subscription'
-      userCoursesData.forEach((course: CourseData) => {
-        coursesTemp.push({
-          ...course,
-          subscription: (course ? true : false)
-        })
-      })
+      if (userCoursesData && userCoursesData.length > 0) {
+        userCoursesData.forEach((course: CourseData) => {
+          coursesTemp.push({
+            ...course,
+            subscription: (course ? true : false)
+          })
+        })  
+      }
       const res: CourseData[] = []
       merge(res, courses, coursesTemp)
       setCoursesWithSubscription(res)
     }
-  }, [userCoursesData, courses])
+  }, [userCoursesData, courses, isUserCoursesLoading])
 
   useEffect(() => {
     if (!isCoursesLoading && !isUserCoursesLoading) {

@@ -27,7 +27,7 @@ export const CourseLine: FC<Props> = ({ item }) => {
   }
 
   const handleRemoveCourse = () => {
-    if (user && user.localId && item.id) {
+    if (user && user.localId && item.id !== undefined) {
       delCourse({
         uid: user.localId,
         courseId: item.id

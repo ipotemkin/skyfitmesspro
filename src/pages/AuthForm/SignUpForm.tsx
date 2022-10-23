@@ -10,6 +10,7 @@ import styles from './style.module.css'
 import { ROUTES } from '../../routes'
 import { useSignUpMutation } from '../../api/auth.api'
 import { getErrorMessage } from '../../utils'
+import { useAddUserMutation } from '../../api/users.api'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
@@ -20,6 +21,7 @@ export const SignUpForm: FC = () => {
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)
   const [signUp] = useSignUpMutation()
+  const [addUser] = useAddUserMutation()
 
   const {
     register,
@@ -34,7 +36,9 @@ export const SignUpForm: FC = () => {
     setIsBlocked(true)
     try {
       const res = await signUp({ email: data.email, password: data.password }).unwrap()
-      console.log('signup reponse -->', res)  
+      console.log('signup reponse -->', res)
+      // добавляем пользователя в таблицу users
+      if (res.localId) await addUser(res.localId).unwrap()
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error, 'Что-то пошло не так...'))

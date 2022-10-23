@@ -35,6 +35,14 @@ export const usersApi = createApi({
     baseUrl: API_URL + '/users',
   }),
   endpoints: (build) => ({
+    addUser: build.mutation<void, string>({
+      query: (uid: string) => ({
+        url: `${uid}.json`,
+        method: 'PUT',
+        body: { uid },
+      }),
+      invalidatesTags: ['User'],
+    }),
     getUsersWithCourses: build.query<UserData[], void>({
       query: () => '.json',
       providesTags: ['User']
@@ -114,6 +122,7 @@ export const usersApi = createApi({
 })
 
 export const {
+  useAddUserMutation,
   useGetUserCoursesQuery,
   useGetUsersWithCoursesQuery,
   useGetUserCourseQuery,
