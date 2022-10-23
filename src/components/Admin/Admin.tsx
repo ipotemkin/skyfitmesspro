@@ -79,7 +79,7 @@ export const Admin = () => {
         }}
       >
         <h3>Администрирование</h3>
-        <input
+        {/* <input
           type="text"
           placeholder="username (email)"
           value={form?.username}
@@ -99,7 +99,7 @@ export const Admin = () => {
         <button onClick={handleCurrentUser}>Get current user</button>
         <button onClick={handleCurrentUserCourses}>
           Get current user courses
-        </button>
+        </button> */}
       </div> 
       {currentUser.localId && <UserGallery uid={currentUser.localId} />}
     </div>
