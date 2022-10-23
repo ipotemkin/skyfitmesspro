@@ -19,6 +19,19 @@ export const currentUserSlice = createSlice({
     }
   },
   extraReducers: builder => {
+    // signUp
+    builder.addMatcher(
+      authApi.endpoints.signUp.matchFulfilled,
+      (state, { payload }) => {
+        return state = {...payload}
+      }
+    )
+    builder.addMatcher(
+      authApi.endpoints.signUp.matchRejected,
+      (state, { payload }) => {
+        console.error('Sign-up rejected!!!')
+      }
+    )
     // signIn
     builder.addMatcher(
       authApi.endpoints.signIn.matchFulfilled,
