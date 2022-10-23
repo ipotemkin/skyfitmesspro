@@ -19,6 +19,7 @@ export const currentUserSlice = createSlice({
     }
   },
   extraReducers: builder => {
+    // signIn
     builder.addMatcher(
       authApi.endpoints.signIn.matchFulfilled,
       (state, { payload }) => {
@@ -29,6 +30,22 @@ export const currentUserSlice = createSlice({
       authApi.endpoints.signIn.matchRejected,
       (state, { payload }) => {
         console.error('Sign-in rejected!!!')
+      }
+    )
+    // changeEmail
+    builder.addMatcher(
+      authApi.endpoints.changeEmail.matchFulfilled,
+      (state, { payload }) => {
+        return state = {
+          ...state,
+          ...payload
+        }
+      }
+    )
+    builder.addMatcher(
+      authApi.endpoints.changeEmail.matchRejected,
+      (state, { payload }) => {
+        console.error('changeEmail rejected!!!')
       }
     )
   }

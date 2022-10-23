@@ -5,6 +5,7 @@ import currentUserReducer from './slices/currentUserSlice'
 import courseReducer from './slices/courseSlice'
 import { coursesApi } from './api/courses.api'
 import { usersApi } from './api/users.api'
+import { authApi } from './api/auth.api'
 
 export const store = configureStore({
   reducer: {
@@ -13,11 +14,13 @@ export const store = configureStore({
     activeCourse: courseReducer,
     [coursesApi.reducerPath]: coursesApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: getDefaultMiddleware => (
     getDefaultMiddleware()
     .concat(coursesApi.middleware)
     .concat(usersApi.middleware)
+    .concat(authApi.middleware)
   )
 });
 
