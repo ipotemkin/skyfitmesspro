@@ -78,9 +78,16 @@ export const ProgressModal: FC<ProgressModalProps> = ({
     if (onClick) onClick()
   }
 
+  const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    if (event.key === 'Enter') {
+      handleSubmit()
+    }
+  }
+
   return (
     <Modal isOpen={() => setIsOpened(false)}>
-      <div className={styles.content}>
+      <div className={styles.content} onKeyDown={handleKeydown}>
         <h2 className={styles.title}>Мой прогресс</h2>
         <div className={styles.fields}>
           {form.exercises?.map((exercise: Exercise, index: number) => (
