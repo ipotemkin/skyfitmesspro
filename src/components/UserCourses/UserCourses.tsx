@@ -1,14 +1,14 @@
 import React, { FC } from 'react'
 
 import { Card } from '../Card/Card'
-import { FirebaseUser } from '../../types'
+import { FirebaseUserRESTAPI } from '../../types'
 import { useUserCourses } from '../../hooks/userHooks'
 
 import styles from './style.module.css'
 import { Warning } from '../Warning/Warning'
 
 type Props = {
-  user: FirebaseUser
+  user: FirebaseUserRESTAPI
   handleWorkouts?: Function
 }
 
@@ -16,7 +16,7 @@ export const UserCourses: FC<Props> = ({
   user,
   handleWorkouts = (courseId: number) => {},
 }) => {
-  const { data: userCourses, isLoading } = useUserCourses(user.uid || '')
+  const { data: userCourses, isLoading } = useUserCourses(user.localId || '')
 
   const handleCourseClick = (e: React.MouseEvent, courseId: number) => {
     handleWorkouts(courseId)

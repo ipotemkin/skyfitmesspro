@@ -15,7 +15,7 @@ export const currentUserSlice = createSlice({
       state = {...action.payload}
     },
     deleteCurrentUser: (state) => {
-      state = initialState
+      return state = {...initialState}
     }
   },
   extraReducers: builder => {
@@ -101,6 +101,6 @@ export const {
   deleteCurrentUser
 } = currentUserSlice.actions
 
-export const selectUser = (state: RootState) => state.currentUser
+export const selectCurrentUser = (state: RootState) => state.currentUser
 
 export default currentUserSlice.reducer

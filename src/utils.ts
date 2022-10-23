@@ -17,7 +17,10 @@ type AuthErrorType = {
   }
 }
 
-export const getErrorMessage = (error: AuthErrorType) => {
+export const getErrorMessage = (
+  error: AuthErrorType, defaultError = 'Неверный логин или пароль'
+) => {
   const testValue: string = ERRORS[error.data.error.message]
-  return testValue || 'Неверный логин или пароль'
+  console.log('getErrorMessage: defaultError -->', defaultError)
+  return testValue || defaultError
 }

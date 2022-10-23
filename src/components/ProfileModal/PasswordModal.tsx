@@ -5,8 +5,11 @@ import { Button } from '../Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './style.module.css'
-import { useManageUser } from '../../hooks/userHooks'
 import { useNavigate } from 'react-router-dom'
+import { useChangePasswordMutation } from '../../api/auth.api'
+import { ROUTES } from '../../routes'
+import { useAppSelector } from '../../hooks/appHooks'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 type PasswordModalProps = {
   setIsOpened: Function
@@ -26,19 +29,23 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
     getValues,
     formState: { errors },
   } = useForm<PasswordData>({ mode: 'onTouched' })
-  const { updatePassword } = useManageUser()
+  const user = useAppSelector(selectCurrentUser)
+  const [changePassword] = useChangePasswordMutation()
   const navigate = useNavigate()
 
-  const onSubmit: SubmitHandler<PasswordData> = (data) => {
-    updatePassword(
-      data.password,
-      () => {
-        setIsOpened(false)
-      },
-      () => {
-        navigate('/login')
-      }
-    )
+  const onSubmit: SubmitHandler<PasswordData> = async (data) => {
+    if (!user.idToken) {
+      navigate(ROUTES.login)
+      return
+    }
+
+    try {
+      await changePassword({ idToken: user.idToken, password: data.password}).unwrap()
+      setIsOpened(false)
+    } catch (error) {
+      console.error('Change password failed -->', error)
+      navigate(ROUTES.login)
+    }    
     console.log(data)
   }
 

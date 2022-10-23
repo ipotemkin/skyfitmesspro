@@ -10,7 +10,7 @@ import { Main } from './pages/Main/Main'
 import { NotFound } from './pages/NotFound/NotFound'
 import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 import { Workout } from './pages/WorkoutPage/Workout'
-import { selectUser } from './slices/userSlice'
+import { selectCurrentUser } from './slices/currentUserSlice'
 import { formatString } from './utils'
 
 export const ROUTES = {
@@ -34,16 +34,16 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, i
 }
 
 export const AppRoutes = () => {
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectCurrentUser)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    if (user.uid && !user.isLoading) {
+    if (user.localId) {
       setIsLoggedIn(true)
     } else {
       setIsLoggedIn(false)
     }
-  }, [user.uid, user.isLoading])
+  }, [user.localId])
 
   return (
     <Routes>

@@ -16,5 +16,6 @@ type ErrorTypes = {
   
 export const ERRORS: ErrorTypes = {
   EMAIL_NOT_FOUND: 'Неверный email',
-  INVALID_PASSWORD: 'Неверный пароль'
+  INVALID_PASSWORD: 'Неверный пароль',
+  EMAIL_EXISTS: 'Email занят'
 }

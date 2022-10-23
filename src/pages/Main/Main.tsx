@@ -5,13 +5,14 @@ import { Gallery } from '../../components/Gallery/Gallery'
 import { Logo } from '../../components/Logo/Logo'
 import { LOGO_COLOR_LIGHT } from '../../constants'
 import { useAppSelector } from '../../hooks/appHooks'
-import { selectUser } from '../../slices/userSlice'
+import { ROUTES } from '../../routes'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 import styles from './style.module.css'
 
 export const Main = () => {
-  const user = useAppSelector(selectUser)
-  const isLoggedIn = user && user.uid && !user.isLoading
+  const user = useAppSelector(selectCurrentUser)
+  const isLoggedIn = user && user.localId
 
   return (
     <div className={styles.mainPage}>
@@ -19,7 +20,7 @@ export const Main = () => {
         <header className={styles.header}>
           <nav className={styles.nav}>
             <Logo color={LOGO_COLOR_LIGHT} />
-            <Link to={ isLoggedIn ? "/profile" : "/login" }>
+            <Link to={ isLoggedIn ? ROUTES.profile : ROUTES.login }>
               <Button type="tertiary" size="s">
                 Войти
               </Button>
