@@ -16,7 +16,7 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     signIn: build.mutation<FirebaseUserRESTAPI, SingInArg>({
-      query: (arg) => ({
+      query: (arg: SingInArg) => ({
         url: `accounts:signInWithPassword?key=${apiKey}`,
         method: 'POST',
         body: {
@@ -24,6 +24,7 @@ export const authApi = createApi({
           returnSecureToken: true
         }
       }),
+      // for DEBUG. TODO: remove on release!
       transformResponse: (response: FirebaseUserRESTAPI) => {
         console.log('signIn response -->', response)
         return response;
