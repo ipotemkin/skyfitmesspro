@@ -2,7 +2,6 @@ import classNames from 'classnames'
 import { FC, useState } from 'react'
 import { FormData } from '../../types'
 import { useNavigate } from 'react-router-dom'
-// import { useAuth } from '../../hooks/userHooks'
 import { Logo } from '../../components/Logo/Logo'
 import { Button } from '../../components/Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -16,7 +15,6 @@ const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
 const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
-  // const { signIn } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)
@@ -40,20 +38,6 @@ export const LoginForm: FC = () => {
       setError(getErrorMessage(error))
       setIsBlocked(false)
     }
-
-    // signIn(
-    //   data.email,
-    //   data.password,
-    //   // при успехе
-    //   () => {
-    //     navigate(ROUTES.profile)
-    //   },
-    //   // при ошибке
-    //   () => {
-    //     setError('Неверный логин или пароль')
-    //     setIsBlocked(false)
-    //   }
-    // )
   }
 
   const clickHandler = () => {
