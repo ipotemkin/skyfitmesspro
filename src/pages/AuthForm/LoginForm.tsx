@@ -2,46 +2,42 @@ import classNames from 'classnames'
 import { FC, useState } from 'react'
 import { FormData } from '../../types'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../hooks/userHooks'
 import { Logo } from '../../components/Logo/Logo'
 import { Button } from '../../components/Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './style.module.css'
 import { ROUTES } from '../../routes'
+import { useSignInMutation } from '../../api/auth.api'
+import { getErrorMessage } from '../../utils'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
 const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
-  const { signIn } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)
+  const [login] = useSignInMutation()
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormData>({ mode: 'onTouched' })
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsBlocked(true)
     setError('')
-    signIn(
-      data.email,
-      data.password,
-      // при успехе
-      () => {
-        navigate(ROUTES.profile)
-      },
-      // при ошибке
-      () => {
-        setError('Неверный логин или пароль')
-        setIsBlocked(false)
-      }
-    )
+
+    try {
+      const res = await login({ email: data.email, password: data.password }).unwrap()
+      console.log('login reponse -->', res)  
+      navigate(ROUTES.profile)
+    } catch (error: any) { // TODO выяснить, какой тип сюда вписать
+      setError(getErrorMessage(error))
+      setIsBlocked(false)
+    }
   }
 
   const clickHandler = () => {

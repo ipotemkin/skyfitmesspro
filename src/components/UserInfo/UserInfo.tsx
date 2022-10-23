@@ -1,14 +1,14 @@
 import { FC, useState } from 'react'
 
 import { Button } from '../Button/Button'
-import { FirebaseUser } from '../../types'
+import { FirebaseUserRESTAPI } from '../../types'
 import { EmailModal } from '../ProfileModal/EmailModal'
 
 import styles from './style.module.css'
 import { PasswordModal } from '../ProfileModal/PasswordModal'
 
 type Props = {
-  user: FirebaseUser
+  user: FirebaseUserRESTAPI
 }
 
 export const UserInfo: FC<Props> = ({ user }) => {

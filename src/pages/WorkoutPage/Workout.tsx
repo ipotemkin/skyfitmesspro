@@ -10,26 +10,26 @@ import { ProgressModal } from '../../components/ProgressModal/ProgressModal'
 import { WarningPage } from '../WarningPage/WarningPage'
 import { useUserCourse } from '../../hooks/userHooks'
 import { useAppSelector } from '../../hooks/appHooks'
-import { selectUser } from '../../slices/userSlice'
 
 import styles from './style.module.css'
 import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
 import { WorkoutArg } from '../../api/users.api'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 export const Workout: FC = () => {
   const { id, day } = useParams()
   const courseId = Number(id) - 1
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectCurrentUser)
   const [isModalOneShown, setIsModalOneShown] = useState(false)
   const [isModalTwoShown, setIsModalTwoShown] = useState(false)
-  const { data, isLoading, isError } = useUserCourse(user?.uid, courseId)
+  const { data, isLoading, isError } = useUserCourse(user?.localId || null, courseId)
 
   console.log('Workout: user -->', user) // for DEBUG!
 
-  if (isLoading || user.isLoading || (!data && !isError))
+  if (isLoading || (!data && !isError))
     return <WarningPage text="Загрузка..." user={user} />
 
-  if (!user.uid) return <WarningPage text="Вы не авторизованы!" />
+  if (!user.localId) return <WarningPage text="Вы не авторизованы!" />
 
   if (!data) {
     console.log('Вы не зарегистрированы на этот курс!') // for DEBUG!
@@ -58,7 +58,7 @@ export const Workout: FC = () => {
   console.log('workout -->', workout)
 
   const workoutArg: WorkoutArg = {
-    uid: user.uid,
+    uid: user.localId,
     courseId,
     workoutId: workoutIdx
   }

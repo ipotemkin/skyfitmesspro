@@ -4,12 +4,11 @@ import { Button } from '../Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './style.module.css'
-import { useManageUser } from '../../hooks/userHooks'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { selectUser, setUser } from '../../slices/userSlice'
 import { useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { useChangeEmailMutation } from '../../api/auth.api'
 
 type EmailModalProps = {
   setIsOpened: Function
@@ -27,25 +26,25 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<EmailData>({ mode: 'onTouched' })
-  const user = useAppSelector(selectUser)
-  const { updateEmail } = useManageUser()
+  const user = useAppSelector(selectCurrentUser)
+  const [changeEmail] = useChangeEmailMutation()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
-  const onSubmit: SubmitHandler<EmailData> = (data) => {
-    updateEmail(
-      data.email,
-      () => {
-        dispatch(setUser({
-          ...user,
-          email: data.email,
-        }))
-        setIsOpened(false)
-      },
-      () => {
-        navigate(ROUTES.login)
-      }
-      )
+  const onSubmit: SubmitHandler<EmailData> = async (data) => {
+    if (!user.idToken) {
+      navigate(ROUTES.login)
+      return
+    }
+
+    try {
+      console.log('user.localId -->', user.localId)
+      await changeEmail({ idToken: user.idToken, email: data.email }).unwrap()
+      setIsOpened(false)
+    } catch (error) {
+      console.error('Change email failed -->', error)
+      navigate(ROUTES.login)
+    }
+
     console.log(data)
   }
 

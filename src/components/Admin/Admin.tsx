@@ -1,18 +1,15 @@
-import { onAuthStateChanged, User } from 'firebase/auth'
-import { DataSnapshot, onValue } from 'firebase/database'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import auth from '../../db/auth'
-import { useAuth, useCoursesWithSubscription, useUserCourses } from '../../hooks/userHooks'
+import { useCoursesWithSubscription, useUserCourses } from '../../hooks/userHooks'
 import { UserGallery } from '../PUserGallery/PUserGallery'
 
-import { off } from 'firebase/database'
-import { usersRef } from '../../db/refs'
 import { useAppSelector } from '../../hooks/appHooks'
-import { selectUser, setUser } from '../../slices/userSlice'
 import { useDispatch } from 'react-redux'
 
 import styles from './style.module.css'
+import { useSignInMutation } from '../../api/auth.api'
+import { deleteCurrentUser, selectCurrentUser } from '../../slices/currentUserSlice'
 
 type FormData = {
   username: string
@@ -20,61 +17,34 @@ type FormData = {
 }
 
 export const Admin = () => {
+  const [restSignIn] = useSignInMutation()
+  const currentUser = useAppSelector(selectCurrentUser)
+
+
   const [form, setForm] = useState<FormData>({ username: '', password: '' })
-  const [uid, setUid] = useState<string | undefined>()
-  const userCourses = useUserCourses(uid || '')
-  const { signUp, signIn, logOut } = useAuth()
+  
+  const userCourses = useUserCourses(currentUser.localId || '')
   const dispatch = useDispatch()
-  const { data: coursesWithSubscription, isLoading } = useCoursesWithSubscription(uid || '')
+  const { data: coursesWithSubscription } = useCoursesWithSubscription(currentUser.localId || '')
 
-  const testUser = useAppSelector(selectUser)
-
-  const onDataChange = (items: DataSnapshot) => {
-    const usersFromDB = items.val()
-    console.log('AuthDebug: usersFromDB -->', usersFromDB)
-  }
-
-  useEffect(() => {
-    const listener = onAuthStateChanged(auth, async (user: User | null) => {
-      if (user) {
-        setUid(user.uid)
-        dispatch(
-          setUser({
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-            isLoading: false,
-          })
-        )
-      } else setUid(undefined)
-    })
-
-    onValue(usersRef, onDataChange)
-
-    return () => {
-      listener()
-      off(usersRef, 'value', onDataChange)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handleSignIn = () => {
-    signIn(form.username, form.password)
+  const handleSignIn = async () => {
+    // signIn(form.username, form.password)
+    const res = await restSignIn({ email: form.username, password: form.password }).unwrap()
+    console.log('handleSignIn -->', res)
   }
 
   const handleLogout = () => {
-    logOut()
+    dispatch(deleteCurrentUser())
   }
 
   const handleSignup = () => {
-    signUp(form.username, form.password)
+    // signUp(form.username, form.password)
   }
 
   const handleCurrentUser = () => {
     console.log('handleCurrentUser')
     console.log(auth.currentUser)
     console.log(typeof auth.currentUser)
-    console.log('testUser -->', testUser)
   }
 
   const handleCurrentUserCourses = () => {
@@ -109,7 +79,7 @@ export const Admin = () => {
         }}
       >
         <h3>Администрирование</h3>
-        {/* <input
+        <input
           type="text"
           placeholder="username (email)"
           value={form?.username}
@@ -129,10 +99,9 @@ export const Admin = () => {
         <button onClick={handleCurrentUser}>Get current user</button>
         <button onClick={handleCurrentUserCourses}>
           Get current user courses
-        </button>*/}
+        </button>
       </div> 
-      {/* {users && <UserList users={users}/>} */}
-      {uid && <UserGallery uid={uid} />}
+      {currentUser.localId && <UserGallery uid={currentUser.localId} />}
     </div>
   )
 }

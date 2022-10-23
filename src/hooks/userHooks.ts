@@ -170,20 +170,22 @@ export const useCoursesWithSubscription = (uid: string) => {
 
   useEffect(() => {
 
-    if (userCoursesData && courses) {    
+    if (!isUserCoursesLoading && courses) {    
       const coursesTemp: CourseData[] = []
       // добавляем свойство 'subscription'
-      userCoursesData.forEach((course: CourseData) => {
-        coursesTemp.push({
-          ...course,
-          subscription: (course ? true : false)
-        })
-      })
+      if (userCoursesData && userCoursesData.length > 0) {
+        userCoursesData.forEach((course: CourseData) => {
+          coursesTemp.push({
+            ...course,
+            subscription: (course ? true : false)
+          })
+        })  
+      }
       const res: CourseData[] = []
       merge(res, courses, coursesTemp)
       setCoursesWithSubscription(res)
     }
-  }, [userCoursesData, courses])
+  }, [userCoursesData, courses, isUserCoursesLoading])
 
   useEffect(() => {
     if (!isCoursesLoading && !isUserCoursesLoading) {
@@ -193,7 +195,6 @@ export const useCoursesWithSubscription = (uid: string) => {
 
   return { data: coursesWithSubscription, isLoading }
 }
-
 
 export const useUserCourse = (uid: string | null, courseId: number) => {
   const { data: course } = useGetCourseQuery(courseId)
@@ -205,17 +206,6 @@ export const useUserCourse = (uid: string | null, courseId: number) => {
   })
   const [userCourse, setUserCourse] = useState<CourseData>()
   const [isError, setIsError] = useState(false)
-
-  // for DEBUG!
-  // console.log('course -->', course)
-  // console.group('useGetUserCourseQuery result -->')
-  // console.log('uid -->', uid)
-  // console.log('courseId -->', courseId)
-  // console.log('userCourseData -->', userCourseData)
-  // console.log('error -->', error)
-  // console.log('isUserCourseLoading -->', isUserCourseLoading)
-  // console.log('isError -->', isError)
-  // console.groupEnd()
 
   useEffect(() => {
     if (isErrorQuery) setIsError(true)
