@@ -15,6 +15,11 @@ type ChangeEmailArg = {
   email: string
 }
 
+type ChangePasswordArg = {
+  idToken: string
+  password: string
+}
+
 export const authApi = createApi({
   reducerPath: 'auth/api',
   tagTypes: ['Auth'],
@@ -50,10 +55,27 @@ export const authApi = createApi({
         return response;
       }
     }),
+    changePassword: build.mutation<FirebaseUserRESTAPI, ChangePasswordArg>({
+      query: (arg: ChangePasswordArg) => ({
+        url: `accounts:update?key=${apiKey}`,
+        method: 'POST',
+        body: {
+          ...arg,
+          returnSecureToken: true
+        }
+      }),
+      // for DEBUG. TODO: remove on release!
+      transformResponse: (response: FirebaseUserRESTAPI) => {
+        console.log('changePassword response -->', response)
+        return response;
+      }
+    }),
   }),
 })
 
 export const {
-  useSignInMutation
+  useSignInMutation,
+  useChangeEmailMutation,
+  useChangePasswordMutation
 } = authApi
 

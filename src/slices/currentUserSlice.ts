@@ -48,10 +48,29 @@ export const currentUserSlice = createSlice({
         console.error('changeEmail rejected!!!')
       }
     )
+    // changePassword
+    builder.addMatcher(
+      authApi.endpoints.changePassword.matchFulfilled,
+      (state, { payload }) => {
+        return state = {
+          ...state,
+          ...payload
+        }
+      }
+    )
+    builder.addMatcher(
+      authApi.endpoints.changePassword.matchRejected,
+      (state, { payload }) => {
+        console.error('changePassword rejected!!!')
+      }
+    )
   }
 })
 
-export const { setCurrentUser, deleteCurrentUser } = currentUserSlice.actions
+export const {
+  setCurrentUser,
+  deleteCurrentUser
+} = currentUserSlice.actions
 
 export const selectUser = (state: RootState) => state.currentUser
 
