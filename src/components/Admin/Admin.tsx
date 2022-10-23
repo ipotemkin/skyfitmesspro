@@ -13,6 +13,7 @@ import { selectUser, setUser } from '../../slices/userSlice'
 import { useDispatch } from 'react-redux'
 
 import styles from './style.module.css'
+import { useSignInMutation } from '../../api/auth.api'
 
 type FormData = {
   username: string
@@ -20,6 +21,9 @@ type FormData = {
 }
 
 export const Admin = () => {
+  const [restSignIn] = useSignInMutation()
+
+
   const [form, setForm] = useState<FormData>({ username: '', password: '' })
   const [uid, setUid] = useState<string | undefined>()
   const userCourses = useUserCourses(uid || '')
@@ -58,8 +62,10 @@ export const Admin = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSignIn = () => {
-    signIn(form.username, form.password)
+  const handleSignIn = async () => {
+    // signIn(form.username, form.password)
+    const res = await restSignIn({ email: form.username, password: form.password }).unwrap()
+    console.log('handleSignIn -->', res)
   }
 
   const handleLogout = () => {
@@ -109,7 +115,7 @@ export const Admin = () => {
         }}
       >
         <h3>Администрирование</h3>
-        {/* <input
+        <input
           type="text"
           placeholder="username (email)"
           value={form?.username}
@@ -129,7 +135,7 @@ export const Admin = () => {
         <button onClick={handleCurrentUser}>Get current user</button>
         <button onClick={handleCurrentUserCourses}>
           Get current user courses
-        </button>*/}
+        </button>
       </div> 
       {/* {users && <UserList users={users}/>} */}
       {uid && <UserGallery uid={uid} />}

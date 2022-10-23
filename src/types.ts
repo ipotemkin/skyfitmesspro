@@ -54,3 +54,14 @@ export type FirebaseUser = {
   // accessToken: string | null
   // refreshToken: string | null
 }
+
+export type FirebaseUserRESTAPI = {
+  localId?: string
+  displayName?: string
+  email?: string
+  idToken?: string
+  refreshToken?: string
+  registered?: boolean
+  kind?: string
+  expiresIn?: string 
+}
