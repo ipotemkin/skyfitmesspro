@@ -16,7 +16,6 @@ const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
 
 export const SignUpForm: FC = () => {
-  // const { signUp } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)

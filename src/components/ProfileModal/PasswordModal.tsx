@@ -1,16 +1,17 @@
-import { FC } from 'react'
 import classNames from 'classnames'
-import { Logo } from '../Logo/Logo'
-import { Button } from '../Button/Button'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
+import { useChangePasswordMutation } from '../../api/auth.api'
+import { useAppSelector } from '../../hooks/appHooks'
+import { useAppCookies } from '../../hooks/userHooks'
+import { ROUTES } from '../../routes'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { Button } from '../Button/Button'
+import { Logo } from '../Logo/Logo'
 
 import styles from './style.module.css'
-import { useNavigate } from 'react-router-dom'
-import { useChangePasswordMutation } from '../../api/auth.api'
-import { ROUTES } from '../../routes'
-import { useAppSelector } from '../../hooks/appHooks'
-import { selectCurrentUser } from '../../slices/currentUserSlice'
-import { useAppCookies } from '../../hooks/userHooks'
 
 type PasswordModalProps = {
   setIsOpened: Function
@@ -43,7 +44,9 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
     }
 
     try {
-      const res = await changePassword({ idToken: user.idToken, password: data.password}).unwrap()
+      const res = await changePassword({
+        idToken: user.idToken, password: data.password
+      }).unwrap()
       setCookies({ ...res })
       setIsOpened(false)
     } catch (error) {
