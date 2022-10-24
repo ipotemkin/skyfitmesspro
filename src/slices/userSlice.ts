@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { FirebaseUser } from '../types'
+
 import { RootState } from '../store'
+import { FirebaseUser } from '../types'
 
 export const initialState: FirebaseUser = {
   email: null,
   displayName: null,
   uid: null,
   isLoading: true
-
-  // accessToken: null,
-  // refreshToken: null
 }
 
 export const userSlice = createSlice({

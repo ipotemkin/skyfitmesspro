@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { authApi } from '../api/auth.api'
 
+import { authApi } from '../api/auth.api'
 import { RootState } from '../store'
 import { FirebaseUserRESTAPI } from '../types'
 

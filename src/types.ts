@@ -51,8 +51,6 @@ export type FirebaseUser = {
   displayName: string | null
   uid: string | null
   isLoading: boolean
-  // accessToken: string | null
-  // refreshToken: string | null
 }
 
 export type FirebaseUserRESTAPI = {
@@ -74,3 +72,13 @@ export type RefreshTokenResponse = {
   user_id?: string
   project_id?: string
 }
+
+export type AppCookies = {
+  [index: string]: string | undefined
+  idToken?: string
+  refreshToken?: string
+  localId?: string
+  email?: string
+}
+
+export const appCookiesNames = ['idToken', 'refreshToken', 'localId', 'email']

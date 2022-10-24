@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { FC, useState } from 'react'
-import { FormData } from '../../types'
+import { AppCookies, FormData } from '../../types'
 import { useNavigate } from 'react-router-dom'
 import { Logo } from '../../components/Logo/Logo'
 import { Button } from '../../components/Button/Button'
@@ -10,7 +10,7 @@ import styles from './style.module.css'
 import { ROUTES } from '../../routes'
 import { useSignInMutation } from '../../api/auth.api'
 import { getErrorMessage } from '../../utils'
-import { useAppCookies } from '../../hooks/userHooks'
+import { useAppCookies } from '../../hooks/appHooks'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
 const validPasswordLength = 6
@@ -20,7 +20,7 @@ export const LoginForm: FC = () => {
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)
   const [login] = useSignInMutation()
-  const { cookies, setCookies } = useAppCookies()
+  const { setCookies } = useAppCookies()
 
   const {
     register,
@@ -34,13 +34,7 @@ export const LoginForm: FC = () => {
 
     try {
       const res = await login({ email: data.email, password: data.password }).unwrap()
-      setCookies({
-        ...res
-        // idToken: res.idToken,
-        // refreshToken: res.refreshToken,
-        // localId: res.localId
-      })
-      console.log('login reponse -->', res)
+      setCookies({ ...res } as AppCookies)
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error))
