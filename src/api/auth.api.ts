@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
 import { apiKey } from '../env'
 import { FirebaseUserRESTAPI, RefreshTokenResponse } from '../types'
-import { usersApi } from './users.api'
 
-// const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]'
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1'
 
 type SingInArg = {
