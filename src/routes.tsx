@@ -3,7 +3,6 @@ import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 
 import { Admin } from './components/Admin/Admin'
 import { useAppSelector } from './hooks/appHooks'
-import { useLoadCredentialsFromCookies } from './hooks/userHooks'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { LoginForm } from './pages/AuthForm/LoginForm'
 import { SignUpForm } from './pages/AuthForm/SignUpForm'

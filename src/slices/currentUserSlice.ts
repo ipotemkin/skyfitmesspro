@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { authApi } from '../api/auth.api'
 
+import { authApi } from '../api/auth.api'
 import { RootState } from '../store'
 import { FirebaseUserRESTAPI } from '../types'
 
@@ -26,12 +26,6 @@ export const currentUserSlice = createSlice({
     }
   },
   extraReducers: builder => {
-    // builder.addMatcher(
-    //   setCurrentUser.match,
-    //   (state, { payload }) => {
-
-    //   }
-    // )
     // signUp
     builder.addMatcher(
       authApi.endpoints.signUp.matchFulfilled,
