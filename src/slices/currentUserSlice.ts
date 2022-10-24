@@ -26,12 +26,6 @@ export const currentUserSlice = createSlice({
     }
   },
   extraReducers: builder => {
-    // builder.addMatcher(
-    //   setCurrentUser.match,
-    //   (state, { payload }) => {
-
-    //   }
-    // )
     // signUp
     builder.addMatcher(
       authApi.endpoints.signUp.matchFulfilled,
