@@ -1,48 +1,13 @@
-import { onAuthStateChanged, User } from 'firebase/auth'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import auth from './db/auth'
+
+import { useLoadCredentialsFromCookies } from './hooks/appHooks'
 import { AppRoutes } from './routes'
-import { deleteUser, initialState, setUser } from './slices/userSlice'
-import { formatString } from './utils'
 
 function App() {
-  const testString = 'courses/{}/workouts/{}'
-  const formattedString = formatString(testString, ['2', '1'])
-  console.log('formatString -->', formattedString)
+  const { loadCredentials } = useLoadCredentialsFromCookies()
 
-  const dispatch = useDispatch()
-  
-  // устанавливаем слушателя для событий login/logout
   useEffect(() => {
-    const listener = onAuthStateChanged(auth, async (user: User | null) => {
-      console.log('App: onAuthStateChanged')
-      // dispatch(setUser({
-      //   ...initialState
-      // }))
-      
-      if (user) {
-        console.log('App: onAuthStateChanged: user -->', user)
-        dispatch(setUser({
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          isLoading: false
-        }))
-      }
-      else {
-        console.log('App: onAuthStateChanged: no user -->', user)
-        dispatch(deleteUser())
-        dispatch(setUser({
-          ...initialState, isLoading: false
-        }))
-      }
-    })
-
-    return () => {
-      listener()
-    }
-
+    loadCredentials()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

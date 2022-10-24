@@ -1,12 +1,17 @@
-import { FC } from 'react'
 import classNames from 'classnames'
-import { Logo } from '../Logo/Logo'
-import { Button } from '../Button/Button'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
+import { useChangePasswordMutation } from '../../api/auth.api'
+import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
+import { ROUTES } from '../../routes'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { AppCookies } from '../../types'
+import { Button } from '../Button/Button'
+import { Logo } from '../Logo/Logo'
 
 import styles from './style.module.css'
-import { useManageUser } from '../../hooks/userHooks'
-import { useNavigate } from 'react-router-dom'
 
 type PasswordModalProps = {
   setIsOpened: Function
@@ -26,19 +31,28 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
     getValues,
     formState: { errors },
   } = useForm<PasswordData>({ mode: 'onTouched' })
-  const { updatePassword } = useManageUser()
+  const user = useAppSelector(selectCurrentUser)
+  const [changePassword] = useChangePasswordMutation()
   const navigate = useNavigate()
+  const { setCookies } = useAppCookies()
 
-  const onSubmit: SubmitHandler<PasswordData> = (data) => {
-    updatePassword(
-      data.password,
-      () => {
-        setIsOpened(false)
-      },
-      () => {
-        navigate('/login')
-      }
-    )
+
+  const onSubmit: SubmitHandler<PasswordData> = async (data) => {
+    if (!user.idToken) {
+      navigate(ROUTES.login)
+      return
+    }
+
+    try {
+      const res = await changePassword({
+        idToken: user.idToken, password: data.password
+      }).unwrap()
+      setCookies({ ...res } as AppCookies)
+      setIsOpened(false)
+    } catch (error) {
+      console.error('Change password failed -->', error)
+      navigate(ROUTES.login)
+    }    
     console.log(data)
   }
 

@@ -10,7 +10,7 @@ import { Main } from './pages/Main/Main'
 import { NotFound } from './pages/NotFound/NotFound'
 import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 import { Workout } from './pages/WorkoutPage/Workout'
-import { selectUser } from './slices/userSlice'
+import { selectCurrentUser } from './slices/currentUserSlice'
 import { formatString } from './utils'
 
 export const ROUTES = {
@@ -34,25 +34,27 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, i
 }
 
 export const AppRoutes = () => {
-  const user = useAppSelector(selectUser)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const user = useAppSelector(selectCurrentUser)
+  
+  // если поставить false, то даже если в куках есть данные, перенаправляет на /
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   useEffect(() => {
-    if (user.uid && !user.isLoading) {
+    if (user.localId) {
       setIsLoggedIn(true)
     } else {
       setIsLoggedIn(false)
     }
-  }, [user.uid, user.isLoading])
+  }, [user.localId])
 
   return (
     <Routes>
       <Route path={ROUTES.home} element={<Main />} />
       <Route path={ROUTES.login} element={<LoginForm />} />
       <Route path={ROUTES.signup} element={<SignUpForm />} />
-      <Route path={ROUTES.admin} element={<Admin />} />
       <Route path={`${ROUTES.aboutCourse}/:id`} element={<AboutCourse />} />
       <Route element={<ProtectedRoute isAllowed={isLoggedIn} />}>
+        <Route path={ROUTES.admin} element={<Admin />} />
         <Route path={ROUTES.profile} element={<ProfilePage />} />
         <Route path={formatString(ROUTES.workout, [':id', ':day'])} element={<Workout />} />
         <Route path="*" element={<NotFound />} />

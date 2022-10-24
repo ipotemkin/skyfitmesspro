@@ -1,7 +1,6 @@
 import { FC, useState } from 'react'
 
 import { Navigation } from '../../components/Navigation/Header'
-import { selectUser } from '../../slices/userSlice'
 import { useAppSelector } from '../../hooks/appHooks'
 import { User as UserNav } from '../../components/User/User'
 import { UserCourses } from '../../components/UserCourses/UserCourses'
@@ -10,9 +9,10 @@ import { WorkoutModal } from '../../components/WorkoutModal/WorkoutModal'
 import { WarningPage } from '../WarningPage/WarningPage'
 
 import styles from './style.module.css'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 export const ProfilePage: FC = () => {
-  const currentUser = useAppSelector(selectUser)
+  const currentUser = useAppSelector(selectCurrentUser)
   const [isWorkoutsShown, setIsWorkoutsShown] = useState(false)
   const [activeCourseId, setActiveCourseId] = useState<number>(1)
 
@@ -21,9 +21,7 @@ export const ProfilePage: FC = () => {
     setIsWorkoutsShown(true)
   }
 
-  if (currentUser.isLoading) return <WarningPage text="Загрузка..." />
-
-  if (!currentUser.uid && !currentUser.isLoading)
+  if (!currentUser.localId)
     return <WarningPage text="Пользователь в системе не зарегистрирован!" />
 
   return (

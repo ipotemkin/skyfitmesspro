@@ -1,41 +1,39 @@
 import { Button } from '@mui/material'
 import { FC } from 'react'
-import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
-import { useAppSelector } from '../../hooks/appHooks'
-import { selectUser } from '../../slices/userSlice'
 
+import { useAppSelector } from '../../hooks/appHooks'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { CourseData } from '../../types'
+import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
 
 import styles from './style.module.css'
 
 type Props = { item: CourseData }
 
 export const CourseLine: FC<Props> = ({ item }) => {
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectCurrentUser)
   const [addCourse] = useAddUserCourseMutation()
   const [delCourse] = useDelUserCourseMutation()
 
   const handleAddCourse = () => {
-    if (user && user.uid && item.id) {
+    if (user && user.localId && item.id) {
       addCourse({
-        uid: user.uid,
+        uid: user.localId,
         courseId: item.id
       })
-      console.log('adding course:', item.id)
     } else {
-      console.log('error adding course:', item.id)
+      console.error('error adding course:', item.id)
     }
   }
 
   const handleRemoveCourse = () => {
-    if (user && user.uid && item.id) {
+    if (user && user.localId && item.id !== undefined) {
       delCourse({
-        uid: user.uid,
+        uid: user.localId,
         courseId: item.id
       })
-      console.log('deleting the course with id:', item.id)
     } else {
-      console.log('error deleting the course with id:', item.id)
+      console.error('error deleting the course with id:', item.id)
     }
   }
   
