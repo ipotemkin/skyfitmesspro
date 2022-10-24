@@ -45,6 +45,10 @@ export const SignUpForm: FC = () => {
     }
   }
 
+  const focusHandler = () => {
+    setError('')
+  }
+
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
 
   return (
@@ -55,6 +59,7 @@ export const SignUpForm: FC = () => {
         </div>
         <div className={styles.inputs}>
           <input
+            onFocus={focusHandler}
             className={styles.input}
             placeholder="E-mail"
             {...register('email', {
@@ -70,6 +75,7 @@ export const SignUpForm: FC = () => {
           </p>
 
           <input
+            onFocus={focusHandler}
             className={inputPasswordStyle}
             placeholder="Пароль"
             type="password"
@@ -86,6 +92,7 @@ export const SignUpForm: FC = () => {
           </p>
 
           <input
+            onFocus={focusHandler}
             className={inputPasswordStyle}
             placeholder="Повторите пароль"
             type="password"

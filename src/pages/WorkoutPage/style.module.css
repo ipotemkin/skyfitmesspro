@@ -3,56 +3,6 @@
   padding-right: calc(50% - 580px);
 }
 
-.message {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 55px;
-
-  letter-spacing: -1.16878px;
-  font-feature-settings: 'pnum' on, 'lnum' on;
-
-  color: #000000;
-}
-
-.header {
-  padding: 24px 0;
-}
-
-.nav {
-  box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navUser {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.navUser:hover {
-  cursor: pointer;
-}
-
-.navUserAvatar {
-  width: 50px;
-  height: 50px;
-
-  background-image: radial-gradient(circle 25px, #d9d9d9 100%, transparent 0%);
-  background-repeat: no-repeat;
-  background-position: 0;
-  background-size: 50px 50px;
-}
-
-.navUserName {
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1.333;
-}
-
 .main {
   padding-top: 42px;
   padding-bottom: 94px;

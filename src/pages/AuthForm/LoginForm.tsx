@@ -42,6 +42,10 @@ export const LoginForm: FC = () => {
     }
   }
 
+  const focusHandler = () => {
+    setError('')
+  }
+
   const clickHandler = () => {
     navigate(ROUTES.signup)
   }
@@ -56,6 +60,7 @@ export const LoginForm: FC = () => {
         </div>
         <div className={styles.inputs}>
           <input
+            onFocus={focusHandler}
             className={styles.input}
             placeholder="E-mail"
             {...register('email', {
@@ -71,6 +76,7 @@ export const LoginForm: FC = () => {
           </p>
 
           <input
+            onFocus={focusHandler}
             className={inputPasswordStyle}
             placeholder="Пароль"
             type="password"

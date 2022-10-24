@@ -1,14 +1,15 @@
 import { FC } from 'react'
-import { WorkoutList } from '../../components/WorkoutList/WorkoutList'
+import { Modal } from '../Modal/Modal'
 import { useAppSelector } from '../../hooks/appHooks'
 import { useUserCourse } from '../../hooks/userHooks'
+import { WorkoutList } from '../WorkoutList/WorkoutList'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 import styles from './style.module.css'
 
 type WorkoutModalProps = {
-  setIsOpened: Function
   courseId: number
+  setIsOpened: Function
 }
 
 export const WorkoutModal: FC<WorkoutModalProps> = ({
@@ -19,13 +20,13 @@ export const WorkoutModal: FC<WorkoutModalProps> = ({
   const { data } = useUserCourse(user.localId || null, courseId)
 
   return (
-    <div className={styles.modal} onClick={() => setIsOpened(false)}>
-      <div className={styles.content} onClick={(e) => e.stopPropagation()}>
+    <Modal isOpen={() => setIsOpened(false)}>
+      <div className={styles.content}>
         <h2 className={styles.title}>Выберите тренировку</h2>
         {data && data.workouts && (
           <WorkoutList workouts={data.workouts} courseId={courseId} />
         )}
       </div>
-    </div>
+    </Modal>
   )
 }
