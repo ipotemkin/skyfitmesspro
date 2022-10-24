@@ -14,11 +14,24 @@ export const currentUserSlice = createSlice({
     setCurrentUser: (state, action: PayloadAction<FirebaseUserRESTAPI>) => {
       state = {...action.payload}
     },
+    updateCurrentUser: (state, action: PayloadAction<FirebaseUserRESTAPI>) => {
+      console.log('in updateCurrentUser')
+      return state = {
+        ...state,
+        ...action.payload
+      }
+    },
     deleteCurrentUser: (state) => {
       return state = {...initialState}
     }
   },
   extraReducers: builder => {
+    // builder.addMatcher(
+    //   setCurrentUser.match,
+    //   (state, { payload }) => {
+
+    //   }
+    // )
     // signUp
     builder.addMatcher(
       authApi.endpoints.signUp.matchFulfilled,
@@ -98,6 +111,7 @@ export const currentUserSlice = createSlice({
 
 export const {
   setCurrentUser,
+  updateCurrentUser,
   deleteCurrentUser
 } = currentUserSlice.actions
 

@@ -3,6 +3,7 @@ import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 
 import { Admin } from './components/Admin/Admin'
 import { useAppSelector } from './hooks/appHooks'
+import { useLoadCredentialsFromCookies } from './hooks/userHooks'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { LoginForm } from './pages/AuthForm/LoginForm'
 import { SignUpForm } from './pages/AuthForm/SignUpForm'
@@ -35,7 +36,9 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, i
 
 export const AppRoutes = () => {
   const user = useAppSelector(selectCurrentUser)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  // если поставить false, то даже если в куках есть данные, перенаправляет на /
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   useEffect(() => {
     if (user.localId) {
@@ -50,9 +53,9 @@ export const AppRoutes = () => {
       <Route path={ROUTES.home} element={<Main />} />
       <Route path={ROUTES.login} element={<LoginForm />} />
       <Route path={ROUTES.signup} element={<SignUpForm />} />
-      <Route path={ROUTES.admin} element={<Admin />} />
       <Route path={`${ROUTES.aboutCourse}/:id`} element={<AboutCourse />} />
       <Route element={<ProtectedRoute isAllowed={isLoggedIn} />}>
+        <Route path={ROUTES.admin} element={<Admin />} />
         <Route path={ROUTES.profile} element={<ProfilePage />} />
         <Route path={formatString(ROUTES.workout, [':id', ':day'])} element={<Workout />} />
         <Route path="*" element={<NotFound />} />

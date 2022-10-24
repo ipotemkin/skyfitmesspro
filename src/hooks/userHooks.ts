@@ -16,6 +16,9 @@ import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
 import { CourseData } from '../types'
 import { useDispatch } from 'react-redux'
 import { initialState, setUser } from '../slices/userSlice'
+import { useCookies } from 'react-cookie'
+import { useAppDispatch } from './appHooks'
+import { updateCurrentUser } from '../slices/currentUserSlice'
 
 export const useAuth = () => {
   const noop = () => {}  // заглушка для колбэков
@@ -250,4 +253,54 @@ export const useUserWorkoutStatus = (uid: string, courseId: number, workoutId: n
   })
 
   return status
+}
+
+export const useLoadCredentialsFromCookies = () => {
+  const { cookies } = useAppCookies()
+  const dispatch = useAppDispatch()
+  const { idToken,  refreshToken, localId, email } = cookies
+
+  const loadCredentials = () => {
+    if (cookies && idToken) {
+      console.log('updating currentUser')
+      dispatch(updateCurrentUser({
+        idToken,
+        refreshToken,
+        localId,
+        email
+      }))
+    } else {
+      console.warn('no credentials found in cookies');
+    } 
+  }
+  
+  return { loadCredentials }
+}
+
+type AppCookies = {
+  idToken?: string
+  refreshToken?: string
+  localId?: string
+  email?: string
+}
+
+export const useAppCookies = () => {
+  const [ cookies, setCookie, removeCookie ] = useCookies(['idToken', 'refreshToken', 'localId', 'email'])
+
+  const setCookies = (cookiesArg: AppCookies) => {
+    const { idToken,  refreshToken, localId, email } = cookiesArg
+    setCookie('idToken', idToken)
+    setCookie('refreshToken', refreshToken)
+    setCookie('localId', localId)
+    setCookie('email', email)
+    }
+
+  const removeCookies = () => {
+    removeCookie('idToken')
+    removeCookie('refreshToken')
+    removeCookie('localId')
+    removeCookie('email')
+  }
+
+  return { cookies, setCookies, removeCookies }
 }
