@@ -9,6 +9,7 @@ import { useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { useChangeEmailMutation } from '../../api/auth.api'
+import { useAppCookies } from '../../hooks/userHooks'
 
 type EmailModalProps = {
   setIsOpened: Function
@@ -29,6 +30,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
   const user = useAppSelector(selectCurrentUser)
   const [changeEmail] = useChangeEmailMutation()
   const navigate = useNavigate()
+  const { setCookies } = useAppCookies()
 
   const onSubmit: SubmitHandler<EmailData> = async (data) => {
     if (!user.idToken) {
@@ -37,8 +39,8 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
     }
 
     try {
-      console.log('user.localId -->', user.localId)
-      await changeEmail({ idToken: user.idToken, email: data.email }).unwrap()
+      const res = await changeEmail({ idToken: user.idToken, email: data.email }).unwrap()
+      setCookies({ ...res })
       setIsOpened(false)
     } catch (error) {
       console.error('Change email failed -->', error)

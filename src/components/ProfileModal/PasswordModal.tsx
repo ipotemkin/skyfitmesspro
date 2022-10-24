@@ -10,6 +10,7 @@ import { useChangePasswordMutation } from '../../api/auth.api'
 import { ROUTES } from '../../routes'
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { useAppCookies } from '../../hooks/userHooks'
 
 type PasswordModalProps = {
   setIsOpened: Function
@@ -32,6 +33,8 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
   const user = useAppSelector(selectCurrentUser)
   const [changePassword] = useChangePasswordMutation()
   const navigate = useNavigate()
+  const { setCookies } = useAppCookies()
+
 
   const onSubmit: SubmitHandler<PasswordData> = async (data) => {
     if (!user.idToken) {
@@ -40,7 +43,8 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
     }
 
     try {
-      await changePassword({ idToken: user.idToken, password: data.password}).unwrap()
+      const res = await changePassword({ idToken: user.idToken, password: data.password}).unwrap()
+      setCookies({ ...res })
       setIsOpened(false)
     } catch (error) {
       console.error('Change password failed -->', error)

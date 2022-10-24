@@ -10,6 +10,7 @@ import styles from './style.module.css'
 import { ROUTES } from '../../routes'
 import { useSignInMutation } from '../../api/auth.api'
 import { getErrorMessage } from '../../utils'
+import { useAppCookies } from '../../hooks/userHooks'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
 const validPasswordLength = 6
@@ -19,6 +20,7 @@ export const LoginForm: FC = () => {
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)
   const [login] = useSignInMutation()
+  const { cookies, setCookies } = useAppCookies()
 
   const {
     register,
@@ -32,7 +34,13 @@ export const LoginForm: FC = () => {
 
     try {
       const res = await login({ email: data.email, password: data.password }).unwrap()
-      console.log('login reponse -->', res)  
+      setCookies({
+        ...res
+        // idToken: res.idToken,
+        // refreshToken: res.refreshToken,
+        // localId: res.localId
+      })
+      console.log('login reponse -->', res)
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error))
