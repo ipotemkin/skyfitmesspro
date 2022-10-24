@@ -92,6 +92,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
         <div className={styles.fields}>
           {form.exercises?.map((exercise: Exercise, index: number) => (
             <ProgressInput
+              id={exercise.id}
               key={exercise.id}
               name={exercise.name}
               value={exercise?.userProgress || ''}

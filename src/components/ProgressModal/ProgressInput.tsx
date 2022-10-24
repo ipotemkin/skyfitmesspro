@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 import styles from './style.module.css'
 
 type ProgressInputProps = {
+  id?: number | string
   name: string
   value: number | string
   amount: number
@@ -10,6 +11,7 @@ type ProgressInputProps = {
 }
 
 export const ProgressInput: FC<ProgressInputProps> = ({
+  id,
   name,
   value,
   amount,
@@ -19,6 +21,7 @@ export const ProgressInput: FC<ProgressInputProps> = ({
     <label className={styles.text}>
       Сколько раз вы сделали "{name}"? ({amount}&nbsp;повторений)
       <input
+        autoFocus={id === 1}
         className={styles.input}
         placeholder="Введите значение"
         value={value}
