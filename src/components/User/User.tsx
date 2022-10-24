@@ -42,8 +42,8 @@ export const User: FC<Props> = ({ user }) => {
     <div className={styles.wrapper} onClick={handleShowNav}>
       <div className={styles.user}>
         <div className={styles.avatar}>
-          {user.displayName?.slice(0, 1).toUpperCase() ||
-            user.email?.slice(0, 1).toUpperCase()}
+          {user.displayName?.trim().charAt(0).toUpperCase() ||
+            user.email?.trim().charAt(0).toUpperCase()}
         </div>
         <div className={styles.name}>{user.displayName || user.email}</div>
         <Arrow
