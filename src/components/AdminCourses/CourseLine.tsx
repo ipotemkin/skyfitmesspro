@@ -1,10 +1,10 @@
 import { Button } from '@mui/material'
 import { FC } from 'react'
 
+import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { CourseData } from '../../types'
-import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
 
 import styles from './style.module.css'
 
@@ -38,13 +38,22 @@ export const CourseLine: FC<Props> = ({ item }) => {
   }
   
   return (
-    <div className={styles.line} style={{ backgroundColor: (item.id! % 2 === 0 ? 'whitesmoke' : '')}}
+    <div
+      className={styles.line}
+      style={{ backgroundColor: (item.id! % 2 === 0 ? 'whitesmoke' : '')}}
     >
-      <div className={styles.col1}>{item.id}</div>
+      <div className={styles.col1}>{item.id! + 1}</div>
       <div className={styles.col2}>{item.name}</div>
       <div className={styles.col3}>
-        {item.subscription && <Button style={{ color: 'red' }} onClick={handleRemoveCourse}>Удалить</Button>}
-        {!item.subscription && <Button onClick={handleAddCourse}>Добавить</Button>}
+        {item.subscription
+          && <Button style={{ color: 'red' }} onClick={handleRemoveCourse}
+          >
+            Удалить
+        </Button>}
+        {!item.subscription
+          && <Button onClick={handleAddCourse}>
+            Добавить
+          </Button>}
       </div>
     </div>
   )
