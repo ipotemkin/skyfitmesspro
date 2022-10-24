@@ -6,3 +6,20 @@
 
   cursor: pointer;
 }
+
+.logoName {
+  display: block;
+}
+
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 860px) {
+}
+
+@media (max-width: 600px) {
+  .logoName {
+    display: none;
+  }
+}

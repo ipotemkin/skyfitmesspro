@@ -1,20 +1,20 @@
 import { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { User } from '../../components/User/User'
+import { WorkoutArg } from '../../api/users.api'
+import { Exercises } from '../../components/Exercises/Exercises'
 import { Navigation } from '../../components/Navigation/Header'
 import { Progress } from '../../components/Progress/Progress'
-import { Exercises } from '../../components/Exercises/Exercises'
-import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
 import { ProgressModal } from '../../components/ProgressModal/ProgressModal'
-import { WarningPage } from '../WarningPage/WarningPage'
-import { useUserCourse } from '../../hooks/userHooks'
+import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
+import { User } from '../../components/User/User'
+import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
 import { useAppSelector } from '../../hooks/appHooks'
+import { useUserCourse } from '../../hooks/userHooks'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { WarningPage } from '../WarningPage/WarningPage'
 
 import styles from './style.module.css'
-import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
-import { WorkoutArg } from '../../api/users.api'
-import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 export const Workout: FC = () => {
   const { id, day } = useParams()

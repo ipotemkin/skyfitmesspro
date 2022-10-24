@@ -70,3 +70,10 @@
 .rotate {
   transform: rotateX(180deg);
 }
+
+
+@media (max-width: 400px) {
+  .name {
+    display: none;
+  }  
+}
