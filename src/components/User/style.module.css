@@ -13,10 +13,16 @@
 }
 
 .avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 50px;
   height: 50px;
 
-  background: #d9d9d9;
+  font-size: 30px;
+
+  background: #bd81ff;
   border-radius: 50%;
 }
 
@@ -34,7 +40,6 @@
   align-items: flex-start;
   padding: 5px 0;
 
-  /* width: 140px; */
   right: 0;
 
   color: rgba(0, 0, 0, 0.478);
