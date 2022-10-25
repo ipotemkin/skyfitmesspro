@@ -1,12 +1,14 @@
 import classNames from 'classnames'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useChangePasswordMutation } from '../../api/auth.api'
 import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { setMessage } from '../../slices/messageSlice'
 import { AppCookies } from '../../types'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
@@ -35,7 +37,7 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
   const [changePassword] = useChangePasswordMutation()
   const navigate = useNavigate()
   const { setCookies } = useAppCookies()
-
+  const dispatch = useDispatch()
 
   const onSubmit: SubmitHandler<PasswordData> = async (data) => {
     if (!user.idToken) {
@@ -51,6 +53,7 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
       setIsOpened(false)
     } catch (error) {
       console.error('Change password failed -->', error)
+      dispatch(setMessage('Ваша сессия истекла. Пожалуйста, войдите в систему!'))
       navigate(ROUTES.login)
     }    
     console.log(data)

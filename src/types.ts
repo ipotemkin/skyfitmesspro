@@ -82,3 +82,7 @@ export type AppCookies = {
 }
 
 export const appCookiesNames = ['idToken', 'refreshToken', 'localId', 'email']
+
+export type Message = {
+  value?: string
+}
