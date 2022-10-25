@@ -8,7 +8,7 @@ import { useGetUserDataMutation, useRefreshTokenMutation } from '../api/auth.api
 import { ROUTES } from '../routes'
 import { updateCurrentUser } from '../slices/currentUserSlice'
 import type { AppDispatch, RootState } from '../store'
-import { AppCookies, appCookiesNames, FirebaseUserRESTAPI } from '../types'
+import { AppCookies, appCookiesNames } from '../types'
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<AppDispatch>()
@@ -87,14 +87,14 @@ export const useRefreshToken = () => {
   return { refreshToken }
 }
 
-const useUpdateCurrentUser = () => {
-  const dispatch = useDispatch()
-  const { setCookies } = useAppCookies()
+// const useUpdateCurrentUser = () => {
+//   const dispatch = useDispatch()
+//   const { setCookies } = useAppCookies()
 
-  const doUpdateCurrentUser = async (updateData: FirebaseUserRESTAPI) => {
-    dispatch(updateCurrentUser({ ...updateData }))
-    setCookies({ ...updateData as AppCookies })
-  }
+//   const doUpdateCurrentUser = async (updateData: FirebaseUserRESTAPI) => {
+//     dispatch(updateCurrentUser({ ...updateData }))
+//     setCookies({ ...updateData as AppCookies })
+//   }
 
-  return { doUpdateCurrentUser }
-}
+//   return { doUpdateCurrentUser }
+// }

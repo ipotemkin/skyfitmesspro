@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react'
 
 import { useGetCourseQuery, useGetCoursesQuery } from '../api/courses.api'
 import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
+import { selectCurrentUser } from '../slices/currentUserSlice'
 import { CourseData } from '../types'
+import { useAppSelector } from './appHooks'
 
 // возвращает список ключей, не равных null
 // это необходимо для очистки сырой информации из БД
@@ -17,8 +19,9 @@ const getValidKeys = (obj: object) => {
 
 // возвращает курсы заданного пользователя (без данных из /users)
 export const useUserCourses = (uid: string) => {
+  const user = useAppSelector(selectCurrentUser)
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery(uid)
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery({uid, idToken: user.idToken})
   const [userCourses, setUserCourses] = useState<CourseData[]>()
   const [isLoading, setIsloading] = useState(true)
 
@@ -44,8 +47,9 @@ export const useUserCourses = (uid: string) => {
 
 // возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователяя
 export const useCoursesWithSubscription = (uid: string) => {
+  const user = useAppSelector(selectCurrentUser)
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery(uid)
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery({uid, idToken: user.idToken})
   const [isLoading, setIsloading] = useState(true)
   const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
 
@@ -78,12 +82,14 @@ export const useCoursesWithSubscription = (uid: string) => {
 }
 
 // полнные даннные по заданному курсу пользователя
-export const useUserCourse = (uid: string | null, courseId: number) => {
+export const useUserCourse = (courseId: number) => {
+  const user = useAppSelector(selectCurrentUser)
   const { data: course } = useGetCourseQuery(courseId)
   const { 
     data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
   } = useGetUserCourseQuery({
-    uid: uid || '',
+    idToken: user.idToken,
+    uid: user.localId || '',
     courseId
   })
   const [userCourse, setUserCourse] = useState<CourseData>()
@@ -97,16 +103,16 @@ export const useUserCourse = (uid: string | null, courseId: number) => {
   useEffect(() => {
     
     // если загрузка завершена но нет данных или пользователя
-    if (!isUserCourseLoading && (!userCourseData || !uid)) setIsError(true)
+    if (!isUserCourseLoading && (!userCourseData || !user.localId)) setIsError(true)
     
     // если есть все данные, то ставим загрузку в false
-    else if (userCourseData && course && uid) {
+    else if (userCourseData && course && user.localId) {
       const res = {}
       merge(res, course, userCourseData)
       setUserCourse(res)
     }
       
-  }, [userCourseData, course, isUserCourseLoading, uid])
+  }, [userCourseData, course, isUserCourseLoading, user.localId])
   
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }

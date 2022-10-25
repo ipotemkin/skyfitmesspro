@@ -22,7 +22,7 @@ export const Workout: FC = () => {
   const user = useAppSelector(selectCurrentUser)
   const [isModalOneShown, setIsModalOneShown] = useState(false)
   const [isModalTwoShown, setIsModalTwoShown] = useState(false)
-  const { data, isLoading, isError } = useUserCourse(user?.localId || null, courseId)
+  const { data, isLoading, isError } = useUserCourse(courseId)
 
   console.log('Workout: user -->', user) // for DEBUG!
 

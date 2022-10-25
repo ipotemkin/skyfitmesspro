@@ -1,9 +1,7 @@
 import { FC } from 'react'
 import { Modal } from '../Modal/Modal'
-import { useAppSelector } from '../../hooks/appHooks'
 import { useUserCourse } from '../../hooks/userHooks'
 import { WorkoutList } from '../WorkoutList/WorkoutList'
-import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 import styles from './style.module.css'
 
@@ -16,8 +14,7 @@ export const WorkoutModal: FC<WorkoutModalProps> = ({
   setIsOpened,
   courseId,
 }) => {
-  const user = useAppSelector(selectCurrentUser)
-  const { data } = useUserCourse(user.localId || null, courseId)
+  const { data } = useUserCourse(courseId)
 
   return (
     <Modal isOpen={() => setIsOpened(false)}>
