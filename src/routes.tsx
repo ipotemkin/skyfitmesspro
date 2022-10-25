@@ -40,12 +40,13 @@ export const AppRoutes = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   useEffect(() => {
-    if (user.localId) {
+    if (user.idToken) {
       setIsLoggedIn(true)
-    } else {
+    } 
+    else {
       setIsLoggedIn(false)
     }
-  }, [user.localId])
+  }, [user.idToken])
 
   return (
     <Routes>

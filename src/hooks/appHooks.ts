@@ -2,8 +2,12 @@
 
 import { useCookies } from 'react-cookie'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import { useGetUserDataMutation } from '../api/auth.api'
+import { ROUTES } from '../routes'
 import { updateCurrentUser } from '../slices/currentUserSlice'
-import type { RootState, AppDispatch } from '../store'
+import type { AppDispatch, RootState } from '../store'
 import { AppCookies, appCookiesNames } from '../types'
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
@@ -30,17 +34,32 @@ export const useAppCookies = () => {
 export const useLoadCredentialsFromCookies = () => {
     const { cookies } = useAppCookies()
     const dispatch = useAppDispatch()
-    const { idToken,  refreshToken, localId, email } = cookies
+    const [getUserData] = useGetUserDataMutation()
+    const navigate = useNavigate()
   
-    const loadCredentials = () => {
-      if (cookies && idToken) {
+    const loadCredentials = async () => {
+      if (cookies && cookies.idToken) {
         console.log('updating currentUser')
-        dispatch(updateCurrentUser({
-          idToken,
-          refreshToken,
-          localId,
-          email
-        }))
+
+        try {
+          // Заполняем недостающие поля из cookies
+          // Firebase REST API update почему-то возвращает не все данные,
+          // хотя по доке должен.
+          // Плюс без этого действия router при перезагрузке страницы направляет на /
+          // даже, когда пользователь есть
+          dispatch(updateCurrentUser({ ...cookies }))  
+
+          // Получаем данные о пользователе с помощью idToken
+          const res = await getUserData(cookies.idToken).unwrap()
+          console.log('user data received -->', res)
+
+        } catch (error) {
+          console.error('Error while getting user data -->', error)
+          
+          // если токен недейстителен, просим пользователя снова войти в систему
+          navigate(ROUTES.login)
+        }
+
       } else {
         console.warn('no credentials found in cookies');
       } 
