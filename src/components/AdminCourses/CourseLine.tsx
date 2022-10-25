@@ -16,7 +16,7 @@ export const CourseLine: FC<Props> = ({ item }) => {
   const [delCourse] = useDelUserCourseMutation()
 
   const handleAddCourse = () => {
-    if (user && user.localId && item.id) {
+    if (user && user.localId && item.id !== undefined) {
       addCourse({
         uid: user.localId,
         courseId: item.id,
