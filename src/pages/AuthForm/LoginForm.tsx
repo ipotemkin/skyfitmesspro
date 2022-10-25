@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { AppCookies, FormData } from '../../types'
 import { useNavigate } from 'react-router-dom'
 import { Logo } from '../../components/Logo/Logo'
@@ -10,7 +10,9 @@ import styles from './style.module.css'
 import { ROUTES } from '../../routes'
 import { useSignInMutation } from '../../api/auth.api'
 import { getErrorMessage } from '../../utils'
-import { useAppCookies } from '../../hooks/appHooks'
+import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
+import { selectMessage, clearMessage } from '../../slices/messageSlice'
+import { useDispatch } from 'react-redux'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
 const validPasswordLength = 6
@@ -21,6 +23,17 @@ export const LoginForm: FC = () => {
   const [isBlocked, setIsBlocked] = useState(false)
   const [login] = useSignInMutation()
   const { setCookies } = useAppCookies()
+  const message = useAppSelector(selectMessage)
+  const [formMessage, setFormMessage] = useState('')
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (message) {
+      setFormMessage(message)
+      dispatch(clearMessage())
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const {
     register,
@@ -54,6 +67,8 @@ export const LoginForm: FC = () => {
 
   return (
     <div className={styles.formWrapper}>
+      {formMessage &&<h2 style={{ color: 'white' }}>{formMessage}</h2>}
+      {/* {<h2 style={{ color: 'white' }}>Войдите в систему!</h2>} */}
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.logo}>
           <Logo />

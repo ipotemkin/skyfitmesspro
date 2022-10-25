@@ -1,11 +1,13 @@
 import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useChangeEmailMutation } from '../../api/auth.api'
 import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { setMessage } from '../../slices/messageSlice'
 import { AppCookies } from '../../types'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
@@ -33,6 +35,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
   const navigate = useNavigate()
   const { setCookies } = useAppCookies()
   const [email, setEmail] = useState(user.email || "E-mail") 
+  const dispatch = useDispatch()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -50,6 +53,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
       setIsOpened(false)
     } catch (error) {
       console.error('Change email failed -->', error)
+      dispatch(setMessage('Ваша сессия истекла. Пожалуйста, войдите в систему!'))
       navigate(ROUTES.login)
     }
   }

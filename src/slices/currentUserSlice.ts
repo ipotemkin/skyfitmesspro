@@ -90,6 +90,7 @@ export const currentUserSlice = createSlice({
       (state, { payload }) => {
         return state = {
           ...state,
+          idToken: payload.id_token, 
           refreshToken: payload.refresh_token
         }
       }
