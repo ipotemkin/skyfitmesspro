@@ -19,7 +19,8 @@ export const CourseLine: FC<Props> = ({ item }) => {
     if (user && user.localId && item.id) {
       addCourse({
         uid: user.localId,
-        courseId: item.id
+        courseId: item.id,
+        idToken: user.idToken
       })
     } else {
       console.error('error adding course:', item.id)
@@ -30,7 +31,8 @@ export const CourseLine: FC<Props> = ({ item }) => {
     if (user && user.localId && item.id !== undefined) {
       delCourse({
         uid: user.localId,
-        courseId: item.id
+        courseId: item.id,
+        idToken: user.idToken
       })
     } else {
       console.error('error deleting the course with id:', item.id)

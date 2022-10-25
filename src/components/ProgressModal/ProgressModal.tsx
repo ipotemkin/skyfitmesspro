@@ -12,6 +12,8 @@ import {
 } from '../../api/users.api'
 
 import styles from './style.module.css'
+import { useAppSelector } from '../../hooks/appHooks'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 type ProgressModalProps = {
   setIsOpened: Function
@@ -33,6 +35,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
   const [form, setForm] = useState<Form>({ exercises: [] })
   const [updateProgress] = useUpdateUserExerciseProgressMutation()
   const [setWorkoutStatus] = useSetWorkoutStatusMutation()
+  const user = useAppSelector(selectCurrentUser)
 
   useEffect(() => {
     setForm({ exercises })
@@ -62,6 +65,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
           arg: {
             ...workoutArg,
             exerciseId: index,
+            idToken: user.idToken
           },
           body: {
             userProgress: item.userProgress || 0,
@@ -72,6 +76,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
       const workoutStatusArg: WorkoutStatusArg = {
         ...workoutArg,
         done: workoutStatus,
+        idToken: user.idToken
       }
       setWorkoutStatus(workoutStatusArg)
     }

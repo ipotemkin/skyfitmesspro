@@ -2,10 +2,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_URL } from '../constants'
 import { CourseData, UserData } from '../types'
 
+
+type TokenArg = {
+  idToken?: string
+}
+
+type UserArg = {
+  uid: string
+} & TokenArg
+
 type CourseArg = {
   uid: string
   courseId: number
-}
+} & TokenArg
 
 export type WorkoutArg = {
   workoutId: number
@@ -33,26 +42,31 @@ export const usersApi = createApi({
   tagTypes: ['UserCourse', 'User'],
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL + '/users',
+    // prepareHeaders: (headers, { getState }) => {
+    //   const token = (getState() as RootState).currentUser.idToken
+    //   if (token) headers.set('authorization', `Bearer ${token}`)
+    //   return headers;
+    // },
   }),
   endpoints: (build) => ({
-    addUser: build.mutation<void, string>({
-      query: (uid: string) => ({
-        url: `${uid}.json`,
+    addUser: build.mutation<void, UserArg>({
+      query: ({idToken, uid }) => ({
+        url: `${uid}.json?auth=${idToken}`,
         method: 'PUT',
         body: { uid },
       }),
       invalidatesTags: ['User'],
     }),
-    getUsersWithCourses: build.query<UserData[], void>({
-      query: () => '.json',
+    getUsersWithCourses: build.query<UserData[], string>({
+      query: (idToken: string) => `.json?auth=${idToken}`,
       providesTags: ['User']
     }),
-    getUserCourses: build.query<CourseData[], string>({
-      query: (uid: string) => `/${uid}/courses.json`,
+    getUserCourses: build.query<CourseData[], UserArg>({
+      query: ({ idToken, uid }) => `/${uid}/courses.json?auth=${idToken}`,
       providesTags: [{ type: 'UserCourse', id: 'LIST' }]
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
-      query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
+      query: ({ idToken, uid, courseId }) => `/${uid}/courses/${courseId}.json?auth=${idToken}`,
       providesTags: (result, error, arg) => 
         [
           { type: 'UserCourse', id: arg.courseId },
@@ -60,8 +74,8 @@ export const usersApi = createApi({
         ]
     }),
     getUserExercises: build.query<UserData, WorkoutArg>({
-      query: ({ uid, courseId, workoutId }) =>
-        `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
+      query: ({ idToken, uid, courseId, workoutId }) =>
+        `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json?auth=${idToken}`,
       providesTags: (result, error, arg) => 
         [
           { type: 'UserCourse', id: arg.courseId },
@@ -70,7 +84,7 @@ export const usersApi = createApi({
       }),
     updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
-        url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json`,
+        url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json?auth=${arg.idToken}`,
         method: 'PATCH',
         body: body,
       }),
@@ -81,8 +95,8 @@ export const usersApi = createApi({
       ]
     }),
     setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
-      query: ({ uid, courseId, workoutId, done }) => ({
-        url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
+      query: ({ idToken, uid, courseId, workoutId, done }) => ({
+        url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json?auth=${idToken}`,
         method: 'PATCH',
         body: { done: done },
       }),
@@ -94,8 +108,8 @@ export const usersApi = createApi({
         ]
     }),
     addUserCourse: build.mutation<void, CourseArg>({
-      query: ({ uid, courseId }) => ({
-        url: `/${uid}/courses/${courseId}.json`,
+      query: ({ idToken, uid, courseId }) => ({
+        url: `/${uid}/courses/${courseId}.json?auth=${idToken}`,
         method: 'PUT',
         body: { id: courseId },
       }),
@@ -106,8 +120,8 @@ export const usersApi = createApi({
         ]
     }),
     delUserCourse: build.mutation<void, CourseArg>({
-      query: ({ uid, courseId }) => ({
-        url: `/${uid}/courses/${courseId}.json`,
+      query: ({ idToken, uid, courseId }) => ({
+        url: `/${uid}/courses/${courseId}.json?auth=${idToken}`,
         method: 'DELETE',
         body: { id: courseId },
       }),
