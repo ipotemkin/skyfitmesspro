@@ -112,10 +112,6 @@ export const authApi = createApi({
       // for DEBUG. TODO: remove on release!
       transformResponse: (response: FirebaseUserRESTAPI) => {
         console.log('getUserData response -->', response)
-        // const newResponse = {
-        //   ...response,
-        //   idToken
-        // }
         return response;
       },
     }),
