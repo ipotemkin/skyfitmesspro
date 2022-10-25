@@ -13,7 +13,7 @@ export const Gallery = () => {
   const { data: courses, isLoading, error } = useGetCoursesQuery()
 
   return (
-    <div className={styles.gallery}>
+    <div className={styles.gallery} data-cy="gallery-courses">
       {courses &&
         courses.map((item) => (
           <Link
