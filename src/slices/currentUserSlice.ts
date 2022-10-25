@@ -100,6 +100,23 @@ export const currentUserSlice = createSlice({
         console.error('refreshToken rejected!!!')
       }
     )
+    // getUserData
+    builder.addMatcher(
+      authApi.endpoints.getUserData.matchFulfilled,
+      (state, { payload }) => {
+        return state = {
+          ...state,
+          ...payload
+        }
+      }
+    )
+    builder.addMatcher(
+      authApi.endpoints.getUserData.matchRejected,
+      (state, { payload }) => {
+        console.error('getUserData rejected!!!')
+      }
+    )
+    
   }
 })
 

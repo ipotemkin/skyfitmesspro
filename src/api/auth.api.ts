@@ -100,6 +100,26 @@ export const authApi = createApi({
         return response;
       }
     }),
+    getUserData: build.mutation<FirebaseUserRESTAPI, string>({
+      query: (idToken: string) => ({
+        url: `accounts:update?key=${apiKey}`,
+        method: 'POST',
+        body: {
+          idToken,
+          returnSecureToken: true
+        }
+      }),
+      // for DEBUG. TODO: remove on release!
+      transformResponse: (response: FirebaseUserRESTAPI) => {
+        console.log('getUserData response -->', response)
+        // const newResponse = {
+        //   ...response,
+        //   idToken
+        // }
+        return response;
+      },
+    }),
+
   }),
 })
 
@@ -108,5 +128,6 @@ export const {
   useSignInMutation,
   useChangeEmailMutation,
   useChangePasswordMutation,
-  useRefreshTokenMutation
+  useRefreshTokenMutation,
+  useGetUserDataMutation
 } = authApi

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -32,7 +32,12 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
   const [changeEmail] = useChangeEmailMutation()
   const navigate = useNavigate()
   const { setCookies } = useAppCookies()
+  const [email, setEmail] = useState(user.email || "E-mail") 
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+  }
+  
   const onSubmit: SubmitHandler<EmailData> = async (data) => {
     if (!user.idToken) {
       navigate(ROUTES.login)
@@ -61,13 +66,15 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
         <div className={styles.inputs}>
           <input
             className={styles.input}
-            placeholder="E-mail"
+            placeholder={user.email || "E-mail"}
+            value={email}
             {...register('email', {
               required: 'Введите e-mail',
               pattern: {
                 value: validEmail,
                 message: 'Введите корректный e-mail',
               },
+              onChange: handleChange
             })}
           />
           <p className={styles.error}>
