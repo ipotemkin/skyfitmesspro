@@ -41,9 +41,11 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     if (user.idToken) {
+      console.log('AppRoutes: user.idToken present -->', user.idToken)
       setIsLoggedIn(true)
     } 
     else {
+      console.log('AppRoutes: no user.idToken -->', user.idToken)
       setIsLoggedIn(false)
     }
   }, [user.idToken])

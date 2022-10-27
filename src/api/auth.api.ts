@@ -96,7 +96,7 @@ export const authApi = createApi({
       }),
       // for DEBUG. TODO: remove on release!
       transformResponse: (response: RefreshTokenResponse) => {
-        console.log('changePassword response -->', response)
+        console.log('refreshToken response -->', response)
         return response;
       }
     }),

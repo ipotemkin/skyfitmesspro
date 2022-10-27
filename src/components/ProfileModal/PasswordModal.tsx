@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useChangePasswordMutation } from '../../api/auth.api'
+import { EXP_MESSAGE } from '../../constants'
 import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
@@ -27,17 +28,17 @@ type PasswordData = {
 const validPasswordLength = 6
 
 export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
+  const user = useAppSelector(selectCurrentUser)
+  const { setCookies } = useAppCookies()
+  const [changePassword] = useChangePasswordMutation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
   } = useForm<PasswordData>({ mode: 'onTouched' })
-  const user = useAppSelector(selectCurrentUser)
-  const [changePassword] = useChangePasswordMutation()
-  const navigate = useNavigate()
-  const { setCookies } = useAppCookies()
-  const dispatch = useDispatch()
 
   const onSubmit: SubmitHandler<PasswordData> = async (data) => {
     if (!user.idToken) {
@@ -53,10 +54,9 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
       setIsOpened(false)
     } catch (error) {
       console.error('Change password failed -->', error)
-      dispatch(setMessage('Ваша сессия истекла. Пожалуйста, войдите в систему!'))
+      dispatch(setMessage(EXP_MESSAGE))
       navigate(ROUTES.login)
     }    
-    console.log(data)
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)

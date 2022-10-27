@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useChangeEmailMutation } from '../../api/auth.api'
+import { EXP_MESSAGE } from '../../constants'
 import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
@@ -25,17 +26,19 @@ type EmailData = {
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 
 export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
+  const user = useAppSelector(selectCurrentUser)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<EmailData>({ mode: 'onTouched' })
-  const user = useAppSelector(selectCurrentUser)
+  
   const [changeEmail] = useChangeEmailMutation()
-  const navigate = useNavigate()
   const { setCookies } = useAppCookies()
   const [email, setEmail] = useState(user.email || "E-mail") 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -53,7 +56,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
       setIsOpened(false)
     } catch (error) {
       console.error('Change email failed -->', error)
-      dispatch(setMessage('Ваша сессия истекла. Пожалуйста, войдите в систему!'))
+      dispatch(setMessage(EXP_MESSAGE))
       navigate(ROUTES.login)
     }
   }

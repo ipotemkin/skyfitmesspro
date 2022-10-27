@@ -12,7 +12,7 @@ import {
 } from '../../api/users.api'
 
 import styles from './style.module.css'
-import { useAppSelector } from '../../hooks/appHooks'
+import { useAppSelector, useMutationWithRefreshToken } from '../../hooks/appHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 type ProgressModalProps = {
@@ -32,10 +32,11 @@ export const ProgressModal: FC<ProgressModalProps> = ({
   exercises,
   onClick,
 }) => {
+  const user = useAppSelector(selectCurrentUser)
   const [form, setForm] = useState<Form>({ exercises: [] })
   const [updateProgress] = useUpdateUserExerciseProgressMutation()
   const [setWorkoutStatus] = useSetWorkoutStatusMutation()
-  const user = useAppSelector(selectCurrentUser)
+  const handleMutationWithRefreshToken = useMutationWithRefreshToken()
 
   useEffect(() => {
     setForm({ exercises })
@@ -71,14 +72,20 @@ export const ProgressModal: FC<ProgressModalProps> = ({
             userProgress: item.userProgress || 0,
           },
         }
-        updateProgress(updateData)
+        handleMutationWithRefreshToken((idToken: string) => updateProgress({
+          ...updateData,
+          arg: { ...updateData.arg, idToken }
+        }))
       })
       const workoutStatusArg: WorkoutStatusArg = {
         ...workoutArg,
         done: workoutStatus,
         idToken: user.idToken
       }
-      setWorkoutStatus(workoutStatusArg)
+      handleMutationWithRefreshToken((idToken: string) => setWorkoutStatus({
+        ...workoutStatusArg,
+        idToken
+      }))
     }
     if (onClick) onClick()
   }

@@ -17,14 +17,14 @@ import { WarningPage } from '../WarningPage/WarningPage'
 import styles from './style.module.css'
 
 export const Workout: FC = () => {
-  const { id, day } = useParams()
+  const { id , day } = useParams()
   const courseId = Number(id) - 1
+  const workoutIdx = Number(day) - 1
+  
   const user = useAppSelector(selectCurrentUser)
   const [isModalOneShown, setIsModalOneShown] = useState(false)
   const [isModalTwoShown, setIsModalTwoShown] = useState(false)
   const { data, isLoading, isError } = useUserCourse(courseId)
-
-  console.log('Workout: user -->', user) // for DEBUG!
 
   if (isLoading || (!data && !isError))
     return <WarningPage text="Загрузка..." user={user} />
@@ -38,12 +38,17 @@ export const Workout: FC = () => {
     )
   }
 
-  const workoutIdx = Number(day) - 1
-
   if (!data.workouts || workoutIdx < 0 || workoutIdx >= data.workouts?.length)
     return (
       <WarningPage text="Нет такой тренировки на этом курсе!" user={user} />
     )
+
+  const workout = data.workouts[workoutIdx]
+  const workoutArg: WorkoutArg = {
+    uid: user.localId,
+    courseId,
+    workoutId: workoutIdx
+  }
 
   const handleClick = () => {
     setIsModalOneShown(true)
@@ -52,15 +57,6 @@ export const Workout: FC = () => {
   const handleSendClick = () => {
     setIsModalOneShown(false)
     setIsModalTwoShown(true)
-  }
-
-  const workout = data.workouts[workoutIdx]
-  console.log('workout -->', workout)
-
-  const workoutArg: WorkoutArg = {
-    uid: user.localId,
-    courseId,
-    workoutId: workoutIdx
   }
 
   return (

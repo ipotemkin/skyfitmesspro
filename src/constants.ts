@@ -19,3 +19,5 @@ export const ERRORS: ErrorTypes = {
   INVALID_PASSWORD: 'Неверный пароль',
   EMAIL_EXISTS: 'Email занят'
 }
+
+export const EXP_MESSAGE = 'Ваша сессия истекла. Пожалуйста, войдите в систему!'
