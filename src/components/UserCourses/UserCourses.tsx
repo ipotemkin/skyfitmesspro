@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import { Card } from '../Card/Card'
 import { FirebaseUserRESTAPI } from '../../types'
-import { useUserCourses } from '../../hooks/userHooks'
+import { useUserCourses } from '../../hooks/userCourseHooks'
 
 import styles from './style.module.css'
 import { Warning } from '../Warning/Warning'

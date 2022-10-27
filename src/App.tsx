@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { useLoadCredentialsFromCookies } from './hooks/appHooks'
+import { useLoadCredentialsFromCookies } from './hooks/authHooks'
 import { AppRoutes } from './routes'
 
 function App() {

@@ -1,17 +1,14 @@
+// USER COURSES HOOKS
+
 import { merge } from 'lodash'
 import { useEffect, useState } from 'react'
-// import { useDispatch } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
 
 import { useGetCourseQuery, useGetCoursesQuery } from '../api/courses.api'
 import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
-// import { EXP_MESSAGE } from '../constants'
-// import { ROUTES } from '../routes'
 import { selectCurrentUser } from '../slices/currentUserSlice'
-// import { setMessage } from '../slices/messageSlice'
 import { CourseData } from '../types'
-// import { checkJWTExpTime } from '../utils'
-import { useAppSelector, useQueryWithRefreshToken } from './appHooks'
+import { useAppSelector } from './appHooks'
+import { useQueryWithRefreshToken } from './authHooks'
 
 // возвращает список ключей, не равных null
 // это необходимо для очистки сырой информации из БД
@@ -128,42 +125,3 @@ export const useUserCourse = (courseId: number) => {
   
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }
-
-// обертка для useAppSelector(selectCurrentUser),
-// проверяет валидность токена и обновляет, если необходимо
-// export const useCurrentUser = () => {
-//   const user = useAppSelector(selectCurrentUser)
-//   const { refreshToken } = useRefreshToken()
-//   const navigate = useNavigate()
-//   const dispatch = useDispatch()
-
-//   if (user.idToken) {
-//     const isTokenValid = checkJWTExpTime(user.idToken)
-
-//     if (isTokenValid || user.updatingTokens) {
-//       return user
-//     }
-
-//     if (user.refreshToken) {
-//       // dispatch(updateCurrentUser({
-//       //   updatingTokens: true
-//       // }))
-//       refreshToken(user.refreshToken)
-//         .catch((error) => {
-//           console.warn('Token refresh failed')
-//           dispatch(setMessage(EXP_MESSAGE))
-//           navigate(ROUTES.login)        
-//         })
-//     } else {
-//       console.warn('No refresh token')
-//     }
-
-//   } else {
-//     console.warn('No idToken')
-//   }
-  
-//   return user
-  
-//   // dispatch(setMessage(EXP_MESSAGE))
-//   // navigate(ROUTES.login)        
-// }
