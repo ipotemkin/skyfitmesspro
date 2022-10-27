@@ -12,8 +12,9 @@ import {
 } from '../../api/users.api'
 
 import styles from './style.module.css'
-import { useAppSelector, useMutationWithRefreshToken } from '../../hooks/appHooks'
+import { useAppSelector } from '../../hooks/appHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { useMutationWithRefreshToken } from '../../hooks/authHooks'
 
 type ProgressModalProps = {
   setIsOpened: Function

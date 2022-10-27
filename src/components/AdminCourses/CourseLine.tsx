@@ -2,7 +2,8 @@ import { Button } from '@mui/material'
 import { FC } from 'react'
 
 import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
-import { useAppSelector, useMutationWithRefreshToken } from '../../hooks/appHooks'
+import { useAppSelector } from '../../hooks/appHooks'
+import { useMutationWithRefreshToken } from '../../hooks/authHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { CourseData } from '../../types'
 

@@ -78,14 +78,9 @@ export type RefreshTokenResponse = {
 export type AppCookies = {
   [index: string]: string | undefined
   idToken?: string
-  refreshToken?: string
-  localId?: string
-  // email?: string
 }
 
-// export const appCookiesNames = ['idToken', 'refreshToken', 'localId', 'email']
-// export const appCookiesNames = ['idToken', 'refreshToken', 'localId']
-export const appCookiesNames = ['idToken', 'refreshToken', 'localId']
+export const appCookiesNames = ['idToken']
 
 export type Message = {
   value?: string

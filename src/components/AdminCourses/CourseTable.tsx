@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useCoursesWithSubscription } from '../../hooks/userHooks'
+import { useCoursesWithSubscription } from '../../hooks/userCourseHooks'
 
 import { CourseLine } from './CourseLine'
 import { Header } from './Header'

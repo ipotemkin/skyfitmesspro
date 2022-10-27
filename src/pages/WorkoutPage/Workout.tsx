@@ -10,7 +10,7 @@ import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
 import { User } from '../../components/User/User'
 import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
 import { useAppSelector } from '../../hooks/appHooks'
-import { useUserCourse } from '../../hooks/userHooks'
+import { useUserCourse } from '../../hooks/userCourseHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { WarningPage } from '../WarningPage/WarningPage'
 
