@@ -80,10 +80,12 @@ export type AppCookies = {
   idToken?: string
   refreshToken?: string
   localId?: string
-  email?: string
+  // email?: string
 }
 
-export const appCookiesNames = ['idToken', 'refreshToken', 'localId', 'email']
+// export const appCookiesNames = ['idToken', 'refreshToken', 'localId', 'email']
+// export const appCookiesNames = ['idToken', 'refreshToken', 'localId']
+export const appCookiesNames = ['idToken', 'refreshToken', 'localId']
 
 export type Message = {
   value?: string

@@ -47,7 +47,11 @@ export const LoginForm: FC = () => {
 
     try {
       const res = await login({ email: data.email, password: data.password }).unwrap()
-      setCookies({ ...res } as AppCookies)
+      setCookies({
+        localId: res?.localId,
+        idToken: res?.idToken,
+        refreshToken: res?.refreshToken
+      })
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error))

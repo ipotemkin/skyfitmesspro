@@ -12,7 +12,7 @@ import { useGoToLoginWithMessage } from './shortcuts'
 import { selectCurrentUser, updateCurrentUser } from '../slices/currentUserSlice'
 import type { AppDispatch, RootState } from '../store'
 import { AppCookies, appCookiesNames } from '../types'
-import { checkJWTExpTime, getJWTExpTime, parseJWT } from '../utils'
+import { checkJWTExpTime, getJWTExpTime, getUserEmailFromJWT, parseJWT } from '../utils'
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<AppDispatch>()
@@ -28,7 +28,8 @@ export const useAppCookies = () => {
   }
 
   const removeCookies = () => {
-    appCookiesNames.forEach(item => removeCookie(item))
+    // appCookiesNames.forEach(item => removeCookie(item))
+    Object.keys(cookies).forEach((item: string) => removeCookie(item))
   }
 
   return { cookies, setCookies, removeCookies }
@@ -42,17 +43,18 @@ export const useLoadCredentialsFromCookies = () => {
   const navigate = useNavigate()
 
   const loadCredentials = async () => {
-    if (cookies && cookies.idToken) {
+    if (cookies && cookies.localId) {
       console.log('updating currentUser')
       const expTime = getJWTExpTime(cookies.idToken)
       const valid = checkJWTExpTime(cookies.idToken)
       const parsedJWT = parseJWT(cookies.idToken)
+      const userEmail = getUserEmailFromJWT(cookies.idToken)
       console.group('idToken:')
       console.log('decoded idToken -->', parsedJWT)
       console.log('expTime -->', expTime)
       console.log('is valid -->', valid)
+      console.log('userEmail -->', userEmail)
       console.groupEnd()
-
 
       try {
         // Заполняем недостающие поля из cookies
@@ -60,7 +62,7 @@ export const useLoadCredentialsFromCookies = () => {
         // хотя по доке должен.
         // Плюс без этого действия router при перезагрузке страницы направляет на /
         // даже, когда пользователь есть
-        dispatch(updateCurrentUser({ ...cookies }))  
+        dispatch(updateCurrentUser({ ...cookies, email: userEmail }))  
 
         // Получаем данные о пользователе с помощью idToken
         const res = await getUserData(cookies.idToken).unwrap()

@@ -38,6 +38,10 @@ export const getUserIdFromJWT = (token: string) => {
   return parseJWT(token).user_id
 }
 
+export const getUserEmailFromJWT = (token: string) => {
+  return parseJWT(token).email
+}
+
 export const getJWTExpTime = (token: string) => {
   return new Date(+parseJWT(token).exp*1000 - 5000)  // поставим истечение токена на 5 сек раньше
 }
