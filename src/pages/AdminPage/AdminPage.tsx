@@ -1,12 +1,12 @@
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
-import { Navigation } from '../Navigation/Header'
-import { UserGallery } from '../PUserGallery/PUserGallery'
+import { Navigation } from '../../components/Navigation/Header'
+import { UserGallery } from '../../components/PUserGallery/PUserGallery'
 import { User as UserNav } from '../../components/User/User'
 
 import styles from './style.module.css'
 
-export const Admin = () => {
+export const AdminPage = () => {
   const currentUser = useAppSelector(selectCurrentUser)
 
   return (
