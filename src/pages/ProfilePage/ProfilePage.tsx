@@ -21,7 +21,7 @@ export const ProfilePage: FC = () => {
     setIsWorkoutsShown(true)
   }
 
-  if (!currentUser.localId)
+  if (!currentUser.idToken)
     return <WarningPage text="Пользователь в системе не зарегистрирован!" />
 
   return (

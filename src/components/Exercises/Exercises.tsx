@@ -11,7 +11,6 @@ type ExercisesProps = {
 }
 
 export const Exercises: FC<ExercisesProps> = ({ exercises, onClick }) => {
-  console.log('Exercises -->', exercises)
   return (
     <div className={styles.content}>
       <h2 className={styles.title}>Упражнения</h2>

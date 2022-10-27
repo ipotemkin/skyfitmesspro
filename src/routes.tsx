@@ -11,7 +11,7 @@ import { NotFound } from './pages/NotFound/NotFound'
 import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 import { Workout } from './pages/WorkoutPage/Workout'
 import { selectCurrentUser } from './slices/currentUserSlice'
-import { formatString } from './utils'
+import { checkJWTExpTime, formatString } from './utils'
 
 export const ROUTES = {
   home: '/',
@@ -40,15 +40,9 @@ export const AppRoutes = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   useEffect(() => {
-    if (user.localId) {
-      // console.log('AppRoutes: user.idToken present -->', user.idToken)
-      setIsLoggedIn(true)
-    } 
-    else {
-      // console.log('AppRoutes: no user.idToken -->', user.idToken)
-      setIsLoggedIn(false)
-    }
-  }, [user.localId])
+    if (user.idToken && checkJWTExpTime(user.idToken)) setIsLoggedIn(true)
+    else setIsLoggedIn(false)
+  }, [user.idToken])
 
   return (
     <Routes>

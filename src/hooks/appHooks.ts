@@ -8,11 +8,11 @@ import { useNavigate } from 'react-router-dom'
 import { useGetUserDataMutation, useRefreshTokenMutation } from '../api/auth.api'
 import { EXP_MESSAGE } from '../constants'
 import { ROUTES } from '../routes'
-import { useGoToLoginWithMessage } from './shortcuts'
 import { selectCurrentUser, updateCurrentUser } from '../slices/currentUserSlice'
 import type { AppDispatch, RootState } from '../store'
 import { AppCookies, appCookiesNames } from '../types'
-import { checkJWTExpTime, getJWTExpTime, getUserEmailFromJWT, parseJWT } from '../utils'
+import { checkJWTExpTime, getJWTExpTime, getUserEmailFromJWT, getUserIdFromJWT, parseJWT } from '../utils'
+import { useGoToLoginWithMessage } from './shortcuts'
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<AppDispatch>()
@@ -38,17 +38,18 @@ export const useAppCookies = () => {
 // возвращает фукнцию для загрузки credentials из cookies
 export const useLoadCredentialsFromCookies = () => {
   const { cookies } = useAppCookies()
-  const dispatch = useAppDispatch()
   const [getUserData] = useGetUserDataMutation()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const loadCredentials = async () => {
-    if (cookies && cookies.localId) {
+    if (cookies && cookies.idToken) {
       console.log('updating currentUser')
       const expTime = getJWTExpTime(cookies.idToken)
       const valid = checkJWTExpTime(cookies.idToken)
       const parsedJWT = parseJWT(cookies.idToken)
       const userEmail = getUserEmailFromJWT(cookies.idToken)
+      const userId = getUserIdFromJWT(cookies.idToken)
       console.group('idToken:')
       console.log('decoded idToken -->', parsedJWT)
       console.log('expTime -->', expTime)
@@ -62,7 +63,7 @@ export const useLoadCredentialsFromCookies = () => {
         // хотя по доке должен.
         // Плюс без этого действия router при перезагрузке страницы направляет на /
         // даже, когда пользователь есть
-        dispatch(updateCurrentUser({ ...cookies, email: userEmail }))  
+        dispatch(updateCurrentUser({ ...cookies, email: userEmail, localId: userId }))  
 
         // Получаем данные о пользователе с помощью idToken
         const res = await getUserData(cookies.idToken).unwrap()
@@ -108,7 +109,7 @@ export const useRefreshToken = () => {
     try {
       const response = await doRefreshToken(refreshTokenArg).unwrap()
       const { id_token: idToken, refresh_token: refreshToken } = response
-      setCookies({ idToken, refreshToken })
+      setCookies({ idToken })
       console.log('Tokens updated')
       return { idToken, refreshToken }
     } catch (error) {
@@ -178,18 +179,3 @@ export const useQueryWithRefreshToken = (query: Function, args: Object) => {
 
   return { data, isLoading, error, isError }
 }
-
-
-
-
-// const useUpdateCurrentUser = () => {
-//   const dispatch = useDispatch()
-//   const { setCookies } = useAppCookies()
-
-//   const doUpdateCurrentUser = async (updateData: FirebaseUserRESTAPI) => {
-//     dispatch(updateCurrentUser({ ...updateData }))
-//     setCookies({ ...updateData as AppCookies })
-//   }
-
-//   return { doUpdateCurrentUser }
-// }
