@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 
-import { Admin } from './components/Admin/Admin'
+import { AdminPage } from './pages/AdminPage/AdminPage'
 import { useAppSelector } from './hooks/appHooks'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { LoginForm } from './pages/AuthForm/LoginForm'
@@ -40,15 +40,15 @@ export const AppRoutes = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   useEffect(() => {
-    if (user.idToken) {
-      console.log('AppRoutes: user.idToken present -->', user.idToken)
+    if (user.localId) {
+      // console.log('AppRoutes: user.idToken present -->', user.idToken)
       setIsLoggedIn(true)
     } 
     else {
-      console.log('AppRoutes: no user.idToken -->', user.idToken)
+      // console.log('AppRoutes: no user.idToken -->', user.idToken)
       setIsLoggedIn(false)
     }
-  }, [user.idToken])
+  }, [user.localId])
 
   return (
     <Routes>
@@ -57,7 +57,7 @@ export const AppRoutes = () => {
       <Route path={ROUTES.signup} element={<SignUpForm />} />
       <Route path={`${ROUTES.aboutCourse}/:id`} element={<AboutCourse />} />
       <Route element={<ProtectedRoute isAllowed={isLoggedIn} />}>
-        <Route path={ROUTES.admin} element={<Admin />} />
+        <Route path={ROUTES.admin} element={<AdminPage />} />
         <Route path={ROUTES.profile} element={<ProfilePage />} />
         <Route path={formatString(ROUTES.workout, [':id', ':day'])} element={<Workout />} />
         <Route path="*" element={<NotFound />} />
