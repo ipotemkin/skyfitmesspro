@@ -16,6 +16,7 @@ export const currentUserSlice = createSlice({
     },
     updateCurrentUser: (state, action: PayloadAction<FirebaseUserRESTAPI>) => {
       console.log('in updateCurrentUser')
+      console.log('payload -->', action.payload)
       return state = {
         ...state,
         ...action.payload
@@ -88,10 +89,12 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.refreshToken.matchFulfilled,
       (state, { payload }) => {
+        console.log('currentUserSlice: extraReducers: refreshToken done')
         return state = {
           ...state,
           idToken: payload.id_token, 
-          refreshToken: payload.refresh_token
+          refreshToken: payload.refresh_token,
+          updatingTokens: false
         }
       }
     )
@@ -99,6 +102,10 @@ export const currentUserSlice = createSlice({
       authApi.endpoints.refreshToken.matchRejected,
       (state, { payload }) => {
         console.error('refreshToken rejected!!!')
+        return state = {
+          ...state,
+          updatingTokens: false
+        }
       }
     )
     // getUserData
@@ -127,6 +134,8 @@ export const {
   deleteCurrentUser
 } = currentUserSlice.actions
 
-export const selectCurrentUser = (state: RootState) => state.currentUser
+export const selectCurrentUser = (state: RootState) => {
+  return state.currentUser
+}
 
 export default currentUserSlice.reducer

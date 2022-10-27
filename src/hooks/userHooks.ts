@@ -1,11 +1,17 @@
 import { merge } from 'lodash'
 import { useEffect, useState } from 'react'
+// import { useDispatch } from 'react-redux'
+// import { useNavigate } from 'react-router-dom'
 
 import { useGetCourseQuery, useGetCoursesQuery } from '../api/courses.api'
 import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
+// import { EXP_MESSAGE } from '../constants'
+// import { ROUTES } from '../routes'
 import { selectCurrentUser } from '../slices/currentUserSlice'
+// import { setMessage } from '../slices/messageSlice'
 import { CourseData } from '../types'
-import { useAppSelector } from './appHooks'
+// import { checkJWTExpTime } from '../utils'
+import { useAppSelector, useQueryWithRefreshToken } from './appHooks'
 
 // возвращает список ключей, не равных null
 // это необходимо для очистки сырой информации из БД
@@ -21,12 +27,12 @@ const getValidKeys = (obj: object) => {
 export const useUserCourses = (uid: string) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery({uid, idToken: user.idToken})
+  const {
+    data: userCoursesData, isLoading: isUserCoursesLoading
+  } = useQueryWithRefreshToken(useGetUserCoursesQuery, {uid, idToken: user.idToken})
   const [userCourses, setUserCourses] = useState<CourseData[]>()
   const [isLoading, setIsloading] = useState(true)
-
-  console.log('useUserCourses: sourses -->', courses)
-
+  
   useEffect(() => {
     if (userCoursesData && courses) {
       const res = []
@@ -49,7 +55,10 @@ export const useUserCourses = (uid: string) => {
 export const useCoursesWithSubscription = (uid: string) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-  const { data: userCoursesData, isLoading: isUserCoursesLoading } = useGetUserCoursesQuery({uid, idToken: user.idToken})
+  const {
+    data: userCoursesData, isLoading: isUserCoursesLoading
+  } = useQueryWithRefreshToken(useGetUserCoursesQuery, {uid, idToken: user.idToken})
+  
   const [isLoading, setIsloading] = useState(true)
   const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
 
@@ -84,13 +93,16 @@ export const useCoursesWithSubscription = (uid: string) => {
 // полнные даннные по заданному курсу пользователя
 export const useUserCourse = (courseId: number) => {
   const user = useAppSelector(selectCurrentUser)
+
   const { data: course } = useGetCourseQuery(courseId)
   const { 
     data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
-  } = useGetUserCourseQuery({
-    idToken: user.idToken,
-    uid: user.localId || '',
-    courseId
+  } = useQueryWithRefreshToken(
+    useGetUserCourseQuery,
+    {
+      idToken: user.idToken,
+      uid: user.localId || '',
+      courseId
   })
   const [userCourse, setUserCourse] = useState<CourseData>()
   const [isError, setIsError] = useState(false)
@@ -103,16 +115,55 @@ export const useUserCourse = (courseId: number) => {
   useEffect(() => {
     
     // если загрузка завершена но нет данных или пользователя
-    if (!isUserCourseLoading && (!userCourseData || !user.localId)) setIsError(true)
+    if (!isUserCourseLoading && (!userCourseData || !user?.localId)) setIsError(true)
     
     // если есть все данные, то ставим загрузку в false
-    else if (userCourseData && course && user.localId) {
+    else if (userCourseData && course && user?.localId) {
       const res = {}
       merge(res, course, userCourseData)
       setUserCourse(res)
     }
-      
-  }, [userCourseData, course, isUserCourseLoading, user.localId])
+
+  }, [userCourseData, course, isUserCourseLoading, user?.localId])
   
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }
+
+// обертка для useAppSelector(selectCurrentUser),
+// проверяет валидность токена и обновляет, если необходимо
+// export const useCurrentUser = () => {
+//   const user = useAppSelector(selectCurrentUser)
+//   const { refreshToken } = useRefreshToken()
+//   const navigate = useNavigate()
+//   const dispatch = useDispatch()
+
+//   if (user.idToken) {
+//     const isTokenValid = checkJWTExpTime(user.idToken)
+
+//     if (isTokenValid || user.updatingTokens) {
+//       return user
+//     }
+
+//     if (user.refreshToken) {
+//       // dispatch(updateCurrentUser({
+//       //   updatingTokens: true
+//       // }))
+//       refreshToken(user.refreshToken)
+//         .catch((error) => {
+//           console.warn('Token refresh failed')
+//           dispatch(setMessage(EXP_MESSAGE))
+//           navigate(ROUTES.login)        
+//         })
+//     } else {
+//       console.warn('No refresh token')
+//     }
+
+//   } else {
+//     console.warn('No idToken')
+//   }
+  
+//   return user
+  
+//   // dispatch(setMessage(EXP_MESSAGE))
+//   // navigate(ROUTES.login)        
+// }

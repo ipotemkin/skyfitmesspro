@@ -2,7 +2,7 @@ import { Button } from '@mui/material'
 import { FC } from 'react'
 
 import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
-import { useAppSelector } from '../../hooks/appHooks'
+import { useAppSelector, useMutationWithRefreshToken } from '../../hooks/appHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { CourseData } from '../../types'
 
@@ -14,26 +14,29 @@ export const CourseLine: FC<Props> = ({ item }) => {
   const user = useAppSelector(selectCurrentUser)
   const [addCourse] = useAddUserCourseMutation()
   const [delCourse] = useDelUserCourseMutation()
+  const handleMutationWithRefreshToken = useMutationWithRefreshToken()
 
-  const handleAddCourse = () => {
+  const handleAddCourse = async () => {
     if (user && user.localId && item.id !== undefined) {
-      addCourse({
-        uid: user.localId,
-        courseId: item.id,
-        idToken: user.idToken
-      })
+      await handleMutationWithRefreshToken(
+        (idToken: string) => addCourse({
+            uid: user.localId!,
+            courseId: item.id!,
+            idToken: idToken
+      }))
     } else {
       console.error('error adding course:', item.id)
     }
   }
 
-  const handleRemoveCourse = () => {
+  const handleRemoveCourse = async () => {
     if (user && user.localId && item.id !== undefined) {
-      delCourse({
-        uid: user.localId,
-        courseId: item.id,
-        idToken: user.idToken
-      })
+      await handleMutationWithRefreshToken(
+        (idToken: string) => delCourse({
+          uid: user.localId!,
+          courseId: item.id!,
+          idToken: idToken
+      }))
     } else {
       console.error('error deleting the course with id:', item.id)
     }

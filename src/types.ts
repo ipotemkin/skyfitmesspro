@@ -61,7 +61,9 @@ export type FirebaseUserRESTAPI = {
   refreshToken?: string
   registered?: boolean
   kind?: string
-  expiresIn?: string 
+  expiresIn?: string
+  needRrefreshToken?: boolean
+  updatingTokens?: boolean
 }
 
 export type RefreshTokenResponse = {
@@ -85,4 +87,23 @@ export const appCookiesNames = ['idToken', 'refreshToken', 'localId', 'email']
 
 export type Message = {
   value?: string
+}
+
+// стурктура idToken
+export type idTokenType = {
+  aud: string  // project name
+  auth_time: number // время последней авторизации
+  email: string
+  email_verified: boolean
+  exp: number  // время экспирации токена
+  firebase: {
+    identities: {
+      email: string[]
+    }
+    sign_in_provider: string
+  }
+  iat: number  // issued at
+  iss: string  // "https://securetoken.google.com/skyfitnesspro-202210"
+  sub: string  // == user_id
+  user_id: string
 }
