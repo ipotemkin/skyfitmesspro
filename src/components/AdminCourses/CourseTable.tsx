@@ -1,14 +1,16 @@
 import { FC } from 'react'
+import { useCoursesWithSubscription } from '../../hooks/userHooks'
 
-import { CourseData } from '../../types'
 import { CourseLine } from './CourseLine'
 import { Header } from './Header'
 
 import styles from './style.module.css'
 
-type Props = { courses: CourseData[] }
+type Props = { uid: string }
 
-export const CourseTable: FC<Props> = ({ courses }) => {
+export const CourseTable: FC<Props> = ({ uid }) => {
+  const { data: courses } = useCoursesWithSubscription(uid)
+
   return (
     <div className={styles.table}>
       <Header/>

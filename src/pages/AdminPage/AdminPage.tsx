@@ -1,10 +1,10 @@
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { Navigation } from '../../components/Navigation/Header'
-import { UserGallery } from '../../components/PUserGallery/PUserGallery'
 import { User as UserNav } from '../../components/User/User'
 
 import styles from './style.module.css'
+import { CourseTable } from '../../components/AdminCourses/CourseTable'
 
 export const AdminPage = () => {
   const currentUser = useAppSelector(selectCurrentUser)
@@ -16,20 +16,7 @@ export const AdminPage = () => {
           <UserNav user={currentUser} />
         </Navigation>
         <h1 className={styles.heading}>Управление курсами</h1>
-
-
-        {/* <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 12,
-            width: 200,
-            margin: 20,
-          }}
-        >
-          <h3>Администрирование</h3>
-        </div> */}
-        {currentUser.localId && <UserGallery uid={currentUser.localId} />}
+        {currentUser.localId && <CourseTable uid={currentUser.localId} />}
       </div>
     </div>
   )
