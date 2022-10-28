@@ -52,7 +52,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
 
     try {
       const res = await changeEmail({ idToken: user.idToken, email: data.email }).unwrap()
-      setCookies({ ...res } as AppCookies)
+      setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
       console.error('Change email failed -->', error)
