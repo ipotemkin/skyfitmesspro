@@ -1,16 +1,17 @@
 import classNames from 'classnames'
 import { FC, useState } from 'react'
-import { FormData } from '../../types'
-import { useNavigate } from 'react-router-dom'
-import { Logo } from '../../components/Logo/Logo'
-import { Button } from '../../components/Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
+import { useSignUpMutation } from '../../api/auth.api'
+import { useAddUserMutation } from '../../api/users.api'
+import { Button } from '../../components/Button/Button'
+import { Logo } from '../../components/Logo/Logo'
+import { ROUTES } from '../../routes'
+import { FormData } from '../../types'
+import { getErrorMessage } from '../../utils'
 
 import styles from './style.module.css'
-import { ROUTES } from '../../routes'
-import { useSignUpMutation } from '../../api/auth.api'
-import { getErrorMessage } from '../../utils'
-import { useAddUserMutation } from '../../api/users.api'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6

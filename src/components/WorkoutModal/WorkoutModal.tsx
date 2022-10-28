@@ -1,6 +1,7 @@
 import { FC } from 'react'
-import { Modal } from '../Modal/Modal'
+
 import { useUserCourse } from '../../hooks/userCourseHooks'
+import { Modal } from '../Modal/Modal'
 import { WorkoutList } from '../WorkoutList/WorkoutList'
 
 import styles from './style.module.css'

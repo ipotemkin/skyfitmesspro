@@ -1,10 +1,10 @@
-import { useAppSelector } from '../../hooks/appHooks'
-import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { CourseTable } from '../../components/AdminCourses/CourseTable'
 import { Navigation } from '../../components/Navigation/Header'
 import { User as UserNav } from '../../components/User/User'
+import { useAppSelector } from '../../hooks/appHooks'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 import styles from './style.module.css'
-import { CourseTable } from '../../components/AdminCourses/CourseTable'
 
 export const AdminPage = () => {
   const currentUser = useAppSelector(selectCurrentUser)

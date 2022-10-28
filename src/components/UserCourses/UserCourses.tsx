@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 
-import { Card } from '../Card/Card'
-import { FirebaseUserRESTAPI } from '../../types'
 import { useUserCourses } from '../../hooks/userCourseHooks'
+import { FirebaseUserRESTAPI } from '../../types'
+import { Card } from '../Card/Card'
+import { Warning } from '../Warning/Warning'
 
 import styles from './style.module.css'
-import { Warning } from '../Warning/Warning'
 
 type Props = {
   user: FirebaseUserRESTAPI
