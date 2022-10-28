@@ -9,3 +9,15 @@
   top: 0;
   left: 0;
 }
+
+@media (max-width: 1200px) {
+  .container {
+    height: 450px;
+  }
+}
+
+@media (max-width: 840px) {
+  .container {
+    height: 340px;
+  }
+}
