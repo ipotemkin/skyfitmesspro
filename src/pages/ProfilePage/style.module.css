@@ -27,3 +27,10 @@
     padding-left: calc(50% - 400px);
   }
 }
+
+@media (max-width: 840px) {
+  .wrapper {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
