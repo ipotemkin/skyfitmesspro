@@ -87,7 +87,7 @@ export const useCoursesWithSubscription = (uid: string) => {
   return { data: coursesWithSubscription, isLoading }
 }
 
-// полнные даннные по заданному курсу пользователя
+// полные даннные по заданному курсу пользователя
 export const useUserCourse = (courseId: number) => {
   const user = useAppSelector(selectCurrentUser)
 

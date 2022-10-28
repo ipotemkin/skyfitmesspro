@@ -15,8 +15,8 @@ export const currentUserSlice = createSlice({
       state = {...action.payload}
     },
     updateCurrentUser: (state, action: PayloadAction<FirebaseUserRESTAPI>) => {
-      console.log('in updateCurrentUser')
-      console.log('payload -->', action.payload)
+      // console.log('in updateCurrentUser')
+      // console.log('payload -->', action.payload)
       return state = {
         ...state,
         ...action.payload
