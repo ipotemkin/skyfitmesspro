@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react'
+
 import { Modal } from '../Modal/Modal'
 import { ReactComponent as Success } from './success.svg'
 

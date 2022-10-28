@@ -1,20 +1,21 @@
-import { Modal } from '../Modal/Modal'
-import { Exercise } from '../../types'
-import { Button } from '../Button/Button'
-import { ProgressInput } from './ProgressInput'
 import { FC, useEffect, useState } from 'react'
+
 import {
   ExercisePayload,
   useSetWorkoutStatusMutation,
   useUpdateUserExerciseProgressMutation,
   WorkoutArg,
-  WorkoutStatusArg,
+  WorkoutStatusArg
 } from '../../api/users.api'
+import { useAppSelector } from '../../hooks/appHooks'
+import { useMutationWithRefreshToken } from '../../hooks/authHooks'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { Exercise } from '../../types'
+import { Button } from '../Button/Button'
+import { Modal } from '../Modal/Modal'
+import { ProgressInput } from './ProgressInput'
 
 import styles from './style.module.css'
-import { useAppSelector } from '../../hooks/appHooks'
-import { selectCurrentUser } from '../../slices/currentUserSlice'
-import { useMutationWithRefreshToken } from '../../hooks/authHooks'
 
 type ProgressModalProps = {
   setIsOpened: Function

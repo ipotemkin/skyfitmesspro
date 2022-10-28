@@ -10,7 +10,6 @@ import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { setMessage } from '../../slices/messageSlice'
-import { AppCookies } from '../../types'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
 
@@ -50,7 +49,7 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
       const res = await changePassword({
         idToken: user.idToken, password: data.password
       }).unwrap()
-      setCookies({ ...res } as AppCookies)
+      setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
       console.error('Change password failed -->', error)

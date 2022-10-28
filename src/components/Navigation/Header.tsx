@@ -9,7 +9,6 @@ type NavigationProps = {
   children?: ReactNode
 }
 
-
 export const Navigation: FC<NavigationProps> = ({ logoColor, children }) => {  
   return (
     <header className={styles.header}>

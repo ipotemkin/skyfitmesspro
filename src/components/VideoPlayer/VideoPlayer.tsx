@@ -1,6 +1,6 @@
 import { FC } from 'react'
-
 import ReactPlayer from 'react-player/youtube'
+
 import loader from './gym.jpg'
 
 import styles from './style.module.css'

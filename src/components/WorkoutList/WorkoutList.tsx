@@ -1,12 +1,12 @@
-import React, { FC, useEffect, useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
+import { ROUTES } from '../../routes'
+import { Workout } from '../../types'
+import { formatString } from '../../utils'
 import { WorkoutListItem } from './WorkoutListItem'
 
 import styles from './style.module.css'
-import { Workout } from '../../types'
-import { Link } from 'react-router-dom'
-import { formatString } from '../../utils'
-import { ROUTES } from '../../routes'
 
 type WorkoutListProps = {
   workouts: Workout[]
