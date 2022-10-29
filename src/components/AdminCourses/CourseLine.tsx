@@ -3,7 +3,7 @@ import { FC } from 'react'
 
 import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
 import { useAppSelector } from '../../hooks/appHooks'
-import { useMutationWithRefreshToken } from '../../hooks/authHooks'
+// import { useMutationWithRefreshToken } from '../../hooks/authHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { CourseData } from '../../types'
 
@@ -15,16 +15,21 @@ export const CourseLine: FC<Props> = ({ item }) => {
   const user = useAppSelector(selectCurrentUser)
   const [addCourse] = useAddUserCourseMutation()
   const [delCourse] = useDelUserCourseMutation()
-  const handleMutationWithRefreshToken = useMutationWithRefreshToken()
+  // const handleMutationWithRefreshToken = useMutationWithRefreshToken()
 
   const handleAddCourse = async () => {
     if (user && user.localId && item.id !== undefined) {
-      await handleMutationWithRefreshToken(
-        (idToken: string) => addCourse({
+      await addCourse({
             uid: user.localId!,
             courseId: item.id!,
-            idToken: idToken
-      }))
+            idToken: user.idToken
+      })
+      // await handleMutationWithRefreshToken(
+      //   (idToken: string) => addCourse({
+      //       uid: user.localId!,
+      //       courseId: item.id!,
+      //       idToken: idToken
+      // }))
     } else {
       console.error('error adding course:', item.id)
     }
@@ -32,12 +37,18 @@ export const CourseLine: FC<Props> = ({ item }) => {
 
   const handleRemoveCourse = async () => {
     if (user && user.localId && item.id !== undefined) {
-      await handleMutationWithRefreshToken(
-        (idToken: string) => delCourse({
+      await delCourse({
           uid: user.localId!,
           courseId: item.id!,
-          idToken: idToken
-      }))
+          idToken: user.idToken
+      })
+      
+      // await handleMutationWithRefreshToken(
+      //   (idToken: string) => delCourse({
+      //     uid: user.localId!,
+      //     courseId: item.id!,
+      //     idToken: idToken
+      // }))
     } else {
       console.error('error deleting the course with id:', item.id)
     }

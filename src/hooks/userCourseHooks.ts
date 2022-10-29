@@ -24,9 +24,15 @@ const getValidKeys = (obj: object) => {
 export const useUserCourses = (uid: string) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
+
+  // const {
+  //   data: userCoursesData, isLoading: isUserCoursesLoading
+  // } = useQueryWithRefreshToken(useGetUserCoursesQuery, {uid, idToken: user.idToken})
+
   const {
     data: userCoursesData, isLoading: isUserCoursesLoading
-  } = useQueryWithRefreshToken(useGetUserCoursesQuery, {uid, idToken: user.idToken})
+  } = useGetUserCoursesQuery({uid, idToken: user.idToken})
+
   const [userCourses, setUserCourses] = useState<CourseData[]>()
   const [isLoading, setIsloading] = useState(true)
   
@@ -52,9 +58,14 @@ export const useUserCourses = (uid: string) => {
 export const useCoursesWithSubscription = (uid: string) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
+
+  // const {
+  //   data: userCoursesData, isLoading: isUserCoursesLoading
+  // } = useQueryWithRefreshToken(useGetUserCoursesQuery, {uid, idToken: user.idToken})
+
   const {
     data: userCoursesData, isLoading: isUserCoursesLoading
-  } = useQueryWithRefreshToken(useGetUserCoursesQuery, {uid, idToken: user.idToken})
+  } = useGetUserCoursesQuery({uid, idToken: user.idToken})
   
   const [isLoading, setIsloading] = useState(true)
   const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
@@ -92,15 +103,26 @@ export const useUserCourse = (courseId: number) => {
   const user = useAppSelector(selectCurrentUser)
 
   const { data: course } = useGetCourseQuery(courseId)
+
+  // const { 
+  //   data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
+  // } = useQueryWithRefreshToken(
+  //   useGetUserCourseQuery,
+  //   {
+  //     idToken: user.idToken,
+  //     uid: user.localId || '',
+  //     courseId
+  // })
+
   const { 
     data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
-  } = useQueryWithRefreshToken(
-    useGetUserCourseQuery,
+  } = useGetUserCourseQuery(
     {
       idToken: user.idToken,
       uid: user.localId || '',
       courseId
   })
+
   const [userCourse, setUserCourse] = useState<CourseData>()
   const [isError, setIsError] = useState(false)
 

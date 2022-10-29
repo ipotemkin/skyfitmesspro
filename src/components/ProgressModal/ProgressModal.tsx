@@ -8,7 +8,7 @@ import {
   WorkoutStatusArg
 } from '../../api/users.api'
 import { useAppSelector } from '../../hooks/appHooks'
-import { useMutationWithRefreshToken } from '../../hooks/authHooks'
+// import { useMutationWithRefreshToken } from '../../hooks/authHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { Exercise } from '../../types'
 import { Button } from '../Button/Button'
@@ -38,7 +38,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
   const [form, setForm] = useState<Form>({ exercises: [] })
   const [updateProgress] = useUpdateUserExerciseProgressMutation()
   const [setWorkoutStatus] = useSetWorkoutStatusMutation()
-  const handleMutationWithRefreshToken = useMutationWithRefreshToken()
+  // const handleMutationWithRefreshToken = useMutationWithRefreshToken()
 
   useEffect(() => {
     setForm({ exercises })
@@ -74,20 +74,26 @@ export const ProgressModal: FC<ProgressModalProps> = ({
             userProgress: item.userProgress || 0,
           },
         }
-        handleMutationWithRefreshToken((idToken: string) => updateProgress({
-          ...updateData,
-          arg: { ...updateData.arg, idToken }
-        }))
+        updateProgress({
+          ...updateData
+        })
+        // handleMutationWithRefreshToken((idToken: string) => updateProgress({
+        //   ...updateData,
+        //   arg: { ...updateData.arg, idToken }
+        // }))
       })
       const workoutStatusArg: WorkoutStatusArg = {
         ...workoutArg,
         done: workoutStatus,
         idToken: user.idToken
       }
-      handleMutationWithRefreshToken((idToken: string) => setWorkoutStatus({
-        ...workoutStatusArg,
-        idToken
-      }))
+      setWorkoutStatus({
+        ...workoutStatusArg
+      })
+      // handleMutationWithRefreshToken((idToken: string) => setWorkoutStatus({
+      //   ...workoutStatusArg,
+      //   idToken
+      // }))
     }
     if (onClick) onClick()
   }

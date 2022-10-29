@@ -1,3 +1,4 @@
+import { SerializedError } from '@reduxjs/toolkit';
 import {
     BaseQueryFn,
     FetchArgs,
@@ -10,6 +11,7 @@ import { ROUTES } from '../routes';
 import { deleteCurrentUser } from '../slices/currentUserSlice';
 import { setMessage } from '../slices/messageSlice';
 import { RootState } from '../store';
+import { RefreshTokenResponse } from '../types';
 import { authApi } from './auth.api';
 //   import { logout } from '../features/userSlice';
   
@@ -17,7 +19,7 @@ import { authApi } from './auth.api';
 //   
   
 // Create a new mutex
-const mutex = new Mutex();
+const mutex = new Mutex()
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL + '/users'
@@ -34,6 +36,17 @@ const customFetchBase: BaseQueryFn<
 
   console.log('customFetchBase: result -->', result)
   console.log('customFetchBase: response status --> ', result.meta?.response?.status)
+  console.log('args -->', args)
+
+  const matchResult = (args as string).match(/(^.*auth=)(.*)$/)
+  let newArgs = ''
+  if (matchResult) {
+    newArgs = matchResult[1]
+    let argsToken = matchResult[2]
+    console.log('newArgs -->', newArgs)
+    console.log('argsToken -->', argsToken)
+  }
+
   alert(`customFetchBase: response status --> ${result.meta?.response?.status}`)
 
   if ([400, 401, 403].includes(result.error?.status as number)) {
@@ -50,12 +63,20 @@ const customFetchBase: BaseQueryFn<
         alert('before if (refreshToken)')
         if (refreshToken) {
           alert('before refreshing token')
-          const res = await api.dispatch(authApi.endpoints.refreshToken.initiate(refreshToken))
+          const res: {
+            data: RefreshTokenResponse } | { error: FetchBaseQueryError | SerializedError
+          } = await api.dispatch(authApi.endpoints.refreshToken.initiate(refreshToken))
           console.log('api.dispatch -->', res)
           alert('after refreshing token')
 
-          if ('access_token' in res) {
+          if ('data' in res && res.data.id_token) {
+            alert('access_token in place')
+            args = newArgs + res.data.id_token
+
+            // const newToken = (res as RefreshTokenResponse)._token
+
             // Retry the initial query
+            console.log('baseQuery args -->', args)
             result = await baseQuery(args, api, extraOptions)
 
           } else {
@@ -64,6 +85,11 @@ const customFetchBase: BaseQueryFn<
             api.dispatch(setMessage(EXP_MESSAGE))
             window.location.href = ROUTES.login
           }
+        } else {
+          document.cookie = ''
+          api.dispatch(deleteCurrentUser())
+          api.dispatch(setMessage(EXP_MESSAGE))
+          window.location.href = ROUTES.login
         }
         
       } finally {
