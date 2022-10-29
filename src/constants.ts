@@ -9,6 +9,8 @@ export const NUMBER_OF_SKELETONS = 6
 export const API_URL =
   'https://skyfitnesspro-202210-default-rtdb.europe-west1.firebasedatabase.app/'
 
+export const API_AUTH_URL = 'https://identitytoolkit.googleapis.com/v1'
+
 type ErrorTypes = {
   [index: string]: string
 }
