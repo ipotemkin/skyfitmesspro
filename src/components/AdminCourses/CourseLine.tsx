@@ -1,7 +1,10 @@
 import { Button } from '@mui/material'
 import { FC } from 'react'
 
-import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
+import {
+  useAddUserCourseMutation,
+  useDelUserCourseMutation,
+} from '../../api/users.api'
 import { useAppSelector } from '../../hooks/appHooks'
 import { useMutationWithRefreshToken } from '../../hooks/authHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
@@ -19,12 +22,13 @@ export const CourseLine: FC<Props> = ({ item }) => {
 
   const handleAddCourse = async () => {
     if (user && user.localId && item.id !== undefined) {
-      await handleMutationWithRefreshToken(
-        (idToken: string) => addCourse({
-            uid: user.localId!,
-            courseId: item.id!,
-            idToken: idToken
-      }))
+      await handleMutationWithRefreshToken((idToken: string) =>
+        addCourse({
+          uid: user.localId!,
+          courseId: item.id!,
+          idToken: idToken,
+        })
+      )
     } else {
       console.error('error adding course:', item.id)
     }
@@ -32,34 +36,34 @@ export const CourseLine: FC<Props> = ({ item }) => {
 
   const handleRemoveCourse = async () => {
     if (user && user.localId && item.id !== undefined) {
-      await handleMutationWithRefreshToken(
-        (idToken: string) => delCourse({
+      await handleMutationWithRefreshToken((idToken: string) =>
+        delCourse({
           uid: user.localId!,
           courseId: item.id!,
-          idToken: idToken
-      }))
+          idToken: idToken,
+        })
+      )
     } else {
       console.error('error deleting the course with id:', item.id)
     }
   }
-  
+
   return (
     <div
       className={styles.line}
-      style={{ backgroundColor: (item.id! % 2 === 0 ? 'whitesmoke' : '')}}
+      style={{ backgroundColor: item.id! % 2 === 0 ? 'whitesmoke' : '' }}
     >
       <div className={styles.col1}>{item.id! + 1}</div>
       <div className={styles.col2}>{item.name}</div>
       <div className={styles.col3}>
-        {item.subscription
-          && <Button style={{ color: 'red' }} onClick={handleRemoveCourse}
-          >
+        {item.subscription && (
+          <Button style={{ color: 'red' }} onClick={handleRemoveCourse}>
             Удалить
-        </Button>}
-        {!item.subscription
-          && <Button onClick={handleAddCourse}>
-            Добавить
-          </Button>}
+          </Button>
+        )}
+        {!item.subscription && (
+          <Button onClick={handleAddCourse}>Добавить</Button>
+        )}
       </div>
     </div>
   )

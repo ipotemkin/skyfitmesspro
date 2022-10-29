@@ -13,10 +13,9 @@ export const CourseTable: FC<Props> = ({ uid }) => {
 
   return (
     <div className={styles.table}>
-      <Header/>
-      {courses && courses.map((item) => (
-        <CourseLine key={item.name} item={item}/>
-      ))}
+      <Header />
+      {courses &&
+        courses.map((item) => <CourseLine key={item.name} item={item} />)}
     </div>
   )
 }

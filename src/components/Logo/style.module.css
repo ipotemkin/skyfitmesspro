@@ -11,15 +11,8 @@
   display: block;
 }
 
-
-@media (max-width: 1200px) {
-}
-
-@media (max-width: 860px) {
-}
-
-@media (max-width: 600px) {
+@media (max-width: 425px) {
   .logoName {
-    display: none;
+    width: 150px;
   }
 }
