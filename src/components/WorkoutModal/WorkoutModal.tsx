@@ -18,11 +18,11 @@ export const WorkoutModal: FC<WorkoutModalProps> = ({
   const { data } = useUserCourse(courseId)
 
   return (
-    <Modal isOpen={() => setIsOpened(false)}>
+    <Modal isOpen={setIsOpened}>
       <div className={styles.content}>
         <h2 className={styles.title}>Выберите тренировку</h2>
         {data && data.workouts && (
-          <WorkoutList workouts={data.workouts} courseId={courseId} />
+          <WorkoutList workouts={data.workouts} courseId={courseId} setIsOpened={setIsOpened}/>
         )}
       </div>
     </Modal>
