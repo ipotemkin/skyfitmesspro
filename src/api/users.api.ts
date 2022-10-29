@@ -1,5 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { API_URL } from '../constants'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import { CourseData, UserData } from '../types'
 import customFetchBase from './customFetchBase'
 
@@ -42,15 +41,6 @@ export const usersApi = createApi({
   reducerPath: 'users/api',
   tagTypes: ['UserCourse', 'User'],
   baseQuery: customFetchBase,
-  // ({
-  //   baseUrl: API_URL + '/users',
-  //   // prepareHeaders: (headers, { getState }) => {
-  //   //   const token = (getState() as RootState).currentUser.idToken
-  //   //   if (token) headers.set('authorization', `Bearer ${token}`)
-  //   //   return headers;
-  //   // },
-
-  // }),
   endpoints: (build) => ({
     addUser: build.mutation<void, UserArg>({
       query: ({idToken, uid }) => ({

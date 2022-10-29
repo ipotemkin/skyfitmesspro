@@ -8,7 +8,6 @@ import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
 import { selectCurrentUser } from '../slices/currentUserSlice'
 import { CourseData } from '../types'
 import { useAppSelector } from './appHooks'
-import { useQueryWithRefreshToken } from './authHooks'
 
 // возвращает список ключей, не равных null
 // это необходимо для очистки сырой информации из БД

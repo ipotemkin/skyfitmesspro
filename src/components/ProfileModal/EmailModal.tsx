@@ -9,7 +9,6 @@ import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { setMessage } from '../../slices/messageSlice'
-import { AppCookies } from '../../types'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
 
