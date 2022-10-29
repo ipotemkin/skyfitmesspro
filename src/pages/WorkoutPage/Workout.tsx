@@ -9,6 +9,7 @@ import { ProgressModal } from '../../components/ProgressModal/ProgressModal'
 import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
 import { User } from '../../components/User/User'
 import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
+import { WorkoutModal } from '../../components/WorkoutModal/WorkoutModal'
 import { useAppSelector } from '../../hooks/appHooks'
 import { useUserCourse } from '../../hooks/userCourseHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
@@ -17,13 +18,14 @@ import { WarningPage } from '../WarningPage/WarningPage'
 import styles from './style.module.css'
 
 export const Workout: FC = () => {
-  const { id , day } = useParams()
+  const { id, day } = useParams()
   const courseId = Number(id) - 1
   const workoutIdx = Number(day) - 1
-  
+
   const user = useAppSelector(selectCurrentUser)
   const [isModalOneShown, setIsModalOneShown] = useState(false)
   const [isModalTwoShown, setIsModalTwoShown] = useState(false)
+  const [isWorkoutsShown, setIsWorkoutsShown] = useState(false)
   const { data, isLoading, isError } = useUserCourse(courseId)
 
   if (isLoading || (!data && !isError))
@@ -47,11 +49,15 @@ export const Workout: FC = () => {
   const workoutArg: WorkoutArg = {
     uid: user.localId,
     courseId,
-    workoutId: workoutIdx
+    workoutId: workoutIdx,
   }
 
   const handleClick = () => {
     setIsModalOneShown(true)
+  }
+
+  const handleWorkoutClick = () => {
+    setIsWorkoutsShown(true)
   }
 
   const handleSendClick = () => {
@@ -63,7 +69,9 @@ export const Workout: FC = () => {
     <div className={styles.container}>
       <Navigation children={<User user={user} />} />
       <main className={styles.main}>
-        <h1 className={styles.heading}>{data.name}</h1>
+        <h1 className={styles.heading} onClick={handleWorkoutClick}>
+          {data.name}
+        </h1>
         <h2 className={styles.title}>{workout.name}</h2>
 
         <VideoPlayer url={workout.videoUrl || ''} />
@@ -88,6 +96,12 @@ export const Workout: FC = () => {
           setIsOpened={setIsModalTwoShown}
           text="Ваш прогресс
           засчитан!"
+        />
+      )}
+      {isWorkoutsShown && (
+        <WorkoutModal
+          setIsOpened={setIsWorkoutsShown}
+          courseId={Number(id) - 1}
         />
       )}
     </div>
