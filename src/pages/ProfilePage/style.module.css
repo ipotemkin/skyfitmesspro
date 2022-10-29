@@ -34,3 +34,24 @@
     padding-left: calc(50% - 300px);
   }
 }
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
+
+@media (max-width: 680px) {
+  .wrapper {
+    padding-right: calc(50% - 180px);
+    padding-left: calc(50% - 180px);
+  }
+}
+
+@media (max-width: 425px) {
+  .wrapper {
+    padding-right: calc(50% - 150px);
+    padding-left: calc(50% - 150px);
+  }
+}
