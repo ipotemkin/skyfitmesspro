@@ -30,6 +30,30 @@
   }
 
   .list {
+    padding-left: 20px;
+
     max-width: 100%;
+  }
+}
+
+@media (max-width: 840px) {
+  .title {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .listItem {
+    font-size: 22px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 680px) {
+  .title {
+    font-size: 26px;
+  }
+
+  .listItem {
+    font-size: 18px;
   }
 }
