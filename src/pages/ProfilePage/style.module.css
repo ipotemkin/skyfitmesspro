@@ -30,15 +30,8 @@
 
 @media (max-width: 840px) {
   .wrapper {
-    padding-right: calc(50% - 300px);
-    padding-left: calc(50% - 300px);
-  }
-}
-
-@media (max-width: 768px) {
-  .wrapper {
-    padding-right: calc(50% - 300px);
-    padding-left: calc(50% - 300px);
+    padding-right: calc(50% - 320px);
+    padding-left: calc(50% - 320px);
   }
 }
 
