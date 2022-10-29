@@ -11,9 +11,10 @@ import styles from './style.module.css'
 type WorkoutListProps = {
   workouts: Workout[]
   courseId: number
+  setIsOpened: Function
 }
 
-export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId }) => {
+export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId, setIsOpened }) => {
   const scrollContent = useRef<HTMLUListElement>(null)
   const scrollRef = useRef<HTMLInputElement>(null)
 
@@ -25,6 +26,10 @@ export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId }) => {
     }
   }, [])
 
+  const handleLink = () => {
+    setIsOpened(false)
+  }
+
   return (
     <div className={styles.wrapper} ref={scrollRef}>
       <ul className={styles.list} ref={scrollContent}>
@@ -35,6 +40,7 @@ export const WorkoutList: FC<WorkoutListProps> = ({ workouts, courseId }) => {
               className={styles.link}
               to={formatString(ROUTES.workout, [`${courseId + 1}`, `${workout.id}`])}
               style={{ textDecoration: 'none' }}
+              onClick={handleLink}
             >
               {workout && workout.name && (
                 <WorkoutListItem
