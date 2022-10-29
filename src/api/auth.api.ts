@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { apiKey } from '../env'
 import { FirebaseUserRESTAPI, RefreshTokenResponse } from '../types'
 
-const baseUrl = 'https://identitytoolkit.googleapis.com/v1'
+// const baseUrl = 'https://identitytoolkit.googleapis.com/v1/'
+const baseUrl = '/proxy/v1/'
 
 type SingInArg = {
   email: string
