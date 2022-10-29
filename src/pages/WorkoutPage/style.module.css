@@ -168,3 +168,25 @@
   background-color: #e6f9ff;
   border: 2px solid #00c1ff;
 }
+
+@media (max-width: 1200px) {
+  .container {
+    padding-right: calc(50% - 400px);
+    padding-left: calc(50% - 400px);
+  }
+
+  .exercises {
+    flex-direction: column;
+    align-items: center;
+    gap: 65px;
+
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 840px) {
+  .container {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
