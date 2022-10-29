@@ -11,7 +11,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export const useAppCookies = () => {
-  const [ cookies, setCookie, removeCookie ] = useCookies(appCookiesNames)
+  const [cookies, setCookie, removeCookie] = useCookies(appCookiesNames)
 
   const setCookies = (cookiesArg: AppCookies) => {
     for (let item in cookiesArg) {
@@ -26,4 +26,3 @@ export const useAppCookies = () => {
 
   return { cookies, setCookies, removeCookies }
 }
-  

@@ -24,53 +24,58 @@ const getValidKeys = (obj: object) => {
 export const useUserCourses = (uid: string) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-  const {
-    data: userCoursesData, isLoading: isUserCoursesLoading
-  } = useQueryWithRefreshToken(useGetUserCoursesQuery, {uid, idToken: user.idToken})
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } =
+    useQueryWithRefreshToken(useGetUserCoursesQuery, {
+      uid,
+      idToken: user.idToken,
+    })
   const [userCourses, setUserCourses] = useState<CourseData[]>()
-  const [isLoading, setIsloading] = useState(true)
-  
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
     if (userCoursesData && courses) {
       const res = []
       const validKeys: string[] = getValidKeys(userCoursesData)
-      for(let i in validKeys) res.push(courses[+validKeys[i]])
+      for (let i in validKeys) res.push(courses[+validKeys[i]])
       setUserCourses(res)
     }
   }, [userCoursesData, courses])
 
   useEffect(() => {
     if (!isCoursesLoading && !isUserCoursesLoading) {
-      setIsloading(false)
+      setIsLoading(false)
     }
   }, [isCoursesLoading, isUserCoursesLoading])
 
   return { data: userCourses, isLoading }
 }
 
-// возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователяя
+// возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователя
 export const useCoursesWithSubscription = (uid: string) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-  const {
-    data: userCoursesData, isLoading: isUserCoursesLoading
-  } = useQueryWithRefreshToken(useGetUserCoursesQuery, {uid, idToken: user.idToken})
-  
-  const [isLoading, setIsloading] = useState(true)
-  const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } =
+    useQueryWithRefreshToken(useGetUserCoursesQuery, {
+      uid,
+      idToken: user.idToken,
+    })
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [coursesWithSubscription, setCoursesWithSubscription] = useState<
+    CourseData[]
+  >([])
 
   useEffect(() => {
-
-    if (!isUserCoursesLoading && courses) {    
+    if (!isUserCoursesLoading && courses) {
       const coursesTemp: CourseData[] = []
       // добавляем свойство 'subscription'
       if (userCoursesData && userCoursesData.length > 0) {
         userCoursesData.forEach((course: CourseData) => {
           coursesTemp.push({
             ...course,
-            subscription: (course ? true : false)
+            subscription: course ? true : false,
           })
-        })  
+        })
       }
       const res: CourseData[] = []
       merge(res, courses, coursesTemp)
@@ -80,26 +85,27 @@ export const useCoursesWithSubscription = (uid: string) => {
 
   useEffect(() => {
     if (!isCoursesLoading && !isUserCoursesLoading) {
-      setIsloading(false)
+      setIsLoading(false)
     }
   }, [isCoursesLoading, isUserCoursesLoading])
 
   return { data: coursesWithSubscription, isLoading }
 }
 
-// полные даннные по заданному курсу пользователя
+// полные данные по заданному курсу пользователя
 export const useUserCourse = (courseId: number) => {
   const user = useAppSelector(selectCurrentUser)
 
   const { data: course } = useGetCourseQuery(courseId)
-  const { 
-    data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
-  } = useQueryWithRefreshToken(
-    useGetUserCourseQuery,
-    {
-      idToken: user.idToken,
-      uid: user.localId || '',
-      courseId
+  const {
+    data: userCourseData,
+    error,
+    isLoading: isUserCourseLoading,
+    isError: isErrorQuery,
+  } = useQueryWithRefreshToken(useGetUserCourseQuery, {
+    idToken: user.idToken,
+    uid: user.localId || '',
+    courseId,
   })
   const [userCourse, setUserCourse] = useState<CourseData>()
   const [isError, setIsError] = useState(false)
@@ -110,18 +116,16 @@ export const useUserCourse = (courseId: number) => {
   }, [isErrorQuery])
 
   useEffect(() => {
-    
     // если загрузка завершена но нет данных или пользователя
-    if (!isUserCourseLoading && (!userCourseData || !user?.localId)) setIsError(true)
-    
+    if (!isUserCourseLoading && (!userCourseData || !user?.localId))
+      setIsError(true)
     // если есть все данные, то ставим загрузку в false
     else if (userCourseData && course && user?.localId) {
       const res = {}
       merge(res, course, userCourseData)
       setUserCourse(res)
     }
-
   }, [userCourseData, course, isUserCourseLoading, user?.localId])
-  
+
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }

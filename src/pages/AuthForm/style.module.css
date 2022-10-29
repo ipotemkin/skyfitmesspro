@@ -6,6 +6,9 @@
   align-items: center;
   justify-content: center;
 
+  padding-right: calc(50% - 580px);
+  padding-left: calc(50% - 580px);
+
   background: #271a58;
 }
 
@@ -87,7 +90,44 @@
   text-align: center;
 }
 
+@media (max-width: 1200px) {
+  .formWrapper {
+    padding-right: calc(50% - 400px);
+    padding-left: calc(50% - 400px);
+  }
+
+  .title {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 840px) {
+  .formWrapper {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
+
+@media (max-width: 768px) {
+  .formWrapper {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
+
+@media (max-width: 680px) {
+  .formWrapper {
+    padding-right: calc(50% - 180px);
+    padding-left: calc(50% - 180px);
+  }
+}
+
 @media (max-width: 425px) {
+  .formWrapper {
+    padding-right: calc(50% - 150px);
+    padding-left: calc(50% - 150px);
+  }
+
   .form {
     width: 300px;
     height: 440px;
