@@ -17,7 +17,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-bottom: ;
 }
 
 .user {
@@ -31,4 +30,10 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+@media (max-width: 840px) {
+  .title {
+    font-size: 36px;
+  }
 }
