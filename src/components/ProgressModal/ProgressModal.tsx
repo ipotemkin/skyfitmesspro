@@ -57,7 +57,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
     setForm({ exercises: newExercises })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let workoutStatus = true
     if (form.exercises) {
       form.exercises.forEach((item: Exercise, index: number) => {
@@ -74,26 +74,14 @@ export const ProgressModal: FC<ProgressModalProps> = ({
             userProgress: item.userProgress || 0,
           },
         }
-        updateProgress({
-          ...updateData
-        })
-        // handleMutationWithRefreshToken((idToken: string) => updateProgress({
-        //   ...updateData,
-        //   arg: { ...updateData.arg, idToken }
-        // }))
+        updateProgress({ ...updateData }).unwrap()
       })
       const workoutStatusArg: WorkoutStatusArg = {
         ...workoutArg,
         done: workoutStatus,
         idToken: user.idToken
       }
-      setWorkoutStatus({
-        ...workoutStatusArg
-      })
-      // handleMutationWithRefreshToken((idToken: string) => setWorkoutStatus({
-      //   ...workoutStatusArg,
-      //   idToken
-      // }))
+      await setWorkoutStatus({ ...workoutStatusArg }).unwrap()
     }
     if (onClick) onClick()
   }

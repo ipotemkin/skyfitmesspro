@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 
 import { AdminPage } from './pages/AdminPage/AdminPage'
-import { useAppSelector } from './hooks/appHooks'
+import { useAppCookies, useAppSelector } from './hooks/appHooks'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { LoginForm } from './pages/AuthForm/LoginForm'
 import { SignUpForm } from './pages/AuthForm/SignUpForm'
@@ -12,6 +12,9 @@ import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 import { Workout } from './pages/WorkoutPage/Workout'
 import { selectCurrentUser } from './slices/currentUserSlice'
 import { checkJWTExpTime, formatString } from './utils'
+import { useDispatch } from 'react-redux'
+import { setMessage } from './slices/messageSlice'
+import { EXP_MESSAGE } from './constants'
 
 export const ROUTES = {
   home: '/',
@@ -25,24 +28,35 @@ export const ROUTES = {
 
 type ProtectedRouteProps = {
   redirectPath?: string;
-  isAllowed: boolean;
+  isAllowed?: boolean;
 }
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, isAllowed }) => {
+  const dispatch = useDispatch()
+
+  if (isAllowed === undefined) {
+    dispatch(setMessage(EXP_MESSAGE))
+    return <Navigate to={ROUTES.login} replace={true} />
+  }
   if (!isAllowed) return <Navigate to={redirectPath} replace={true} />
   return <Outlet />
 }
 
 export const AppRoutes = () => {
   const user = useAppSelector(selectCurrentUser)
+  const { removeCookies } = useAppCookies()
   
   // если поставить false, то даже если в куках есть данные, перенаправляет на /
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(true)
 
   useEffect(() => {
     if (user.idToken && checkJWTExpTime(user.idToken)) setIsLoggedIn(true)
+    else if (user.idToken && !checkJWTExpTime(user.idToken) && !user.refreshToken) {
+      removeCookies()
+      setIsLoggedIn(undefined)
+    }
     else setIsLoggedIn(false)
-  }, [user.idToken])
+  }, [removeCookies, user.idToken, user.refreshToken])
 
   return (
     <Routes>
