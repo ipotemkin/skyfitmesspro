@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { authApi } from '../api/auth.api'
 
+import { authApi } from '../api/auth.api'
 import { RootState } from '../store'
 import { FirebaseUserRESTAPI } from '../types'
 
@@ -13,6 +13,14 @@ export const currentUserSlice = createSlice({
   reducers: {
     setCurrentUser: (state, action: PayloadAction<FirebaseUserRESTAPI>) => {
       state = {...action.payload}
+    },
+    updateCurrentUser: (state, action: PayloadAction<FirebaseUserRESTAPI>) => {
+      // console.log('in updateCurrentUser')
+      // console.log('payload -->', action.payload)
+      return state = {
+        ...state,
+        ...action.payload
+      }
     },
     deleteCurrentUser: (state) => {
       return state = {...initialState}
@@ -81,9 +89,12 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.refreshToken.matchFulfilled,
       (state, { payload }) => {
+        console.log('currentUserSlice: extraReducers: refreshToken done')
         return state = {
           ...state,
-          refreshToken: payload.refresh_token
+          idToken: payload.id_token, 
+          refreshToken: payload.refresh_token,
+          updatingTokens: false
         }
       }
     )
@@ -91,16 +102,40 @@ export const currentUserSlice = createSlice({
       authApi.endpoints.refreshToken.matchRejected,
       (state, { payload }) => {
         console.error('refreshToken rejected!!!')
+        return state = {
+          ...state,
+          updatingTokens: false
+        }
       }
     )
+    // getUserData
+    builder.addMatcher(
+      authApi.endpoints.getUserData.matchFulfilled,
+      (state, { payload }) => {
+        return state = {
+          ...state,
+          ...payload
+        }
+      }
+    )
+    builder.addMatcher(
+      authApi.endpoints.getUserData.matchRejected,
+      (state, { payload }) => {
+        console.error('getUserData rejected!!!')
+      }
+    )
+    
   }
 })
 
 export const {
   setCurrentUser,
+  updateCurrentUser,
   deleteCurrentUser
 } = currentUserSlice.actions
 
-export const selectCurrentUser = (state: RootState) => state.currentUser
+export const selectCurrentUser = (state: RootState) => {
+  return state.currentUser
+}
 
 export default currentUserSlice.reducer

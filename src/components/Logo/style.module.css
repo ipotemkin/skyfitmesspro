@@ -6,3 +6,13 @@
 
   cursor: pointer;
 }
+
+.logoName {
+  display: block;
+}
+
+@media (max-width: 425px) {
+  .logoName {
+    width: 150px;
+  }
+}

@@ -1,46 +1,106 @@
-# Getting Started with Create React App
+# Сайт для онлайн школы тренировок “SkyFitnessPro”
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+[Demo](https://skyfitnesspro.herokuapp.com/)
 
-## Available Scripts
+## Установка
 
-In the project directory, you can run:
+Склонируйте репозиторий и установите зависимости
 
-### `npm start`
+```sh
+cd skyfitnesspro
+npm install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Создайте файл .env (пример переменной окружения находится в файле .env.example)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Для запуска сервера в development-режиме выполните команду
 
-### `npm test`
+```sh
+npm run serve
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+При необходимости production сборки выполните команду
 
-### `npm run build`
+```sh
+npm run build
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Описание проекта:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Сайт для онлайн школы тренировок “SkyFitnessPro”.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Макет доступен [здесь.](https://www.figma.com/file/QoOmLM2WGbES23xQeDCCYi/%D0%A1%D0%B0%D0%B9%D1%82-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D1%82%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BE%D0%BA?node-id=0%3A1)
 
-### `npm run eject`
+## Структура и функционал приложения
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Главная страница приложения
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [x] логотип, краткое описание
+- [x] список карточек с названиями всех курсов, имеющихся в базе данных
+- [x] кнопка "Войти", при клике на которую пользователь попадает на страницу авторизации
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Страница курса
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [x] содержит логотип приложения и описание курса, имеющееся в базе данных
 
-## Learn More
+### Страница авторизации
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [x] на данной странице пользователь имеет возможность зарегистрироваться или войти в свой аккаунт
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Страница профиля
+
+- [x] логотип приложения
+- [x] информация о пользователе
+- [x] кнопки для смены логина и пароля
+- [x] в правом верхнем углу отображается имя пользователя, при клике на которое появляется дополнительное меню
+- [x] отображается список курсов пользователя
+
+### Страница тренировки
+
+- [x] логотип приложения, краткое описание
+- [x] в правом верхнем углу отображается имя пользователя, при клике на которое появляется дополнительное меню
+- [x] видео тренировки
+- [x] список упражнений (из базы данных)
+- [x] таблица с прогрессом пользователя
+- [x] кнопка для возможности заполнения прогресса по тренировке
+
+### Работа приложения
+
+- [x] приложение реализовано как SPA
+- [x] главная страница:
+  - [x] при клике на кнопку "Войти" пользователь попадает на страницу авторизации, если он еще не авторизован
+  - [x] если пользователь авторизован, то при клике на кнопку "Войти" он сразу попадает на страницу профиля
+  - [x] список карточек выводится в соответствии с названиями всех курсов, имеющихся в базе данных
+  - [x] пока данные прогружаются, пользователь видит скелетоны карточек
+  - [x] при ошибке запроса на странице выводится соответствующая надпись
+  - [x] по клику на выбранный курс пользователь попадает на страницу, где может ознакомиться с его описанием
+  - [x] при нажатии на кнопку "Наверх" страница прокручивается в начало списка доступных курсов
+- [x] страницы авторизации и регистрации:
+  - [x] настроена валидация полей логина и пароля
+  - [x] при возникновении ошибки выводится соответствующее сообщение
+- [x] страница профиля пользователя:
+  - [x] при клике на кнопки "Редактировать e-mail", "Редактировать пароль" появляется модальное окно с возможностью редактировать и сохранять введенные данные
+  - [x] в правом верхнем углу отображается имя пользователя, при клике на которое появляется меню с возможностью добавить/удалить курс (для демонстрации работы приложения), остаться на странице профиля, а также выйти из приложения
+  - [x] в качестве аватарки отображается первая буква имени пользователя
+  - [x] при клике на карточку курса появляется модальное окно с возможностью выбора тренировки, выполненные тренировки отмечены цветом и галочкой
+  - [x] при клике на тренировку пользователь попадает на страницу соответствующей тренировки
+- [x] страница тренировки:
+  - [x] в правом верхнем углу отображается имя пользователя, при клике на которое появляется меню с возможностью добавить/удалить курс (для демонстрации работы приложения), перейти на страницу профиля, а также выйти из приложения
+  - [x] при клике на название курса появляется модальное окно с возможностью выбрать тренировку
+  - [x] возможность просматривать видео тренировки (play, stop, pause, регулировка громкости)
+  - [x] при клике на кнопку "Заполнить свой прогресс" появляется модальное окно с возможностью ввести данные (настроена валидация) и сохранить их, при этом уже имеющиеся до этого данные о количестве выполненных повторений отображаются сразу при открытии окна
+  - [x] после сохранения данных появляется модальное окно с надписью "Ваш прогресс засчитан", исчезающее через 0.8 секунды.
+  - [x] в таблице прогресса отображаются упражнения (список берется из базы данных), а также выводится прогресс в процентах (автоматически рассчитывается после ввода данных пользователем)
+- [x] при попытке неавторизованного пользователя зайти на страницу профиля или тренировки он автоматически попадает на главную страницу
+- [x] при попытке авторизованного пользователя зайти на страницу тренировки, которой нет в списке его курсов, он автоматически попадает на главную страницу
+- [x] при переходе на новую страницу реализована прокрутка страницы в начало
+- [ ] реализована адаптивная верстка (breakpoints: 1440px, 1024px, 768px, 425px)
+
+### Технический стек приложения
+
+- [x] React
+- [x] Redux + Redux Toolkit + RTK Query
+- [x] Firebase
+- [x] React Router DOM, реализация routing
+- [x] TypeScript
+- [x] [Material UI](https://mui.com/material-ui/getting-started/overview/)

@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+
 import {
   ExercisePayload,
   useSetWorkoutStatusMutation,
@@ -6,9 +7,12 @@ import {
   WorkoutArg,
   WorkoutStatusArg
 } from '../../api/users.api'
+import { useAppSelector } from '../../hooks/appHooks'
+import { useMutationWithRefreshToken } from '../../hooks/authHooks'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { Exercise } from '../../types'
 import { Button } from '../Button/Button'
-
+import { Modal } from '../Modal/Modal'
 import { ProgressInput } from './ProgressInput'
 
 import styles from './style.module.css'
@@ -25,11 +29,16 @@ type Form = {
 }
 
 export const ProgressModal: FC<ProgressModalProps> = ({
-  setIsOpened, workoutArg, exercises, onClick,
+  setIsOpened,
+  workoutArg,
+  exercises,
+  onClick,
 }) => {
+  const user = useAppSelector(selectCurrentUser)
   const [form, setForm] = useState<Form>({ exercises: [] })
   const [updateProgress] = useUpdateUserExerciseProgressMutation()
-  const [ setWorkoutStatus ] = useSetWorkoutStatusMutation()
+  const [setWorkoutStatus] = useSetWorkoutStatusMutation()
+  const handleMutationWithRefreshToken = useMutationWithRefreshToken()
 
   useEffect(() => {
     setForm({ exercises })
@@ -53,35 +62,51 @@ export const ProgressModal: FC<ProgressModalProps> = ({
     if (form.exercises) {
       form.exercises.forEach((item: Exercise, index: number) => {
         // проверяем, выполнены ли упражнения
-        workoutStatus &&= (item.userProgress === item.retriesCount)
-        
-        const updateData: ExercisePayload  = {
+        workoutStatus &&= item.userProgress === item.retriesCount
+
+        const updateData: ExercisePayload = {
           arg: {
             ...workoutArg,
             exerciseId: index,
+            idToken: user.idToken
           },
           body: {
-            userProgress: item.userProgress || 0
-          }
+            userProgress: item.userProgress || 0,
+          },
         }
-        updateProgress(updateData)
+        handleMutationWithRefreshToken((idToken: string) => updateProgress({
+          ...updateData,
+          arg: { ...updateData.arg, idToken }
+        }))
       })
       const workoutStatusArg: WorkoutStatusArg = {
         ...workoutArg,
-        done: workoutStatus
+        done: workoutStatus,
+        idToken: user.idToken
       }
-      setWorkoutStatus(workoutStatusArg)
+      handleMutationWithRefreshToken((idToken: string) => setWorkoutStatus({
+        ...workoutStatusArg,
+        idToken
+      }))
     }
     if (onClick) onClick()
   }
-  
+
+  const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    if (event.key === 'Enter') {
+      handleSubmit()
+    }
+  }
+
   return (
-    <div className={styles.modal} onClick={() => setIsOpened(false)}>
-      <div className={styles.content} onClick={(e) => e.stopPropagation()}>
+    <Modal isOpen={() => setIsOpened(false)}>
+      <div className={styles.content} onKeyDown={handleKeydown}>
         <h2 className={styles.title}>Мой прогресс</h2>
         <div className={styles.fields}>
           {form.exercises?.map((exercise: Exercise, index: number) => (
             <ProgressInput
+              id={exercise.id}
               key={exercise.id}
               name={exercise.name}
               value={exercise?.userProgress || ''}
@@ -92,6 +117,6 @@ export const ProgressModal: FC<ProgressModalProps> = ({
         </div>
         <Button onClick={handleSubmit}>Отправить</Button>
       </div>
-    </div>
+    </Modal>
   )
 }

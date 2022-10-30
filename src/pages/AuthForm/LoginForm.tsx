@@ -1,24 +1,40 @@
 import classNames from 'classnames'
-import { FC, useState } from 'react'
-import { FormData } from '../../types'
-import { useNavigate } from 'react-router-dom'
-import { Logo } from '../../components/Logo/Logo'
-import { Button } from '../../components/Button/Button'
+import { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import { useSignInMutation } from '../../api/auth.api'
+import { Button } from '../../components/Button/Button'
+import { Logo } from '../../components/Logo/Logo'
+import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
+import { ROUTES } from '../../routes'
+import { clearMessage, selectMessage } from '../../slices/messageSlice'
+import { FormData } from '../../types'
+import { getErrorMessage } from '../../utils'
 
 import styles from './style.module.css'
-import { ROUTES } from '../../routes'
-import { useSignInMutation } from '../../api/auth.api'
-import { getErrorMessage } from '../../utils'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
 const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
-  const navigate = useNavigate()
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)
   const [login] = useSignInMutation()
+  const { setCookies } = useAppCookies()
+  const message = useAppSelector(selectMessage)
+  const [formMessage, setFormMessage] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (message) {
+      setFormMessage(message)
+      dispatch(clearMessage())
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const {
     register,
@@ -32,12 +48,16 @@ export const LoginForm: FC = () => {
 
     try {
       const res = await login({ email: data.email, password: data.password }).unwrap()
-      console.log('login reponse -->', res)  
+      setCookies({ idToken: res?.idToken })
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error))
       setIsBlocked(false)
     }
+  }
+
+  const focusHandler = () => {
+    setError('')
   }
 
   const clickHandler = () => {
@@ -48,12 +68,14 @@ export const LoginForm: FC = () => {
 
   return (
     <div className={styles.formWrapper}>
+      {formMessage &&<h2 style={{ color: 'white' }}>{formMessage}</h2>}
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.logo}>
           <Logo />
         </div>
         <div className={styles.inputs}>
           <input
+            onFocus={focusHandler}
             className={styles.input}
             placeholder="E-mail"
             {...register('email', {
@@ -69,6 +91,7 @@ export const LoginForm: FC = () => {
           </p>
 
           <input
+            onFocus={focusHandler}
             className={inputPasswordStyle}
             placeholder="Пароль"
             type="password"

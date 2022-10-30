@@ -2,6 +2,8 @@ import classNames from 'classnames'
 import { FC, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+
+import { useAppCookies } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { deleteCurrentUser } from '../../slices/currentUserSlice'
 import { FirebaseUserRESTAPI } from '../../types'
@@ -17,6 +19,7 @@ export const User: FC<Props> = ({ user }) => {
   const [isShowNav, setIsShowNav] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { removeCookies } = useAppCookies()
 
   const handleShowNav = () => {
     setIsShowNav((prev) => !prev)
@@ -24,6 +27,7 @@ export const User: FC<Props> = ({ user }) => {
 
   const handleLogout = () => {
     dispatch(deleteCurrentUser())
+    removeCookies()
   }
 
   const handleProfile = () => {
@@ -37,7 +41,10 @@ export const User: FC<Props> = ({ user }) => {
   return (
     <div className={styles.wrapper} onClick={handleShowNav}>
       <div className={styles.user}>
-        <div className={styles.avatar} />
+        <div className={styles.avatar}>
+          {user.displayName?.trim().charAt(0).toUpperCase() ||
+            user.email?.trim().charAt(0).toUpperCase()}
+        </div>
         <div className={styles.name}>{user.displayName || user.email}</div>
         <Arrow
           className={classNames(styles.arrow, isShowNav && styles.rotate)}

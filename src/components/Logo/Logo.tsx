@@ -1,8 +1,9 @@
 import { FC } from 'react'
-
-import logo from './logo.svg'
-import { LOGO_COLOR_DARK } from '../../constants'
 import { useNavigate } from 'react-router-dom'
+
+import { LOGO_COLOR_DARK } from '../../constants'
+import { ROUTES } from '../../routes'
+import logo from './logo.svg'
 
 import styles from './style.module.css'
 
@@ -11,12 +12,12 @@ type Props = { color?: string }
 export const Logo: FC<Props> = ({ color = LOGO_COLOR_DARK }) => {
   const navigate = useNavigate()
 
-  const handleLogo = () => navigate('/')
+  const handleLogo = () => navigate(ROUTES.home)
 
   return (
     <div className={styles.logo} onClick={handleLogo}>
       <img src={logo} alt="logo" width="29px" />
-      <svg
+      <svg className={styles.logoName}
         width="184"
         height="30"
         viewBox="0 0 184 30"

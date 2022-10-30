@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 
 import { store } from './store'
 import App from './App'
+import { AuthMiddleware } from './middleware/AuthMiddleware'
+import { ScrollToTop } from './components/ScrollToTop/ScrollToTop'
 
 import './index.css'
 
@@ -13,7 +15,10 @@ const root = createRoot(container)
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <ScrollToTop />
+      <AuthMiddleware>
+        <App />
+      </AuthMiddleware>
     </Provider>
   </BrowserRouter>
 )

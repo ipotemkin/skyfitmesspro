@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 
-import { Admin } from './components/Admin/Admin'
+import { AdminPage } from './pages/AdminPage/AdminPage'
 import { useAppSelector } from './hooks/appHooks'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { LoginForm } from './pages/AuthForm/LoginForm'
@@ -11,7 +11,7 @@ import { NotFound } from './pages/NotFound/NotFound'
 import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 import { Workout } from './pages/WorkoutPage/Workout'
 import { selectCurrentUser } from './slices/currentUserSlice'
-import { formatString } from './utils'
+import { checkJWTExpTime, formatString } from './utils'
 
 export const ROUTES = {
   home: '/',
@@ -35,24 +35,23 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, i
 
 export const AppRoutes = () => {
   const user = useAppSelector(selectCurrentUser)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  // если поставить false, то даже если в куках есть данные, перенаправляет на /
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   useEffect(() => {
-    if (user.localId) {
-      setIsLoggedIn(true)
-    } else {
-      setIsLoggedIn(false)
-    }
-  }, [user.localId])
+    if (user.idToken && checkJWTExpTime(user.idToken)) setIsLoggedIn(true)
+    else setIsLoggedIn(false)
+  }, [user.idToken])
 
   return (
     <Routes>
       <Route path={ROUTES.home} element={<Main />} />
       <Route path={ROUTES.login} element={<LoginForm />} />
       <Route path={ROUTES.signup} element={<SignUpForm />} />
-      <Route path={ROUTES.admin} element={<Admin />} />
       <Route path={`${ROUTES.aboutCourse}/:id`} element={<AboutCourse />} />
       <Route element={<ProtectedRoute isAllowed={isLoggedIn} />}>
+        <Route path={ROUTES.admin} element={<AdminPage />} />
         <Route path={ROUTES.profile} element={<ProfilePage />} />
         <Route path={formatString(ROUTES.workout, [':id', ':day'])} element={<Workout />} />
         <Route path="*" element={<NotFound />} />

@@ -1,10 +1,23 @@
 .container {
   position: relative;
   height: 640px;
+  width: 100%;
 }
 
 .player {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    height: 450px;
+  }
+}
+
+@media (max-width: 840px) {
+  .container {
+    height: 340px;
+  }
 }

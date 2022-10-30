@@ -1,30 +1,32 @@
 import { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { User } from '../../components/User/User'
+import { WorkoutArg } from '../../api/users.api'
+import { Exercises } from '../../components/Exercises/Exercises'
 import { Navigation } from '../../components/Navigation/Header'
 import { Progress } from '../../components/Progress/Progress'
-import { Exercises } from '../../components/Exercises/Exercises'
-import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
 import { ProgressModal } from '../../components/ProgressModal/ProgressModal'
-import { WarningPage } from '../WarningPage/WarningPage'
-import { useUserCourse } from '../../hooks/userHooks'
+import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
+import { User } from '../../components/User/User'
+import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
+import { WorkoutModal } from '../../components/WorkoutModal/WorkoutModal'
 import { useAppSelector } from '../../hooks/appHooks'
+import { useUserCourse } from '../../hooks/userCourseHooks'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { WarningPage } from '../WarningPage/WarningPage'
 
 import styles from './style.module.css'
-import { SuccessModal } from '../../components/SuccessModal/SuccessModal'
-import { WorkoutArg } from '../../api/users.api'
-import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 export const Workout: FC = () => {
   const { id, day } = useParams()
   const courseId = Number(id) - 1
+  const workoutIdx = Number(day) - 1
+
   const user = useAppSelector(selectCurrentUser)
   const [isModalOneShown, setIsModalOneShown] = useState(false)
   const [isModalTwoShown, setIsModalTwoShown] = useState(false)
-  const { data, isLoading, isError } = useUserCourse(user?.localId || null, courseId)
-
-  console.log('Workout: user -->', user) // for DEBUG!
+  const [isWorkoutsShown, setIsWorkoutsShown] = useState(false)
+  const { data, isLoading, isError } = useUserCourse(courseId)
 
   if (isLoading || (!data && !isError))
     return <WarningPage text="Загрузка..." user={user} />
@@ -38,15 +40,24 @@ export const Workout: FC = () => {
     )
   }
 
-  const workoutIdx = Number(day) - 1
-
   if (!data.workouts || workoutIdx < 0 || workoutIdx >= data.workouts?.length)
     return (
       <WarningPage text="Нет такой тренировки на этом курсе!" user={user} />
     )
 
+  const workout = data.workouts[workoutIdx]
+  const workoutArg: WorkoutArg = {
+    uid: user.localId,
+    courseId,
+    workoutId: workoutIdx,
+  }
+
   const handleClick = () => {
     setIsModalOneShown(true)
+  }
+
+  const handleWorkoutClick = () => {
+    setIsWorkoutsShown(true)
   }
 
   const handleSendClick = () => {
@@ -54,20 +65,13 @@ export const Workout: FC = () => {
     setIsModalTwoShown(true)
   }
 
-  const workout = data.workouts[workoutIdx]
-  console.log('workout -->', workout)
-
-  const workoutArg: WorkoutArg = {
-    uid: user.localId,
-    courseId,
-    workoutId: workoutIdx
-  }
-
   return (
     <div className={styles.container}>
       <Navigation children={<User user={user} />} />
       <main className={styles.main}>
-        <h1 className={styles.heading}>{data.name}</h1>
+        <h1 className={styles.heading} onClick={handleWorkoutClick}>
+          {data.name}
+        </h1>
         <h2 className={styles.title}>{workout.name}</h2>
 
         <VideoPlayer url={workout.videoUrl || ''} />
@@ -92,6 +96,12 @@ export const Workout: FC = () => {
           setIsOpened={setIsModalTwoShown}
           text="Ваш прогресс
           засчитан!"
+        />
+      )}
+      {isWorkoutsShown && (
+        <WorkoutModal
+          setIsOpened={setIsWorkoutsShown}
+          courseId={Number(id) - 1}
         />
       )}
     </div>

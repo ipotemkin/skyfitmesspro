@@ -1,22 +1,22 @@
 import classNames from 'classnames'
 import { FC, useState } from 'react'
-import { FormData } from '../../types'
-import { useNavigate } from 'react-router-dom'
-import { Logo } from '../../components/Logo/Logo'
-import { Button } from '../../components/Button/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
+import { useSignUpMutation } from '../../api/auth.api'
+import { useAddUserMutation } from '../../api/users.api'
+import { Button } from '../../components/Button/Button'
+import { Logo } from '../../components/Logo/Logo'
+import { ROUTES } from '../../routes'
+import { FormData } from '../../types'
+import { getErrorMessage } from '../../utils'
 
 import styles from './style.module.css'
-import { ROUTES } from '../../routes'
-import { useSignUpMutation } from '../../api/auth.api'
-import { getErrorMessage } from '../../utils'
-import { useAddUserMutation } from '../../api/users.api'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 const validPasswordLength = 6
 
 export const SignUpForm: FC = () => {
-  // const { signUp } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)
@@ -38,12 +38,16 @@ export const SignUpForm: FC = () => {
       const res = await signUp({ email: data.email, password: data.password }).unwrap()
       console.log('signup reponse -->', res)
       // добавляем пользователя в таблицу users
-      if (res.localId) await addUser(res.localId).unwrap()
+      if (res.localId) await addUser({uid: res.localId, idToken: res.idToken}).unwrap()
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error, 'Что-то пошло не так...'))
       setIsBlocked(false)
     }
+  }
+
+  const focusHandler = () => {
+    setError('')
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
@@ -56,6 +60,7 @@ export const SignUpForm: FC = () => {
         </div>
         <div className={styles.inputs}>
           <input
+            onFocus={focusHandler}
             className={styles.input}
             placeholder="E-mail"
             {...register('email', {
@@ -71,6 +76,7 @@ export const SignUpForm: FC = () => {
           </p>
 
           <input
+            onFocus={focusHandler}
             className={inputPasswordStyle}
             placeholder="Пароль"
             type="password"
@@ -87,6 +93,7 @@ export const SignUpForm: FC = () => {
           </p>
 
           <input
+            onFocus={focusHandler}
             className={inputPasswordStyle}
             placeholder="Повторите пароль"
             type="password"

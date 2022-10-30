@@ -1,15 +1,19 @@
-import { FC } from 'react'
 import classNames from 'classnames'
-import { Logo } from '../Logo/Logo'
-import { Button } from '../Button/Button'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import { useChangePasswordMutation } from '../../api/auth.api'
+import { EXP_MESSAGE } from '../../constants'
+import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
+import { ROUTES } from '../../routes'
+import { selectCurrentUser } from '../../slices/currentUserSlice'
+import { setMessage } from '../../slices/messageSlice'
+import { Button } from '../Button/Button'
+import { Logo } from '../Logo/Logo'
 
 import styles from './style.module.css'
-import { useNavigate } from 'react-router-dom'
-import { useChangePasswordMutation } from '../../api/auth.api'
-import { ROUTES } from '../../routes'
-import { useAppSelector } from '../../hooks/appHooks'
-import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 type PasswordModalProps = {
   setIsOpened: Function
@@ -23,15 +27,17 @@ type PasswordData = {
 const validPasswordLength = 6
 
 export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
+  const user = useAppSelector(selectCurrentUser)
+  const { setCookies } = useAppCookies()
+  const [changePassword] = useChangePasswordMutation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
   } = useForm<PasswordData>({ mode: 'onTouched' })
-  const user = useAppSelector(selectCurrentUser)
-  const [changePassword] = useChangePasswordMutation()
-  const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<PasswordData> = async (data) => {
     if (!user.idToken) {
@@ -40,13 +46,16 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
     }
 
     try {
-      await changePassword({ idToken: user.idToken, password: data.password}).unwrap()
+      const res = await changePassword({
+        idToken: user.idToken, password: data.password
+      }).unwrap()
+      setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
       console.error('Change password failed -->', error)
+      dispatch(setMessage(EXP_MESSAGE))
       navigate(ROUTES.login)
     }    
-    console.log(data)
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)

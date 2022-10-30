@@ -1,9 +1,3 @@
-export interface User {
-  id: number
-  username: string
-  password: string
-}
-
 export interface CourseMainData {
   id?: number;
   name?: string;
@@ -51,8 +45,6 @@ export type FirebaseUser = {
   displayName: string | null
   uid: string | null
   isLoading: boolean
-  // accessToken: string | null
-  // refreshToken: string | null
 }
 
 export type FirebaseUserRESTAPI = {
@@ -63,7 +55,9 @@ export type FirebaseUserRESTAPI = {
   refreshToken?: string
   registered?: boolean
   kind?: string
-  expiresIn?: string 
+  expiresIn?: string
+  needRrefreshToken?: boolean
+  updatingTokens?: boolean
 }
 
 export type RefreshTokenResponse = {
@@ -73,4 +67,34 @@ export type RefreshTokenResponse = {
   id_token?: string
   user_id?: string
   project_id?: string
+}
+
+export type AppCookies = {
+  [index: string]: string | undefined
+  idToken?: string
+}
+
+export const appCookiesNames = ['idToken']
+
+export type Message = {
+  value?: string
+}
+
+// стурктура idToken
+export type idTokenType = {
+  aud: string  // project name
+  auth_time: number // время последней авторизации
+  email: string
+  email_verified: boolean
+  exp: number  // время экспирации токена
+  firebase: {
+    identities: {
+      email: string[]
+    }
+    sign_in_provider: string
+  }
+  iat: number  // issued at
+  iss: string  // "https://securetoken.google.com/skyfitnesspro-202210"
+  sub: string  // == user_id
+  user_id: string
 }

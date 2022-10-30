@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
 import { apiKey } from '../env'
 import { FirebaseUserRESTAPI, RefreshTokenResponse } from '../types'
-import { usersApi } from './users.api'
 
-// const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]'
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1'
 
 type SingInArg = {
@@ -97,10 +96,26 @@ export const authApi = createApi({
       }),
       // for DEBUG. TODO: remove on release!
       transformResponse: (response: RefreshTokenResponse) => {
-        console.log('changePassword response -->', response)
+        console.log('refreshToken response -->', response)
         return response;
       }
     }),
+    getUserData: build.mutation<FirebaseUserRESTAPI, string>({
+      query: (idToken: string) => ({
+        url: `accounts:update?key=${apiKey}`,
+        method: 'POST',
+        body: {
+          idToken,
+          returnSecureToken: true
+        }
+      }),
+      // for DEBUG. TODO: remove on release!
+      transformResponse: (response: FirebaseUserRESTAPI) => {
+        console.log('getUserData response -->', response)
+        return response;
+      },
+    }),
+
   }),
 })
 
@@ -109,5 +124,6 @@ export const {
   useSignInMutation,
   useChangeEmailMutation,
   useChangePasswordMutation,
-  useRefreshTokenMutation
+  useRefreshTokenMutation,
+  useGetUserDataMutation
 } = authApi

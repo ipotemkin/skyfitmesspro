@@ -1,14 +1,19 @@
-import { FC } from 'react'
-import { Logo } from '../Logo/Logo'
-import { Button } from '../Button/Button'
+import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-
-import styles from './style.module.css'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../hooks/appHooks'
+
+import { useChangeEmailMutation } from '../../api/auth.api'
+import { EXP_MESSAGE } from '../../constants'
+import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
-import { useChangeEmailMutation } from '../../api/auth.api'
+import { setMessage } from '../../slices/messageSlice'
+import { AppCookies } from '../../types'
+import { Button } from '../Button/Button'
+import { Logo } from '../Logo/Logo'
+
+import styles from './style.module.css'
 
 type EmailModalProps = {
   setIsOpened: Function
@@ -21,15 +26,24 @@ type EmailData = {
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 
 export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
+  const user = useAppSelector(selectCurrentUser)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<EmailData>({ mode: 'onTouched' })
-  const user = useAppSelector(selectCurrentUser)
+  
   const [changeEmail] = useChangeEmailMutation()
+  const { setCookies } = useAppCookies()
+  const [email, setEmail] = useState(user.email || "E-mail") 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+  }
+  
   const onSubmit: SubmitHandler<EmailData> = async (data) => {
     if (!user.idToken) {
       navigate(ROUTES.login)
@@ -37,15 +51,14 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
     }
 
     try {
-      console.log('user.localId -->', user.localId)
-      await changeEmail({ idToken: user.idToken, email: data.email }).unwrap()
+      const res = await changeEmail({ idToken: user.idToken, email: data.email }).unwrap()
+      setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
       console.error('Change email failed -->', error)
+      dispatch(setMessage(EXP_MESSAGE))
       navigate(ROUTES.login)
     }
-
-    console.log(data)
   }
 
   return (
@@ -60,13 +73,15 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
         <div className={styles.inputs}>
           <input
             className={styles.input}
-            placeholder="E-mail"
+            placeholder={user.email || "E-mail"}
+            value={email}
             {...register('email', {
               required: 'Введите e-mail',
               pattern: {
                 value: validEmail,
                 message: 'Введите корректный e-mail',
               },
+              onChange: handleChange
             })}
           />
           <p className={styles.error}>

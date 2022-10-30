@@ -34,3 +34,21 @@
   margin: 0;
   padding: 0;
 }
+
+@media (max-width: 840px) {
+  .card {
+    width: 300px;
+    min-height: 400px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 680px) {
+  .card {
+    width: 280px;
+    min-height: 370px;
+  }
+}

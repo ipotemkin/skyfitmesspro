@@ -1,20 +1,15 @@
-.aboutCourse {
+.wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   box-sizing: border-box;
+  width: 100%;
   min-height: 100vh;
 
+  padding-right: calc(50% - 580px);
+  padding-left: calc(50% - 580px);
+
   background-color: #fafafa;
-}
-
-.aboutCourseWrapper {
-  display: flex;
-  flex-direction: column;
-
-  box-sizing: border-box;
-  max-width: 1160px;
 }
 
 .header {
@@ -33,7 +28,7 @@
 .titleWrapper {
   box-sizing: border-box;
   padding: 30px;
-  width: 1190px;
+  width: 100%;
   min-height: 310px;
   margin-bottom: 75px;
 
@@ -98,6 +93,7 @@
 
 .suitableList {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-self: flex-start;
 
@@ -190,9 +186,15 @@
   padding: 0;
 }
 
+.descriptionText {
+  margin-top: 0;
+}
+
 .footer {
   background-color: #f9ebff;
 
+  box-sizing: border-box;
+  width: 100%;
   padding: 46px 285px 48px 52px;
 
   border-radius: 30px;
@@ -213,4 +215,168 @@
 
   margin: 0;
   margin-bottom: 34px;
+}
+
+@media (max-width: 1200px) {
+  .wrapper {
+    padding-right: calc(50% - 400px);
+    padding-left: calc(50% - 400px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 48px;
+  }
+
+  .suitableHeader,
+  .linesHeader {
+    font-size: 32px;
+  }
+
+  .suitableNumber {
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .suitableText,
+  .linesText,
+  .descriptionText,
+  .footerText {
+    font-size: 20px;
+  }
+
+  .nav,
+  .titleWrapper,
+  .suitableList,
+  .description,
+  .footer {
+    margin-bottom: 40px;
+  }
+
+  .linesList {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+
+    margin-bottom: 30px;
+  }
+
+  .linesItem {
+    width: auto;
+  }
+
+  .footer {
+    padding: 24px 190px 30px 30px;
+    background-size: 220px;
+  }
+
+  .footerText {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 840px) {
+  .wrapper {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
+
+@media (max-width: 680px) {
+  .wrapper {
+    padding-right: calc(50% - 180px);
+    padding-left: calc(50% - 180px);
+  }
+
+  .titleWrapper {
+    background-position: top -140px left 0;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .suitableHeader,
+  .linesHeader {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .suitableNumber {
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .suitableText,
+  .linesText,
+  .descriptionText,
+  .footerText {
+    font-size: 16px;
+  }
+
+  .nav,
+  .titleWrapper,
+  .suitableList,
+  .description,
+  .footer {
+    margin-bottom: 30px;
+  }
+
+  .linesList {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+
+    margin-bottom: 30px;
+  }
+
+  .footer {
+    padding: 24px 30px 30px 30px;
+    background-size: 0;
+  }
+
+  .footerText {
+    line-height: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 425px) {
+  .wrapper {
+    padding-right: calc(50% - 150px);
+    padding-left: calc(50% - 150px);
+  }
+
+  .titleWrapper {
+    background-position: center;
+  }
+
+  .titleWrapper,
+  .linesHeader,
+  .suitableHeader,
+  .suitableList,
+  .description,
+  .footer {
+    margin-bottom: 10px;
+  }
+
+  .suitableNumber {
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .descriptionText {
+    line-height: 24px;
+  }
 }

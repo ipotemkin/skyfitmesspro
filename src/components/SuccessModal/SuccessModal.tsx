@@ -1,10 +1,12 @@
 import { FC, useEffect } from 'react'
+
+import { Modal } from '../Modal/Modal'
 import { ReactComponent as Success } from './success.svg'
 
 import styles from './style.module.css'
 
 type SuccessModalProps = {
-  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>
+  setIsOpened: Function
   text?: string
 }
 
@@ -18,11 +20,11 @@ export const SuccessModal: FC<SuccessModalProps> = ({ setIsOpened, text }) => {
   }, [setIsOpened])
 
   return (
-    <div className={styles.modal} onClick={() => setIsOpened(false)}>
-      <div className={styles.content} onClick={(e) => e.stopPropagation()}>
+    <Modal isOpen={() => setIsOpened(false)}>
+      <div className={styles.content}>
         <h2 className={styles.title}>{text}</h2>
         <Success />
       </div>
-    </div>
+    </Modal>
   )
 }
