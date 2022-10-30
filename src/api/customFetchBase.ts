@@ -7,6 +7,7 @@ import {
   } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
 import { API_URL } from '../constants'
+import { updateCurrentUser } from '../slices/currentUserSlice'
 import { RootState } from '../store'
 import { RefreshTokenResponse } from '../types'
 import { authApi } from './auth.api'
@@ -19,7 +20,7 @@ const getQueryPath = (url: string) => {
   return matchResult ? matchResult[1] : ''
 } 
 
-const updateTokenInArgs = (args: any, newToken: string) => {
+const updateTokenInArgs = (args: string | FetchArgs, newToken: string) => {
   if (typeof args === 'string') {
     return getQueryPath(args) + newToken
   } else {
@@ -50,7 +51,7 @@ const customFetchBase: BaseQueryFn<
   // alert(`customFetchBase: response status --> ${result.meta?.response?.status}`)
 
   if ([400, 401, 403].includes(result.error?.status as number)) {
-    // let success = false
+    let success = false
 
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
@@ -78,35 +79,19 @@ const customFetchBase: BaseQueryFn<
           
             // Retry the initial query
             console.log('baseQuery args -->', args)
-            // try {
-            result = await baseQuery(args, api, extraOptions)
-              // success = true
-            // } catch {
-              // success = false
-            // }
-
+            try {
+              result = await baseQuery(args, api, extraOptions)
+              success = true
+            } catch {
+              success = false
+            }
           } 
-          // else {
-          //   document.cookie = ''
-          //   api.dispatch(deleteCurrentUser())
-          //   api.dispatch(setMessage(EXP_MESSAGE))
-          //   window.location.href = ROUTES.login
-          // }
-        }
-        //  else {
-        //   document.cookie = ''
-        //   api.dispatch(deleteCurrentUser())
-        //   api.dispatch(setMessage(EXP_MESSAGE))
-        //   window.location.href = ROUTES.login
-        // }
-        
+        } 
       } finally {
-        // if (!success) {
-          // document.cookie = ''
-          // api.dispatch(deleteCurrentUser())
-          // api.dispatch(setMessage(EXP_MESSAGE))
-          // window.location.href = ROUTES.login
-        // }
+        if (!success) {
+          api.dispatch(updateCurrentUser({ needRelogin: true }))
+          alert('setting refreshToken to undefined')
+        }
         // release must be called once the mutex should be released again.
         release()
       }

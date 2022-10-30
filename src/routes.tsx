@@ -34,6 +34,8 @@ type ProtectedRouteProps = {
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, isAllowed }) => {
   const dispatch = useDispatch()
 
+  console.log('ProtectedRoute: isAllowed -->', isAllowed)
+
   if (isAllowed === undefined) {
     dispatch(setMessage(EXP_MESSAGE))
     return <Navigate to={ROUTES.login} replace={true} />
@@ -50,13 +52,18 @@ export const AppRoutes = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(true)
 
   useEffect(() => {
-    if (user.idToken && checkJWTExpTime(user.idToken)) setIsLoggedIn(true)
-    else if (user.idToken && !checkJWTExpTime(user.idToken) && !user.refreshToken) {
+    if (user.needRelogin) {
+      console.log('routes: need relogin = true')
       removeCookies()
       setIsLoggedIn(undefined)
-    }
+    } else if (user.idToken && checkJWTExpTime(user.idToken)) setIsLoggedIn(true)
+    // else if (user.idToken && !checkJWTExpTime(user.idToken) && !user.refreshToken) {
+    //   console.log('routes: removing cookies')
+    //   removeCookies()
+    //   setIsLoggedIn(undefined)
+    // }
     else setIsLoggedIn(false)
-  }, [removeCookies, user.idToken, user.refreshToken])
+  }, [removeCookies, user.idToken, user.refreshToken, user.needRelogin])
 
   return (
     <Routes>

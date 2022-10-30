@@ -31,7 +31,10 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.signUp.matchFulfilled,
       (state, { payload }) => {
-        return state = {...payload}
+        return state = {
+          ...payload,
+          needRelogin: false
+        }
       }
     )
     builder.addMatcher(

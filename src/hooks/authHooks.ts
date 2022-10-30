@@ -28,7 +28,12 @@ export const useLoadCredentialsFromCookies = () => {
         try {
           // это действие улучшает анимацию страницы,
           // поскольку выполняется быстрее, чем getUserData
-          dispatch(updateCurrentUser({ ...cookies, email, localId }))
+          dispatch(updateCurrentUser({
+            ...cookies,
+            email,
+            localId,
+            needRelogin: false
+          }))
 
           // Получаем данные о пользователе с помощью idToken
           await getUserData(cookies.idToken).unwrap()

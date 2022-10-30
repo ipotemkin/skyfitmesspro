@@ -56,6 +56,7 @@ export type FirebaseUserRESTAPI = {
   registered?: boolean
   kind?: string
   expiresIn?: string
+  needRelogin?: boolean
   // needRrefreshToken?: boolean
   // updatingTokens?: boolean
 }
