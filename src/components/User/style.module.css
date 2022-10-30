@@ -42,8 +42,6 @@
   min-width: 200px;
   padding: 5px 0;
 
-  right: 0;
-
   color: rgba(0, 0, 0, 0.478);
   background-color: #fff;
   border-radius: 12px;
@@ -76,5 +74,18 @@
 @media (max-width: 680px) {
   .name {
     display: none;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 425px) {
+  .avatar {
+    width: 40px;
+    height: 40px;
+
+    font-size: 28px;
   }
 }
