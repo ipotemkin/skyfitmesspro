@@ -1,11 +1,12 @@
 import { SerializedError } from '@reduxjs/toolkit'
 import {
-    BaseQueryFn,
-    FetchArgs,
-    fetchBaseQuery,
-    FetchBaseQueryError,
-  } from '@reduxjs/toolkit/query'
+  BaseQueryFn,
+  FetchArgs,
+  fetchBaseQuery,
+  FetchBaseQueryError
+} from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
+
 import { API_URL } from '../constants'
 import { updateCurrentUser } from '../slices/currentUserSlice'
 import { RootState } from '../store'

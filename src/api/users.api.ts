@@ -8,7 +8,7 @@ type TokenArg = {
 }
 
 type UserArg = {
-  uid: string
+  uid?: string
 } & TokenArg
 
 type CourseArg = {

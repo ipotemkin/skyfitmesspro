@@ -7,9 +7,6 @@ import {
   WorkoutArg,
   WorkoutStatusArg
 } from '../../api/users.api'
-import { useAppSelector } from '../../hooks/appHooks'
-// import { useMutationWithRefreshToken } from '../../hooks/authHooks'
-import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { Exercise } from '../../types'
 import { Button } from '../Button/Button'
 import { Modal } from '../Modal/Modal'
@@ -34,11 +31,9 @@ export const ProgressModal: FC<ProgressModalProps> = ({
   exercises,
   onClick,
 }) => {
-  const user = useAppSelector(selectCurrentUser)
   const [form, setForm] = useState<Form>({ exercises: [] })
   const [updateProgress] = useUpdateUserExerciseProgressMutation()
   const [setWorkoutStatus] = useSetWorkoutStatusMutation()
-  // const handleMutationWithRefreshToken = useMutationWithRefreshToken()
 
   useEffect(() => {
     setForm({ exercises })

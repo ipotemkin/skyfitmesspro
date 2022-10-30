@@ -1,5 +1,6 @@
 // USER COURSES HOOKS
 
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { merge } from 'lodash'
 import { useEffect, useState } from 'react'
 
@@ -20,12 +21,12 @@ const getValidKeys = (obj: object) => {
 }
 
 // возвращает курсы заданного пользователя (без данных из /users)
-export const useUserCourses = (uid: string) => {
+export const useUserCourses = (uid?: string) => {
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
 
   const {
     data: userCoursesData, isLoading: isUserCoursesLoading
-  } = useGetUserCoursesQuery({ uid })
+  } = useGetUserCoursesQuery({ uid } ?? skipToken)
 
   const [userCourses, setUserCourses] = useState<CourseData[]>()
   const [isLoading, setIsloading] = useState(true)
@@ -49,12 +50,12 @@ export const useUserCourses = (uid: string) => {
 }
 
 // возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователяя
-export const useCoursesWithSubscription = (uid: string) => {
+export const useCoursesWithSubscription = (uid?: string) => {
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
 
   const {
     data: userCoursesData, isLoading: isUserCoursesLoading
-  } = useGetUserCoursesQuery({ uid })
+  } = useGetUserCoursesQuery({ uid } ?? skipToken)
   
   const [isLoading, setIsloading] = useState(true)
   const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
@@ -88,17 +89,17 @@ export const useCoursesWithSubscription = (uid: string) => {
 }
 
 // полные даннные по заданному курсу пользователя
-export const useUserCourse = (courseId: number) => {
+export const useUserCourse = (courseId?: number) => {
   const user = useAppSelector(selectCurrentUser)
-  const { data: course } = useGetCourseQuery(courseId)
+  const { data: course } = useGetCourseQuery(courseId ?? skipToken)
 
+  const queryArgs = user.localId && courseId
+    ? { uid: user.localId, courseId}
+    : undefined
+  
   const { 
     data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
-  } = useGetUserCourseQuery(
-    {
-      uid: user.localId || '',
-      courseId
-  })
+  } = useGetUserCourseQuery(queryArgs ?? skipToken)
 
   const [userCourse, setUserCourse] = useState<CourseData>()
   const [isError, setIsError] = useState(false)

@@ -16,7 +16,7 @@ export const UserCourses: FC<Props> = ({
   user,
   handleWorkouts = (courseId: number) => {},
 }) => {
-  const { data: userCourses, isLoading } = useUserCourses(user.localId || '')
+  const { data: userCourses, isLoading } = useUserCourses(user.localId)
 
   const handleCourseClick = (e: React.MouseEvent, courseId: number) => {
     handleWorkouts(courseId)
