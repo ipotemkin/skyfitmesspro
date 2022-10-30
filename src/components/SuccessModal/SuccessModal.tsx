@@ -23,7 +23,7 @@ export const SuccessModal: FC<SuccessModalProps> = ({ setIsOpened, text }) => {
     <Modal isOpen={() => setIsOpened(false)}>
       <div className={styles.content}>
         <h2 className={styles.title}>{text}</h2>
-        <Success />
+        <Success className={styles.icon} />
       </div>
     </Modal>
   )

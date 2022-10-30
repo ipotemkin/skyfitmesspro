@@ -1,7 +1,10 @@
 import { Button } from '@mui/material'
 import { FC } from 'react'
 
-import { useAddUserCourseMutation, useDelUserCourseMutation } from '../../api/users.api'
+import {
+  useAddUserCourseMutation,
+  useDelUserCourseMutation,
+} from '../../api/users.api'
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { CourseData } from '../../types'
@@ -36,24 +39,23 @@ export const CourseLine: FC<Props> = ({ item }) => {
       console.error('error deleting the course with id:', item.id)
     }
   }
-  
+
   return (
     <div
       className={styles.line}
-      style={{ backgroundColor: (item.id! % 2 === 0 ? 'whitesmoke' : '')}}
+      style={{ backgroundColor: item.id! % 2 === 0 ? 'whitesmoke' : '' }}
     >
       <div className={styles.col1}>{item.id! + 1}</div>
       <div className={styles.col2}>{item.name}</div>
       <div className={styles.col3}>
-        {item.subscription
-          && <Button style={{ color: 'red' }} onClick={handleRemoveCourse}
-          >
+        {item.subscription && (
+          <Button style={{ color: 'red' }} onClick={handleRemoveCourse}>
             Удалить
-        </Button>}
-        {!item.subscription
-          && <Button onClick={handleAddCourse}>
-            Добавить
-          </Button>}
+          </Button>
+        )}
+        {!item.subscription && (
+          <Button onClick={handleAddCourse}>Добавить</Button>
+        )}
       </div>
     </div>
   )

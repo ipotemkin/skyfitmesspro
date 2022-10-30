@@ -22,3 +22,15 @@
   font-size: 32px;
   line-height: 40px;
 }
+
+@media (max-width: 500px) {
+  .title {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .content {
+    width: 320px;
+    padding: 25px 10px 40px;
+  }
+}

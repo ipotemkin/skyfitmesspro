@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  height: 640px;
+  height: 653px;
   width: 100%;
 }
 
@@ -19,5 +19,17 @@
 @media (max-width: 840px) {
   .container {
     height: 340px;
+  }
+}
+
+@media (max-width: 680px) {
+  .container {
+    height: 202px;
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    height: 169px;
   }
 }

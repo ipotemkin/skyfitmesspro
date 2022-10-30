@@ -9,6 +9,7 @@
 }
 
 .heading {
+  display: inline-block;
   margin: 0 0 40px;
 
   font-weight: 400;
@@ -16,6 +17,11 @@
   line-height: 56px;
 
   cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.heading:hover {
+  color: #4f0d92;
 }
 
 .title {
@@ -32,143 +38,6 @@
   gap: 94px;
 
   margin-top: 75px;
-}
-
-.exercisesTitle {
-  margin: 0 0 30px;
-
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 40px;
-}
-
-.exercisesList {
-  max-width: 410px;
-  margin-bottom: 40px;
-}
-
-.exercisesListItem {
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
-}
-
-.progress {
-  padding: 36px 44px;
-  background-color: #f2f2f2;
-  border-radius: 30px;
-}
-
-.progressTitle {
-  margin: 0 0 40px;
-
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 40px;
-
-  text-align: center;
-}
-
-.progressList {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-}
-
-.progressListItem {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
-}
-
-.exerciseName {
-  max-width: 278px;
-}
-
-.progressbar {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-
-  min-width: 278px;
-  height: 36px;
-
-  background-color: #f9ebff;
-  border: 2px solid #9a48f1;
-  border-radius: 22px;
-}
-
-.progressbarDone {
-  position: absolute;
-
-  height: 100%;
-
-  background-color: #9a48f1;
-}
-
-.progressbarPercent {
-  position: absolute;
-  z-index: 1;
-
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
-
-  color: #fff;
-}
-
-.color1 {
-  background-color: #565eef;
-}
-
-.colorBg1 {
-  background-color: #edecff;
-  border: 2px solid #565eef;
-}
-
-.color2 {
-  background-color: #ff6d00;
-}
-
-.colorBg2 {
-  background-color: #fff2e0;
-  border: 2px solid #ff6d00;
-}
-
-.color3 {
-  background-color: #9a48f1;
-}
-
-.colorBg3 {
-  background-color: #f9ebff;
-  border: 2px solid #9a48f1;
-}
-
-.color4 {
-  background-color: #a9d42b;
-}
-
-.colorBg4 {
-  background-color: #f2fbd6;
-  border: 2px solid #a9d42b;
-}
-
-.color5 {
-  background-color: #00c1ff;
-}
-
-.colorBg5 {
-  background-color: #e6f9ff;
-  border: 2px solid #00c1ff;
 }
 
 @media (max-width: 1200px) {
@@ -190,5 +59,41 @@
   .container {
     padding-right: calc(50% - 300px);
     padding-left: calc(50% - 300px);
+  }
+
+  .heading {
+    margin-bottom: 20px;
+
+    font-size: 36px;
+    line-height: 1.2;
+  }
+
+  .title {
+    margin-bottom: 30px;
+
+    font-size: 24px;
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 680px) {
+  .container {
+    padding-right: calc(50% - 180px);
+    padding-left: calc(50% - 180px);
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .exercises {
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    padding-right: calc(50% - 150px);
+    padding-left: calc(50% - 150px);
   }
 }

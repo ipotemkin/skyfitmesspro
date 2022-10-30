@@ -29,20 +29,20 @@ export const useUserCourses = (uid?: string) => {
   } = useGetUserCoursesQuery({ uid } ?? skipToken)
 
   const [userCourses, setUserCourses] = useState<CourseData[]>()
-  const [isLoading, setIsloading] = useState(true)
-  
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
     if (userCoursesData && courses) {
       const res = []
       const validKeys: string[] = getValidKeys(userCoursesData)
-      for(let i in validKeys) res.push(courses[+validKeys[i]])
+      for (let i in validKeys) res.push(courses[+validKeys[i]])
       setUserCourses(res)
     }
   }, [userCoursesData, courses])
 
   useEffect(() => {
     if (!isCoursesLoading && !isUserCoursesLoading) {
-      setIsloading(false)
+      setIsLoading(false)
     }
   }, [isCoursesLoading, isUserCoursesLoading])
 
@@ -57,21 +57,20 @@ export const useCoursesWithSubscription = (uid?: string) => {
     data: userCoursesData, isLoading: isUserCoursesLoading
   } = useGetUserCoursesQuery({ uid } ?? skipToken)
   
-  const [isLoading, setIsloading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
 
   useEffect(() => {
-
-    if (!isUserCoursesLoading && courses) {    
+    if (!isUserCoursesLoading && courses) {
       const coursesTemp: CourseData[] = []
       // добавляем свойство 'subscription'
       if (userCoursesData && userCoursesData.length > 0) {
         userCoursesData.forEach((course: CourseData) => {
           coursesTemp.push({
             ...course,
-            subscription: (course ? true : false)
+            subscription: course ? true : false,
           })
-        })  
+        })
       }
       const res: CourseData[] = []
       merge(res, courses, coursesTemp)
@@ -81,7 +80,7 @@ export const useCoursesWithSubscription = (uid?: string) => {
 
   useEffect(() => {
     if (!isCoursesLoading && !isUserCoursesLoading) {
-      setIsloading(false)
+      setIsLoading(false)
     }
   }, [isCoursesLoading, isUserCoursesLoading])
 
@@ -110,18 +109,16 @@ export const useUserCourse = (courseId?: number) => {
   }, [isErrorQuery])
 
   useEffect(() => {
-    
     // если загрузка завершена но нет данных или пользователя
-    if (!isUserCourseLoading && (!userCourseData || !user?.localId)) setIsError(true)
-    
+    if (!isUserCourseLoading && (!userCourseData || !user?.localId))
+      setIsError(true)
     // если есть все данные, то ставим загрузку в false
     else if (userCourseData && course && user?.localId) {
       const res = {}
       merge(res, course, userCourseData)
       setUserCourse(res)
     }
-
   }, [userCourseData, course, isUserCourseLoading, user?.localId])
-  
+
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }
