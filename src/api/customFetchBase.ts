@@ -59,26 +59,26 @@ const customFetchBase: BaseQueryFn<
       try {
         const { refreshToken } = (api.getState() as RootState).currentUser
         // const refreshToken = storeState.currentUser.refreshToken
-        console.log('refreshToken -->', refreshToken)
+        // console.log('refreshToken -->', refreshToken)
         // console.log(refreshToken)
-        console.log('fetching new credentials')
+        // console.log('fetching new credentials')
         
-        alert('before if (refreshToken)')
+        // alert('before if (refreshToken)')
         if (refreshToken) {
-          alert('before refreshing token')
+          // alert('before refreshing token')
           const res: {
             data: RefreshTokenResponse } | { error: FetchBaseQueryError | SerializedError
           } = await api.dispatch(authApi.endpoints.refreshToken.initiate(refreshToken))
-          console.log('api.dispatch -->', res)
-          alert('after refreshing token')
+          // console.log('api.dispatch -->', res)
+          // alert('after refreshing token')
 
           if ('data' in res && res.data.id_token) {
-            alert('access_token in place')
+            // alert('access_token in place')
 
             args = updateTokenInArgs(args, res.data.id_token)
           
             // Retry the initial query
-            console.log('baseQuery args -->', args)
+            // console.log('baseQuery args -->', args)
             try {
               result = await baseQuery(args, api, extraOptions)
               success = true
@@ -90,7 +90,7 @@ const customFetchBase: BaseQueryFn<
       } finally {
         if (!success) {
           api.dispatch(updateCurrentUser({ needRelogin: true }))
-          alert('setting refreshToken to undefined')
+          // alert('setting refreshToken to undefined')
         }
         // release must be called once the mutex should be released again.
         release()
@@ -98,7 +98,7 @@ const customFetchBase: BaseQueryFn<
     } else {
       // wait until the mutex is available without locking it
       await mutex.waitForUnlock()
-      alert('Before last baseQuery')
+      // alert('Before last baseQuery')
       
       const { idToken } = (api.getState() as RootState).currentUser
       if (idToken)

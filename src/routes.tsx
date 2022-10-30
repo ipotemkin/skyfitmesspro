@@ -32,38 +32,38 @@ type ProtectedRouteProps = {
 }
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, isAllowed }) => {
-  const dispatch = useDispatch()
+  if (isAllowed === undefined)
+    redirectPath = ROUTES.login
 
-  console.log('ProtectedRoute: isAllowed -->', isAllowed)
-
-  if (isAllowed === undefined) {
-    dispatch(setMessage(EXP_MESSAGE))
-    return <Navigate to={ROUTES.login} replace={true} />
-  }
-  if (!isAllowed) return <Navigate to={redirectPath} replace={true} />
-  return <Outlet />
+  if (!isAllowed)
+    return <Navigate to={redirectPath} replace={true} />
+  
+    return <Outlet />
 }
 
 export const AppRoutes = () => {
   const user = useAppSelector(selectCurrentUser)
   const { removeCookies } = useAppCookies()
+  const dispatch = useDispatch()
   
-  // если поставить false, то даже если в куках есть данные, перенаправляет на /
+  // если поставить false, то даже если в куках есть данные, перенаправляет на home page
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(true)
+  
+  const isTokenValid = user.idToken ? checkJWTExpTime(user.idToken) : false
 
   useEffect(() => {
-    if (user.needRelogin) {
-      console.log('routes: need relogin = true')
+    // если токен истек или недейстителен, просим пользователя перезайти
+    if ((user.idToken && !isTokenValid) || user.needRelogin) {
+      dispatch(setMessage(EXP_MESSAGE))
       removeCookies()
       setIsLoggedIn(undefined)
-    } else if (user.idToken && checkJWTExpTime(user.idToken)) setIsLoggedIn(true)
-    // else if (user.idToken && !checkJWTExpTime(user.idToken) && !user.refreshToken) {
-    //   console.log('routes: removing cookies')
-    //   removeCookies()
-    //   setIsLoggedIn(undefined)
-    // }
+    } else
+    // если токен валиден, редиректим на заданную страницу
+    if (user.idToken && isTokenValid)
+      setIsLoggedIn(true)
+    // если токена нет, редиректим на home page
     else setIsLoggedIn(false)
-  }, [removeCookies, user.idToken, user.refreshToken, user.needRelogin])
+  }, [removeCookies, user.idToken, user.needRelogin, isTokenValid, dispatch])
 
   return (
     <Routes>
