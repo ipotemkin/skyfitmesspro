@@ -29,6 +29,16 @@ const updateTokenInArgs = (args: string | FetchArgs, newToken: string) => {
   }
 }
 
+const AddTokenToUrl = (args: string | FetchArgs, token: string) => {
+  const queryString = '?auth=' + token
+  if (typeof args === 'string') {
+    return args + queryString
+  } else {
+    args.url = args.url + queryString
+    return args
+  }
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL + '/users'
 })
@@ -41,6 +51,14 @@ const customFetchBase: BaseQueryFn<
 
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock()
+  
+  // alert(`aegs before: ${args}`)
+
+  const { idToken } = (api.getState() as RootState).currentUser
+  if (idToken)
+    args = AddTokenToUrl(args, idToken)
+
+  // alert(`aegs after: ${args}`)
 
   let result = await baseQuery(args, api, extraOptions)
 
