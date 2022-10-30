@@ -14,7 +14,7 @@ describe('The main page of the application', () => {
   })
 
   it('should go to the course page', () => {
-    cy.get('[data-at="gallery-courses"]').as('Gallery')
+    cy.get('[data-cy="gallery-courses"]').as('Gallery')
     
     cy.get('@Gallery').find('a').contains('Йога').click()
 
