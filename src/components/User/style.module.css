@@ -35,12 +35,13 @@
 .nav {
   position: absolute;
   right: 0;
+  top: 55px;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 
-  min-width: 200px;
+  min-width: 240px;
   padding: 5px 0;
 
   color: rgba(0, 0, 0, 0.478);
@@ -72,6 +73,19 @@
   transform: rotateX(180deg);
 }
 
+@media (max-width: 840px) {
+  .name {
+    font-size: 20px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+
+    font-size: 28px;
+  }
+}
+
 @media (max-width: 680px) {
   .name {
     display: none;
@@ -79,27 +93,21 @@
 
   .nav {
     top: 54px;
+    min-width: 230px;
   }
 
   .arrow {
     display: none;
   }
-}
-
-@media (max-width: 425px) {
-  .avatar {
-    width: 40px;
-    height: 40px;
-
-    font-size: 28px;
-  }
-
-  .nav {
-    top: 48px;
-  }
 
   .link {
     font-size: 18px;
     padding: 5px 15px;
+  }
+}
+
+@media (max-width: 425px) {
+  .nav {
+    top: 43px;
   }
 }
