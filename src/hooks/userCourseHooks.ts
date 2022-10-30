@@ -92,7 +92,7 @@ export const useUserCourse = (courseId?: number) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: course } = useGetCourseQuery(courseId ?? skipToken)
 
-  const queryArgs = user.localId && courseId
+  const queryArgs = user.localId && courseId !== undefined
     ? { uid: user.localId, courseId}
     : undefined
   
