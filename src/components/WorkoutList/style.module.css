@@ -99,3 +99,13 @@
 .done {
   color: #06b16e;
 }
+
+@media (max-width: 500px) {
+  .title {
+    font-size: 18px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
+}

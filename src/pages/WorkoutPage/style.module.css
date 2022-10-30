@@ -82,6 +82,10 @@
     padding-left: calc(50% - 180px);
   }
 
+  .title {
+    font-size: 20px;
+  }
+
   .exercises {
     margin-top: 40px;
   }

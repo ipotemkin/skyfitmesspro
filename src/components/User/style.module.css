@@ -34,6 +34,7 @@
 
 .nav {
   position: absolute;
+  right: 0;
 
   display: flex;
   flex-direction: column;
@@ -76,6 +77,10 @@
     display: none;
   }
 
+  .nav {
+    top: 54px;
+  }
+
   .arrow {
     display: none;
   }
@@ -87,5 +92,14 @@
     height: 40px;
 
     font-size: 28px;
+  }
+
+  .nav {
+    top: 48px;
+  }
+
+  .link {
+    font-size: 18px;
+    padding: 5px 15px;
   }
 }
