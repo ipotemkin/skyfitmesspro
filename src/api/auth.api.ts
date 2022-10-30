@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import { API_AUTH_URL } from '../constants'
 import { apiKey } from '../env'
 import { FirebaseUserRESTAPI, RefreshTokenResponse } from '../types'
-
-const baseUrl = 'https://identitytoolkit.googleapis.com/v1'
 
 type SingInArg = {
   email: string
@@ -23,7 +22,7 @@ type ChangePasswordArg = {
 export const authApi = createApi({
   reducerPath: 'auth/api',
   tagTypes: ['Auth'],
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: API_AUTH_URL }),
   endpoints: (build) => ({
     signUp: build.mutation<FirebaseUserRESTAPI, SingInArg>({
       query: (arg: SingInArg) => ({

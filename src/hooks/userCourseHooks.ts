@@ -1,5 +1,6 @@
 // USER COURSES HOOKS
 
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { merge } from 'lodash'
 import { useEffect, useState } from 'react'
 
@@ -8,7 +9,6 @@ import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
 import { selectCurrentUser } from '../slices/currentUserSlice'
 import { CourseData } from '../types'
 import { useAppSelector } from './appHooks'
-import { useQueryWithRefreshToken } from './authHooks'
 
 // возвращает список ключей, не равных null
 // это необходимо для очистки сырой информации из БД
@@ -21,14 +21,13 @@ const getValidKeys = (obj: object) => {
 }
 
 // возвращает курсы заданного пользователя (без данных из /users)
-export const useUserCourses = (uid: string) => {
-  const user = useAppSelector(selectCurrentUser)
+export const useUserCourses = (uid?: string) => {
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-  const { data: userCoursesData, isLoading: isUserCoursesLoading } =
-    useQueryWithRefreshToken(useGetUserCoursesQuery, {
-      uid,
-      idToken: user.idToken,
-    })
+
+  const {
+    data: userCoursesData, isLoading: isUserCoursesLoading
+  } = useGetUserCoursesQuery({ uid } ?? skipToken)
+
   const [userCourses, setUserCourses] = useState<CourseData[]>()
   const [isLoading, setIsLoading] = useState(true)
 
@@ -50,20 +49,16 @@ export const useUserCourses = (uid: string) => {
   return { data: userCourses, isLoading }
 }
 
-// возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователя
-export const useCoursesWithSubscription = (uid: string) => {
-  const user = useAppSelector(selectCurrentUser)
+// возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователяя
+export const useCoursesWithSubscription = (uid?: string) => {
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-  const { data: userCoursesData, isLoading: isUserCoursesLoading } =
-    useQueryWithRefreshToken(useGetUserCoursesQuery, {
-      uid,
-      idToken: user.idToken,
-    })
 
+  const {
+    data: userCoursesData, isLoading: isUserCoursesLoading
+  } = useGetUserCoursesQuery({ uid } ?? skipToken)
+  
   const [isLoading, setIsLoading] = useState(true)
-  const [coursesWithSubscription, setCoursesWithSubscription] = useState<
-    CourseData[]
-  >([])
+  const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
 
   useEffect(() => {
     if (!isUserCoursesLoading && courses) {
@@ -92,21 +87,19 @@ export const useCoursesWithSubscription = (uid: string) => {
   return { data: coursesWithSubscription, isLoading }
 }
 
-// полные данные по заданному курсу пользователя
-export const useUserCourse = (courseId: number) => {
+// полные даннные по заданному курсу пользователя
+export const useUserCourse = (courseId?: number) => {
   const user = useAppSelector(selectCurrentUser)
+  const { data: course } = useGetCourseQuery(courseId ?? skipToken)
 
-  const { data: course } = useGetCourseQuery(courseId)
-  const {
-    data: userCourseData,
-    error,
-    isLoading: isUserCourseLoading,
-    isError: isErrorQuery,
-  } = useQueryWithRefreshToken(useGetUserCourseQuery, {
-    idToken: user.idToken,
-    uid: user.localId || '',
-    courseId,
-  })
+  const queryArgs = user.localId && courseId
+    ? { uid: user.localId, courseId}
+    : undefined
+  
+  const { 
+    data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
+  } = useGetUserCourseQuery(queryArgs ?? skipToken)
+
   const [userCourse, setUserCourse] = useState<CourseData>()
   const [isError, setIsError] = useState(false)
 

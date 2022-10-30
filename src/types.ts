@@ -40,12 +40,12 @@ export type FormData = {
   confirmPassword?: string
 }
 
-export type FirebaseUser = {
-  email: string | null
-  displayName: string | null
-  uid: string | null
-  isLoading: boolean
-}
+// export type FirebaseUser = {
+//   email: string | null
+//   displayName: string | null
+//   uid: string | null
+//   isLoading: boolean
+// }
 
 export type FirebaseUserRESTAPI = {
   localId?: string
@@ -56,8 +56,9 @@ export type FirebaseUserRESTAPI = {
   registered?: boolean
   kind?: string
   expiresIn?: string
-  needRrefreshToken?: boolean
-  updatingTokens?: boolean
+  needRelogin?: boolean
+  // needRrefreshToken?: boolean
+  // updatingTokens?: boolean
 }
 
 export type RefreshTokenResponse = {

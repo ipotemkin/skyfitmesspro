@@ -31,7 +31,10 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.signUp.matchFulfilled,
       (state, { payload }) => {
-        return state = {...payload}
+        return state = {
+          ...payload,
+          needRelogin: false
+        }
       }
     )
     builder.addMatcher(
@@ -94,7 +97,7 @@ export const currentUserSlice = createSlice({
           ...state,
           idToken: payload.id_token, 
           refreshToken: payload.refresh_token,
-          updatingTokens: false
+          // updatingTokens: false
         }
       }
     )
@@ -104,7 +107,7 @@ export const currentUserSlice = createSlice({
         console.error('refreshToken rejected!!!')
         return state = {
           ...state,
-          updatingTokens: false
+          // updatingTokens: false
         }
       }
     )
