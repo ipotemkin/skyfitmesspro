@@ -38,7 +38,7 @@ export const SignUpForm: FC = () => {
       const res = await signUp({ email: data.email, password: data.password }).unwrap()
       console.log('signup reponse -->', res)
       // добавляем пользователя в таблицу users
-      if (res.localId) await addUser({uid: res.localId, idToken: res.idToken}).unwrap()
+      if (res.localId) await addUser({ uid: res.localId }).unwrap()
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error, 'Что-то пошло не так...'))

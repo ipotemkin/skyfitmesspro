@@ -68,7 +68,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
           arg: {
             ...workoutArg,
             exerciseId: index,
-            idToken: user.idToken
+            // idToken: user.idToken
           },
           body: {
             userProgress: item.userProgress || 0,
@@ -79,7 +79,7 @@ export const ProgressModal: FC<ProgressModalProps> = ({
       const workoutStatusArg: WorkoutStatusArg = {
         ...workoutArg,
         done: workoutStatus,
-        idToken: user.idToken
+        // idToken: user.idToken
       }
       await setWorkoutStatus({ ...workoutStatusArg }).unwrap()
     }

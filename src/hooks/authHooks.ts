@@ -1,55 +1,33 @@
-// AUTHORIZATION HOOKS
-
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-
-import { useGetUserDataMutation, useRefreshTokenMutation } from '../api/auth.api'
-import { EXP_MESSAGE } from '../constants'
-import { selectCurrentUser, updateCurrentUser } from '../slices/currentUserSlice'
+import { updateCurrentUser } from '../slices/currentUserSlice'
 import { getJWTExpTime, parseJWT } from '../utils'
-import { useAppCookies, useAppDispatch, useAppSelector } from './appHooks'
-import { useGoToLoginWithMessage } from './shortcutsHooks'
+import { useAppCookies, useAppDispatch } from './appHooks'
 
 // возвращает фукнцию для загрузки credentials из cookies
 export const useLoadCredentialsFromCookies = () => {
-    const { cookies } = useAppCookies()
-    const [getUserData] = useGetUserDataMutation()
-    const goToLoginWithMessage = useGoToLoginWithMessage()
-    const dispatch = useAppDispatch()
-  
-    const loadCredentials = async () => {
-      if (cookies && cookies.idToken) {
-        const decodedToken = parseJWT(cookies.idToken)
-        const { email, user_id: localId } = decodedToken
-        console.log('decoded token -->', decodedToken)
-        const expTime = getJWTExpTime(cookies.idToken)
-        console.log('token expired at', expTime)
-  
-        try {
-          // это действие улучшает анимацию страницы,
-          // поскольку выполняется быстрее, чем getUserData
-          dispatch(updateCurrentUser({
-            ...cookies,
-            email,
-            localId,
-            needRelogin: false
-          }))
+  const { cookies } = useAppCookies()
+  const dispatch = useAppDispatch()
 
-          // Получаем данные о пользователе с помощью idToken
-          await getUserData(cookies.idToken).unwrap()
-  
-        } catch (error) {
-          // если токен недейстителен, просим пользователя снова войти в систему
-          goToLoginWithMessage('Ваш токен устарел или недействителен. Пожалуйста, войдите в систему')
-        }
-  
-      } else {
-        console.warn('no credentials found in cookies');
-      } 
-    }
-    
-    return { loadCredentials }
+  const loadCredentials = () => {
+    if (cookies && cookies.idToken) {
+      const { email, user_id: localId } = parseJWT(cookies.idToken)
+     
+      // TODO remove on release!
+      console.log('token expired at', getJWTExpTime(cookies.idToken))
+
+      // Получаем данные о пользователе из idToken
+      dispatch(updateCurrentUser({
+        ...cookies,
+        email,
+        localId,
+        needRelogin: false
+      }))
+    } else {
+      console.warn('no credentials found in cookies');
+    } 
   }
+  
+  return { loadCredentials }
+}
   
 // export const useRefreshToken = () => {
 //   const user = useAppSelector(selectCurrentUser)

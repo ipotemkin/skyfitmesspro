@@ -50,19 +50,19 @@ export const usersApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
-    getUsersWithCourses: build.query<UserData[], string>({
+    getUsersWithCourses: build.query<UserData[], void>({
       // query: (idToken: string) => `.json?auth=${idToken}`,
-      query: (idToken: string) => `.json`,
+      query: () => `.json`,
       providesTags: ['User']
     }),
     getUserCourses: build.query<CourseData[], UserArg>({
       // query: ({ idToken, uid }) => `/${uid}/courses.json?auth=${idToken}`,
-      query: ({ idToken, uid }) => `/${uid}/courses.json`,
+      query: ({ uid }) => `/${uid}/courses.json`,
       providesTags: [{ type: 'UserCourse', id: 'LIST' }]
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
       // query: ({ idToken, uid, courseId }) => `/${uid}/courses/${courseId}.json?auth=${idToken}`,
-      query: ({ idToken, uid, courseId }) => `/${uid}/courses/${courseId}.json`,
+      query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
       providesTags: (result, error, arg) => 
         [
           { type: 'UserCourse', id: arg.courseId },
@@ -70,7 +70,7 @@ export const usersApi = createApi({
         ]
     }),
     getUserExercises: build.query<UserData, WorkoutArg>({
-      query: ({ idToken, uid, courseId, workoutId }) =>
+      query: ({ uid, courseId, workoutId }) =>
       // `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json?auth=${idToken}`,
       `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
       providesTags: (result, error, arg) => 
@@ -93,7 +93,7 @@ export const usersApi = createApi({
       ]
     }),
     setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
-      query: ({ idToken, uid, courseId, workoutId, done }) => ({
+      query: ({ uid, courseId, workoutId, done }) => ({
         // url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json?auth=${idToken}`,
         url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
         method: 'PATCH',
@@ -107,7 +107,7 @@ export const usersApi = createApi({
         ]
     }),
     addUserCourse: build.mutation<void, CourseArg>({
-      query: ({ idToken, uid, courseId }) => ({
+      query: ({ uid, courseId }) => ({
         // url: `/${uid}/courses/${courseId}.json?auth=${idToken}`,
         url: `/${uid}/courses/${courseId}.json`,
         method: 'PUT',
@@ -120,7 +120,7 @@ export const usersApi = createApi({
         ]
     }),
     delUserCourse: build.mutation<void, CourseArg>({
-      query: ({ idToken, uid, courseId }) => ({
+      query: ({ uid, courseId }) => ({
         // url: `/${uid}/courses/${courseId}.json?auth=${idToken}`,
         url: `/${uid}/courses/${courseId}.json`,
         method: 'DELETE',
@@ -147,4 +147,3 @@ export const {
   useAddUserCourseMutation,
   useDelUserCourseMutation
 } = usersApi
-
