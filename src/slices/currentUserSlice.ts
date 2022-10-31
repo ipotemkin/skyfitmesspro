@@ -97,7 +97,7 @@ export const currentUserSlice = createSlice({
           ...state,
           idToken: payload.id_token, 
           refreshToken: payload.refresh_token,
-          // updatingTokens: false
+          needRelogin: false
         }
       }
     )
@@ -107,7 +107,6 @@ export const currentUserSlice = createSlice({
         console.error('refreshToken rejected!!!')
         return state = {
           ...state,
-          // updatingTokens: false
         }
       }
     )

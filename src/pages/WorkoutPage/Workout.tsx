@@ -28,13 +28,15 @@ export const Workout: FC = () => {
   const [isWorkoutsShown, setIsWorkoutsShown] = useState(false)
   const { data, isLoading, isError } = useUserCourse(courseId)
 
-  if (isLoading || (!data && !isError))
+  if (isLoading || (!data && !isError)) {
     return <WarningPage text="Загрузка..." user={user} />
+  }
 
-  if (!user.localId) return <WarningPage text="Вы не авторизованы!" />
+  if (!user.localId) {
+    return <WarningPage text="Вы не авторизованы!" />
+  }
 
   if (!data) {
-    console.log('Вы не зарегистрированы на этот курс!') // for DEBUG!
     return (
       <WarningPage text="Вы не зарегистрированы на этот курс!" user={user} />
     )
