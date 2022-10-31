@@ -109,16 +109,12 @@ export const useUserCourse = (courseId?: number) => {
   }, [isErrorQuery])
 
   useEffect(() => {
-    // если загрузка завершена но нет данных или пользователя
-    if (!isUserCourseLoading && (!userCourseData || !user?.localId))
-      setIsError(true)
-    // если есть все данные, то ставим загрузку в false
-    else if (userCourseData && course && user?.localId) {
-      const res = {}
-      merge(res, course, userCourseData)
-      setUserCourse(res)
-    }
-  }, [userCourseData, course, isUserCourseLoading, user?.localId])
+    if (userCourseData && course && user?.localId) {
+    const res = {}
+    merge(res, course, userCourseData)
+    setUserCourse(res)
+  }
+  }, [userCourseData, course, user?.localId])
 
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }

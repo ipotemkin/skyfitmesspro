@@ -6,6 +6,7 @@ import {
   FetchBaseQueryError
 } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
+import Cookies from 'js-cookie'
 
 import { API_URL } from '../constants'
 import { updateCurrentUser } from '../slices/currentUserSlice'
@@ -73,6 +74,10 @@ const customFetchBase: BaseQueryFn<
           } = await api.dispatch(authApi.endpoints.refreshToken.initiate(refreshToken))
 
           if ('data' in res && res.data.id_token) {
+            // обновляем токен в cookies
+            // без этого при обновлении страницы приложение просить снова авторизоваться
+            Cookies.set('idToken', res.data.id_token)
+            
             args = updateTokenInArgs(args, res.data.id_token)
           
             // Retry the initial query
