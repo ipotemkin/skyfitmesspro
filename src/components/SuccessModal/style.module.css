@@ -22,3 +22,18 @@
 
   text-align: center;
 }
+
+@media (max-width: 500px) {
+  .content {
+    width: 320px;
+    padding: 25px 20px 0;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .icon {
+    height: 165px;
+  }
+}

@@ -47,7 +47,8 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
 
     try {
       const res = await changePassword({
-        idToken: user.idToken, password: data.password
+        idToken: user.idToken,
+        password: data.password,
       }).unwrap()
       setCookies({ idToken: res?.idToken })
       setIsOpened(false)
@@ -55,7 +56,7 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
       console.error('Change password failed -->', error)
       dispatch(setMessage(EXP_MESSAGE))
       navigate(ROUTES.login)
-    }    
+    }
   }
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)

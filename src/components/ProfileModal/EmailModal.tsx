@@ -9,7 +9,6 @@ import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { setMessage } from '../../slices/messageSlice'
-import { AppCookies } from '../../types'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
 
@@ -33,17 +32,17 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<EmailData>({ mode: 'onTouched' })
-  
+
   const [changeEmail] = useChangeEmailMutation()
   const { setCookies } = useAppCookies()
-  const [email, setEmail] = useState(user.email || "E-mail") 
+  const [email, setEmail] = useState(user.email || 'E-mail')
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
-  
+
   const onSubmit: SubmitHandler<EmailData> = async (data) => {
     if (!user.idToken) {
       navigate(ROUTES.login)
@@ -51,7 +50,10 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
     }
 
     try {
-      const res = await changeEmail({ idToken: user.idToken, email: data.email }).unwrap()
+      const res = await changeEmail({
+        idToken: user.idToken,
+        email: data.email,
+      }).unwrap()
       setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
@@ -73,7 +75,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
         <div className={styles.inputs}>
           <input
             className={styles.input}
-            placeholder={user.email || "E-mail"}
+            placeholder={user.email || 'E-mail'}
             value={email}
             {...register('email', {
               required: 'Введите e-mail',
@@ -81,7 +83,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
                 value: validEmail,
                 message: 'Введите корректный e-mail',
               },
-              onChange: handleChange
+              onChange: handleChange,
             })}
           />
           <p className={styles.error}>

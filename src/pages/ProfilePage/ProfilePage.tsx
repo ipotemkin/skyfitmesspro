@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
 import { Navigation } from '../../components/Navigation/Header'
-import { User as UserNav } from '../../components/User/User'
+import { User } from '../../components/User/User'
 import { UserCourses } from '../../components/UserCourses/UserCourses'
 import { UserInfo } from '../../components/UserInfo/UserInfo'
 import { WorkoutModal } from '../../components/WorkoutModal/WorkoutModal'
@@ -28,7 +28,7 @@ export const ProfilePage: FC = () => {
     <div className={styles.profilePage}>
       <div className={styles.wrapper}>
         <Navigation>
-          <UserNav user={currentUser} />
+          <User user={currentUser} />
         </Navigation>
         <UserInfo user={currentUser} />
         <UserCourses user={currentUser} handleWorkouts={handleWorkouts} />

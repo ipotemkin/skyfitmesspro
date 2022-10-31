@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,13 +21,16 @@ export const User: FC<Props> = ({ user }) => {
   const navigate = useNavigate()
   const { removeCookies } = useAppCookies()
 
+  const outerRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
+
   const handleShowNav = () => {
-    setIsShowNav((prev) => !prev)
+    setIsShowNav(!isShowNav)
   }
 
   const handleLogout = () => {
-    dispatch(deleteCurrentUser())
     removeCookies()
+    dispatch(deleteCurrentUser())
   }
 
   const handleProfile = () => {
@@ -38,9 +41,19 @@ export const User: FC<Props> = ({ user }) => {
     navigate(ROUTES.admin)
   }
 
+  useEffect(() => {
+    const listener = (e: MouseEvent) => {
+      if (!outerRef.current || !outerRef.current.contains(e.target as Node)) {
+        setIsShowNav(false)
+      }
+    }
+    document.addEventListener('click', listener)
+    return () => document.removeEventListener('click', listener)
+  }, [])
+
   return (
-    <div className={styles.wrapper} onClick={handleShowNav}>
-      <div className={styles.user}>
+    <div className={styles.wrapper}>
+      <div className={styles.user} onClick={handleShowNav} ref={outerRef}>
         <div className={styles.avatar}>
           {user.displayName?.trim().charAt(0).toUpperCase() ||
             user.email?.trim().charAt(0).toUpperCase()}
@@ -52,7 +65,11 @@ export const User: FC<Props> = ({ user }) => {
       </div>
 
       {isShowNav && (
-        <div className={styles.nav} onClick={(e) => e.stopPropagation()}>
+        <div
+          className={styles.nav}
+          ref={innerRef}
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className={styles.link} onClick={handleProfile}>
             Профиль
           </div>
