@@ -32,7 +32,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node src/serverProxy.js",
+    "proxy": "react-scripts build && nodemon src/serverProxy.js",
     "serve": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -62,6 +63,7 @@
     "@types/js-cookie": "^3.0.2",
     "@types/lodash": "^4.14.186",
     "eslint-config-prettier": "^8.5.0",
+    "nodemon": "^2.0.20",
     "prettier": "2.7.1"
   }
 }
