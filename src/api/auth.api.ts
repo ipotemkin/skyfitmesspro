@@ -5,8 +5,11 @@ import { apiKey, httpOnlyProxy } from '../env'
 import { FirebaseUserRESTAPI, RefreshTokenResponse } from '../types'
 
 let baseUrl = API_AUTH_URL
+console.log('httpOnlyProxy -->', httpOnlyProxy)
 if (httpOnlyProxy) {
+  console.log('httpOnlyProxy -->', httpOnlyProxy)
   baseUrl = '/proxy/v1/'
+  console.log('baseUrl -->', baseUrl)
 }
 
 type SingInArg = {
