@@ -19,6 +19,12 @@ npm install
 npm run serve
 ```
 
+Для запуска тестирования cypress выполните команду
+
+```sh
+npm run cypress
+```
+
 При необходимости production сборки выполните команду
 
 ```sh
@@ -106,10 +112,12 @@ npm run build
 Используется защищенный режим – база данных закрыта от неавторизованных пользователей по определнным правилам
 
 В базе данных два корневых узла: courses и users
+
 - **courses** (информация о курсах) защищены от записы, но доступны неавторизованному пользователю для чтения
 - **users** (курсы/тренироки/прогресс конкретного пользователя) доступны только авторизованным пользователям. Более того, пользователь видит и может изменить только свои данные
 
 Для доступа к users иcпользуются токены:
+
 - **idToken** - это access token, время его жизни 60 минут
 - **refreshToken** - токен для обновления idToken, он бессрочный
 
@@ -137,5 +145,6 @@ npm run build
 - [x] React Router DOM, реализация routing
 - [x] React-cookie
 - [x] TypeScript
+- [x] Реализация e2e тестов cypress
 - [x] [Material UI](https://mui.com/material-ui/getting-started/overview/)
-- [X] [Mutex](https://www.npmjs.com/package/async-mutex)
+- [x] [Mutex](https://www.npmjs.com/package/async-mutex)

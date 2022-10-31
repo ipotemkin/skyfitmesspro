@@ -36,6 +36,7 @@
     "serve": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cypress": "cypress open",
     "eject": "react-scripts eject",
     "lint:fix": "eslint src/ --fix --max-warnings=0",
     "lint": "eslint --fix ./src/**/*.{js,jsx,ts,tsx}"
@@ -61,6 +62,7 @@
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",
     "@types/lodash": "^4.14.186",
+    "cypress": "^10.11.0",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "2.7.1"
   }
