@@ -117,3 +117,41 @@
   background-color: #e6f9ff;
   box-shadow: inset 0 0 0px 1px #00c1ff;
 }
+
+@media (max-width: 840px) {
+  .title {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .listItem {
+    font-size: 22px;
+    line-height: 1.5;
+  }
+
+  .progressbar {
+    min-width: 250px;
+  }
+
+  .percent {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 680px) {
+  .progress {
+    padding: 26px 36px 40px;
+  }
+
+  .title {
+    margin-bottom: 25px;
+
+    font-size: 26px;
+  }
+
+  .listItem {
+    flex-direction: column;
+    row-gap: 10px;
+    font-size: 18px;
+  }
+}

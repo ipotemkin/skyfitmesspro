@@ -59,3 +59,30 @@
 .input:focus {
   border-bottom: 1px solid #580ea2;
 }
+
+@media (max-width: 500px) {
+  .title {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .content {
+    width: 320px;
+    padding: 25px 20px 40px;
+  }
+
+  .fields {
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
+
+  .input {
+    margin: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}

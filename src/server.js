@@ -18,6 +18,12 @@ const API_SERVICE_DOMAIN = 'googleapis.com'
 const API_URL = 'https://skyfitnesspro-202210-default-rtdb.europe-west1.firebasedatabase.app/'
 const API_DOMAIN = 'firebasedatabase.app'
 
+const getRefreshTokenFromCookiesString = (cookieString) => {
+   const result = cookieString.match(/refreshToken=(.[^;]*[^;]).*/)
+   const newToken = result[1]
+   return newToken ? newToken : undefined
+}
+
 console.log(publicPath)
 
 // Logging
@@ -35,17 +41,20 @@ function onProxyReq(proxyReq, req, res) {
 
   if(req.body) {
     const isRefteshToken = req.url.includes('token?key=')
-    if (isRefteshToken && req.body.refresh_token === undefined) {
 
-      const tokens = req.headers.cookie
-
-      if 
-      const result = tokens.match(/refreshToken=(.[^;]*[^;]).*/)
-
-      
-          
-
+    if (isRefteshToken) {
+      console.log('req.headers.cookie (1) -->', req.headers.cookie)
+      console.log('Setting refreshToken')
+      // req.body.refreshToken=''
+      const newToken = getRefreshTokenFromCookiesString(req.headers.cookie)
+      req.body.refreshToken = newToken
     }
+   //  if (isRefteshToken && req.body.refresh_token === undefined) {
+   //    const tokens = req.headers.cookie
+
+   //    // if 
+   //    // const result = tokens.match(/refreshToken=(.[^;]*[^;]).*/)
+   //  }
 
 
     let bodyData = JSON.stringify(req.body);
@@ -65,7 +74,7 @@ function onProxyReq(proxyReq, req, res) {
   // console.log(result[1])
 
   // console.log('req -->', req)
-  console.log('req.headers.cookie -->', req.headers.cookie)
+  console.log('req.headers.cookie (2) -->', req.headers.cookie)
 
   console.log('token?key=', req.url.includes('token?key='))
   console.log('body =', req.body)
