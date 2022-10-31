@@ -29,8 +29,8 @@ export const User: FC<Props> = ({ user }) => {
   }
 
   const handleLogout = () => {
-    dispatch(deleteCurrentUser())
     removeCookies()
+    dispatch(deleteCurrentUser())
   }
 
   const handleProfile = () => {

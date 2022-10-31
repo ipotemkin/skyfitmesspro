@@ -9,6 +9,7 @@ import { Mutex } from 'async-mutex'
 import Cookies from 'js-cookie'
 
 import { API_URL } from '../constants'
+import { httpOnlyProxy } from '../env'
 import { updateCurrentUser } from '../slices/currentUserSlice'
 import { RootState } from '../store'
 import { RefreshTokenResponse } from '../types'
@@ -41,6 +42,13 @@ const AddTokenToUrl = (args: string | FetchArgs, token: string) => {
   }
 }
 
+const runRefreshToken = async (api: any, refreshToken: string) => {
+  const res: {
+    data: RefreshTokenResponse } | { error: FetchBaseQueryError | SerializedError
+    } = await api.dispatch(authApi.endpoints.refreshToken.initiate(refreshToken))
+  return res
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL + '/users'
 })
@@ -66,14 +74,21 @@ const customFetchBase: BaseQueryFn<
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
 
-      try {
-        const { refreshToken } = (api.getState() as RootState).currentUser
-        if (refreshToken) {
-          const res: {
-            data: RefreshTokenResponse } | { error: FetchBaseQueryError | SerializedError
-          } = await api.dispatch(authApi.endpoints.refreshToken.initiate(refreshToken))
+      // let res: {
+      //     data: RefreshTokenResponse } | { error: FetchBaseQueryError | SerializedError
+      //   } = undefined
 
-          if ('data' in res && res.data.id_token) {
+      let submitToken: string = ''
+        
+        try {
+          if (!httpOnlyProxy) {
+            const { refreshToken } = (api.getState() as RootState).currentUser
+            if (!refreshToken) throw new Error('No refresh token')  
+            else submitToken = refreshToken
+          }
+          const res = await runRefreshToken(api, submitToken)
+          
+          if (res && 'data' in res && res.data.id_token) {
             // обновляем токен в cookies
             // без этого при обновлении страницы приложение просить снова авторизоваться
             Cookies.set('idToken', res.data.id_token)
@@ -88,7 +103,6 @@ const customFetchBase: BaseQueryFn<
               success = false
             }
           } 
-        } 
       } finally {
         if (!success) {
           api.dispatch(updateCurrentUser({ needRelogin: true }))
