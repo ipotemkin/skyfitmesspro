@@ -12,18 +12,16 @@ export const currentUserSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state, action: PayloadAction<FirebaseUserRESTAPI>) => {
-      state = {...action.payload}
+      state = { ...action.payload }
     },
     updateCurrentUser: (state, action: PayloadAction<FirebaseUserRESTAPI>) => {
-      // console.log('in updateCurrentUser')
-      // console.log('payload -->', action.payload)
       return state = {
         ...state,
         ...action.payload
       }
     },
     deleteCurrentUser: (state) => {
-      return state = {...initialState}
+      return state = { ...initialState }
     }
   },
   extraReducers: builder => {

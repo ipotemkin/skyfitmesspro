@@ -2,7 +2,6 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { CourseData, UserData } from '../types'
 import customFetchBase from './customFetchBase'
 
-
 type TokenArg = {
   idToken?: string
 }
@@ -51,17 +50,14 @@ export const usersApi = createApi({
       invalidatesTags: ['User'],
     }),
     getUsersWithCourses: build.query<UserData[], void>({
-      // query: (idToken: string) => `.json?auth=${idToken}`,
       query: () => `.json`,
       providesTags: ['User']
     }),
     getUserCourses: build.query<CourseData[], UserArg>({
-      // query: ({ idToken, uid }) => `/${uid}/courses.json?auth=${idToken}`,
       query: ({ uid }) => `/${uid}/courses.json`,
       providesTags: [{ type: 'UserCourse', id: 'LIST' }]
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
-      // query: ({ idToken, uid, courseId }) => `/${uid}/courses/${courseId}.json?auth=${idToken}`,
       query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
       providesTags: (result, error, arg) => 
         [
@@ -71,7 +67,6 @@ export const usersApi = createApi({
     }),
     getUserExercises: build.query<UserData, WorkoutArg>({
       query: ({ uid, courseId, workoutId }) =>
-      // `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json?auth=${idToken}`,
       `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
       providesTags: (result, error, arg) => 
         [
@@ -81,7 +76,6 @@ export const usersApi = createApi({
       }),
     updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
-        // url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json?auth=${arg.idToken}`,
         url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json`,
         method: 'PATCH',
         body: body,
@@ -94,7 +88,6 @@ export const usersApi = createApi({
     }),
     setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
       query: ({ uid, courseId, workoutId, done }) => ({
-        // url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json?auth=${idToken}`,
         url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
         method: 'PATCH',
         body: { done: done },
@@ -108,7 +101,6 @@ export const usersApi = createApi({
     }),
     addUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
-        // url: `/${uid}/courses/${courseId}.json?auth=${idToken}`,
         url: `/${uid}/courses/${courseId}.json`,
         method: 'PUT',
         body: { id: courseId },
@@ -121,7 +113,6 @@ export const usersApi = createApi({
     }),
     delUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
-        // url: `/${uid}/courses/${courseId}.json?auth=${idToken}`,
         url: `/${uid}/courses/${courseId}.json`,
         method: 'DELETE',
         body: { id: courseId },
