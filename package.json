@@ -36,7 +36,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_HTTP_ONLY_PROXY=TRUE node src/serverProxy.js",
+    "start": "node src/server.js",
     "proxy": "REACT_APP_HTTP_ONLY_PROXY=TRUE react-scripts build && nodemon src/serverProxy.js",
     "serve": "react-scripts start",
     "build": "react-scripts build",
