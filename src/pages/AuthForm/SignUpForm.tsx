@@ -7,7 +7,6 @@ import { useSignUpMutation } from '../../api/auth.api'
 import { useAddUserMutation } from '../../api/users.api'
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
-import { useAppCookies } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { FormData } from '../../types'
 import { getErrorMessage } from '../../utils'
@@ -23,7 +22,6 @@ export const SignUpForm: FC = () => {
   const [isBlocked, setIsBlocked] = useState(false)
   const [signUp] = useSignUpMutation()
   const [addUser] = useAddUserMutation()
-  const { setCookies } = useAppCookies()
 
   const {
     register,
@@ -38,10 +36,7 @@ export const SignUpForm: FC = () => {
     try {
       const res = await signUp({ email: data.email, password: data.password }).unwrap()
       // добавляем пользователя в таблицу users
-      if (res.localId) {
-        setCookies({ idToken: res?.idToken })
-        await addUser({ uid: res.localId }).unwrap()
-      }
+      if (res.localId) await addUser({ uid: res.localId }).unwrap()
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error, 'Что-то пошло не так...'))

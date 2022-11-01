@@ -13,7 +13,7 @@ export const useGoToLoginWithMessage = () => {
   const navigate = useNavigate()
   const { removeCookies } = useAppCookies()
 
-  const goToLoginWithMessage = (message: string) => {
+  const goToLoginWithMessage = (message: string = '') => {
     removeCookies()
     dispatch(deleteCurrentUser())
     dispatch(setMessage(message))

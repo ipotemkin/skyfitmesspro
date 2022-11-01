@@ -2,9 +2,10 @@
 
 import { useCookies } from 'react-cookie'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { appCookiesNames } from '../constants'
 
 import type { AppDispatch, RootState } from '../store'
-import { AppCookies, appCookiesNames } from '../types'
+import { AppCookies } from '../types'
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<AppDispatch>()

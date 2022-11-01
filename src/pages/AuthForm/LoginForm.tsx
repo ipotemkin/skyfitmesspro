@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSignInMutation } from '../../api/auth.api'
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
-import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
+import { useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { clearMessage, selectMessage } from '../../slices/messageSlice'
 import { FormData } from '../../types'
@@ -22,7 +22,6 @@ export const LoginForm: FC = () => {
   const [error, setError] = useState('')
   const [isBlocked, setIsBlocked] = useState(false)
   const [login] = useSignInMutation()
-  const { setCookies } = useAppCookies()
   const message = useAppSelector(selectMessage)
   const [formMessage, setFormMessage] = useState('')
   const dispatch = useDispatch()
@@ -47,8 +46,7 @@ export const LoginForm: FC = () => {
     setError('')
 
     try {
-      const res = await login({ email: data.email, password: data.password }).unwrap()
-      setCookies({ idToken: res?.idToken })
+      await login({ email: data.email, password: data.password }).unwrap()
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error))
