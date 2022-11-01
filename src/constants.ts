@@ -22,3 +22,7 @@ export const ERRORS: ErrorTypes = {
 }
 
 export const EXP_MESSAGE = 'Ваша сессия истекла. Пожалуйста, войдите в систему!'
+
+export const accessTokenName = 'idToken'
+
+export const appCookiesNames = [accessTokenName]

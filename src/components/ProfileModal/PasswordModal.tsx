@@ -1,15 +1,12 @@
 import classNames from 'classnames'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 import { useChangePasswordMutation } from '../../api/auth.api'
 import { EXP_MESSAGE } from '../../constants'
-import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
-import { ROUTES } from '../../routes'
+import { useAppSelector } from '../../hooks/appHooks'
+import { useGoToLoginWithMessage } from '../../hooks/shortcutsHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
-import { setMessage } from '../../slices/messageSlice'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
 
@@ -28,10 +25,8 @@ const validPasswordLength = 6
 
 export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
   const user = useAppSelector(selectCurrentUser)
-  const { setCookies } = useAppCookies()
+  const goToLoginWithMessage = useGoToLoginWithMessage()
   const [changePassword] = useChangePasswordMutation()
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
@@ -41,20 +36,18 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
 
   const onSubmit: SubmitHandler<PasswordData> = async (data) => {
     if (!user.idToken) {
-      navigate(ROUTES.login)
+      goToLoginWithMessage(EXP_MESSAGE)
       return
     }
 
     try {
-      const res = await changePassword({
+      await changePassword({
         idToken: user.idToken,
         password: data.password,
       }).unwrap()
-      setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
-      dispatch(setMessage(EXP_MESSAGE))
-      navigate(ROUTES.login)
+      goToLoginWithMessage(EXP_MESSAGE)
     }
   }
 

@@ -1,14 +1,11 @@
 import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 import { useChangeEmailMutation } from '../../api/auth.api'
 import { EXP_MESSAGE } from '../../constants'
-import { useAppCookies, useAppSelector } from '../../hooks/appHooks'
-import { ROUTES } from '../../routes'
+import { useAppSelector } from '../../hooks/appHooks'
+import { useGoToLoginWithMessage } from '../../hooks/shortcutsHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
-import { setMessage } from '../../slices/messageSlice'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
 
@@ -26,6 +23,7 @@ const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 
 export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
   const user = useAppSelector(selectCurrentUser)
+  const goToLoginWithMessage = useGoToLoginWithMessage()
 
   const {
     register,
@@ -34,10 +32,7 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
   } = useForm<EmailData>({ mode: 'onTouched' })
 
   const [changeEmail] = useChangeEmailMutation()
-  const { setCookies } = useAppCookies()
   const [email, setEmail] = useState(user.email || 'E-mail')
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -45,20 +40,18 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
 
   const onSubmit: SubmitHandler<EmailData> = async (data) => {
     if (!user.idToken) {
-      navigate(ROUTES.login)
+      goToLoginWithMessage(EXP_MESSAGE)
       return
     }
 
     try {
-      const res = await changeEmail({
+      await changeEmail({
         idToken: user.idToken,
         email: data.email,
       }).unwrap()
-      setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
-      dispatch(setMessage(EXP_MESSAGE))
-      navigate(ROUTES.login)
+      goToLoginWithMessage(EXP_MESSAGE)
     }
   }
 

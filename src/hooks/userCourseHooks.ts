@@ -61,20 +61,34 @@ export const useCoursesWithSubscription = (uid?: string) => {
   const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
 
   useEffect(() => {
+    const res: CourseData[] = []
+
     if (!isUserCoursesLoading && courses) {
       const coursesTemp: CourseData[] = []
+      
       // добавляем свойство 'subscription'
-      if (userCoursesData && userCoursesData.length > 0) {
-        userCoursesData.forEach((course: CourseData) => {
-          coursesTemp.push({
-            ...course,
-            subscription: course ? true : false,
+      if (userCoursesData) {
+        if (userCoursesData.length > 0) {
+          userCoursesData.forEach((course: CourseData) => {
+            coursesTemp.push({
+              ...course,
+              subscription: course ? true : false,
+            })
           })
-        })
+          merge(res, courses, coursesTemp)
+        } else {
+          const validKeys = getValidKeys(userCoursesData)
+          courses.forEach((course: CourseData) => {
+            res.push({
+              ...course,
+              subscription: validKeys.includes(String(course.id)) ? true : false,         
+            })
+          })        
+        }
+        setCoursesWithSubscription(res)
+        return
       }
-      const res: CourseData[] = []
-      merge(res, courses, coursesTemp)
-      setCoursesWithSubscription(res)
+      setCoursesWithSubscription(courses)
     }
   }, [userCoursesData, courses, isUserCoursesLoading])
 

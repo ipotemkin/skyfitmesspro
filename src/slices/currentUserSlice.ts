@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import Cookies from 'js-cookie'
 
 import { authApi } from '../api/auth.api'
+import { accessTokenName } from '../constants'
 import { RootState } from '../store'
 import { FirebaseUserRESTAPI } from '../types'
 
@@ -29,6 +31,9 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.signUp.matchFulfilled,
       (state, { payload }) => {
+        if (payload.idToken)
+          Cookies.set(accessTokenName, payload.idToken)
+        
         return state = {
           ...payload,
           needRelogin: false
@@ -39,6 +44,9 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.signIn.matchFulfilled,
       (state, { payload }) => {
+        if (payload.idToken)
+          Cookies.set(accessTokenName, payload.idToken)
+        
         return state = {...payload}
       }
     )
@@ -46,6 +54,9 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.changeEmail.matchFulfilled,
       (state, { payload }) => {
+        if (payload.idToken)
+          Cookies.set(accessTokenName, payload.idToken)
+
         return state = {
           ...state,
           ...payload
@@ -56,6 +67,9 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.changePassword.matchFulfilled,
       (state, { payload }) => {
+        if (payload.idToken)
+          Cookies.set(accessTokenName, payload.idToken)
+
         return state = {
           ...state,
           ...payload
@@ -66,6 +80,9 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.refreshToken.matchFulfilled,
       (state, { payload }) => {
+        if (payload.id_token)
+          Cookies.set(accessTokenName, payload.id_token)
+
         return state = {
           ...state,
           idToken: payload.id_token, 
@@ -78,6 +95,9 @@ export const currentUserSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.getUserData.matchFulfilled,
       (state, { payload }) => {
+        if (payload.idToken)
+          Cookies.set(accessTokenName, payload.idToken)
+
         return state = {
           ...state,
           ...payload
