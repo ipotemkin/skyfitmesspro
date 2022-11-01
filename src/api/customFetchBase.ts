@@ -53,7 +53,6 @@ const customFetchBase: BaseQueryFn<
           
           if (res && 'data' in res && res.data.id_token) {
             // обновляем токен в cookies
-            // без этого при обновлении страницы приложение просить снова авторизоваться
             Cookies.set('idToken', res.data.id_token)
             
             args = updateTokenInArgs(args, res.data.id_token)
