@@ -1,0 +1,157 @@
+.progress {
+  padding: 36px 44px;
+  background-color: #f2f2f2;
+  border-radius: 30px;
+}
+
+.title {
+  margin: 0 0 40px;
+
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.name {
+  max-width: 278px;
+}
+
+.progressbar {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  min-width: 278px;
+  height: 36px;
+
+  border-radius: 22px;
+}
+
+.done {
+  position: absolute;
+
+  height: 101%;
+
+  border-radius: 22px 0px 0px 22px;
+}
+
+.percent {
+  position: absolute;
+  z-index: 1;
+
+  width: 60px;
+  left: calc(50% - 22px);
+
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+
+  color: #000;
+  text-align: center;
+}
+
+.color1 {
+  background-color: #565eef;
+}
+
+.colorBg1 {
+  background-color: #edecff;
+  box-shadow: inset 0 0 0px 1px #565eef;
+}
+
+.color2 {
+  background-color: #ff6d00;
+}
+
+.colorBg2 {
+  background-color: #fff2e0;
+  box-shadow: inset 0 0 0px 1px #ff6d00;
+}
+
+.color3 {
+  background-color: #9a48f1;
+}
+
+.colorBg3 {
+  background-color: #f9ebff;
+  box-shadow: inset 0 0 0px 1px #9a48f1;
+}
+
+.color4 {
+  background-color: #a9d42b;
+}
+
+.colorBg4 {
+  background-color: #f2fbd6;
+  box-shadow: inset 0 0 0px 1px #a9d42b;
+}
+
+.color5 {
+  background-color: #00c1ff;
+}
+
+.colorBg5 {
+  background-color: #e6f9ff;
+  box-shadow: inset 0 0 0px 1px #00c1ff;
+}
+
+@media (max-width: 840px) {
+  .title {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .listItem {
+    font-size: 22px;
+    line-height: 1.5;
+  }
+
+  .progressbar {
+    min-width: 250px;
+  }
+
+  .percent {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 680px) {
+  .progress {
+    padding: 26px 36px 40px;
+  }
+
+  .title {
+    margin-bottom: 25px;
+
+    font-size: 26px;
+  }
+
+  .listItem {
+    flex-direction: column;
+    row-gap: 10px;
+    font-size: 18px;
+  }
+}

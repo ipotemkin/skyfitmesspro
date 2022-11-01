@@ -1,0 +1,137 @@
+.formWrapper {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding-right: calc(50% - 580px);
+  padding-left: calc(50% - 580px);
+
+  background: #271a58;
+}
+
+.form {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 366px;
+  height: 440px;
+  margin: 0 auto;
+  padding: 44px;
+
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.logo {
+  margin: 0 auto;
+  margin-bottom: 38px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.input {
+  font-family: inherit;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.05px;
+
+  color: inherit;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #d0cece;
+}
+
+.input::placeholder {
+  color: #d0cece;
+}
+
+.input:focus {
+  border-bottom: 1px solid #580ea2;
+}
+
+.inputPassword {
+  margin-top: 20px;
+}
+
+.error {
+  height: 19px;
+  margin: 0;
+  padding-left: 2px;
+
+  font-size: 14px;
+
+  color: #ff6b6b;
+}
+
+.error span::before {
+  display: inline;
+  content: '⚠ ';
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.back {
+  margin-bottom: 9px;
+  padding: 0;
+
+  text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .formWrapper {
+    padding-right: calc(50% - 400px);
+    padding-left: calc(50% - 400px);
+  }
+
+  .title {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 840px) {
+  .formWrapper {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
+
+@media (max-width: 768px) {
+  .formWrapper {
+    padding-right: calc(50% - 300px);
+    padding-left: calc(50% - 300px);
+  }
+}
+
+@media (max-width: 680px) {
+  .formWrapper {
+    padding-right: calc(50% - 180px);
+    padding-left: calc(50% - 180px);
+  }
+}
+
+@media (max-width: 425px) {
+  .formWrapper {
+    padding-right: calc(50% - 150px);
+    padding-left: calc(50% - 150px);
+  }
+
+  .form {
+    width: 300px;
+    height: 440px;
+
+    padding: 44px 25px 44px;
+  }
+}

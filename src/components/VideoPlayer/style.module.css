@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+  height: 653px;
+  width: 100%;
+}
+
+.player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    height: 450px;
+  }
+}
+
+@media (max-width: 840px) {
+  .container {
+    height: 340px;
+  }
+}
+
+@media (max-width: 680px) {
+  .container {
+    height: 202px;
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    height: 169px;
+  }
+}

@@ -1,0 +1,39 @@
+.content {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 42px 42px 0;
+
+  width: 444px;
+
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 10px;
+
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+  .content {
+    width: 320px;
+    padding: 25px 20px 0;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .icon {
+    height: 165px;
+  }
+}
