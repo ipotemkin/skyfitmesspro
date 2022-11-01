@@ -58,7 +58,7 @@ export const User: FC<Props> = ({ user }) => {
           {user.displayName?.trim().charAt(0).toUpperCase() ||
             user.email?.trim().charAt(0).toUpperCase()}
         </div>
-        <div className={styles.name}>{user.displayName || user.email}</div>
+        <div data-cy="name-user" className={styles.name}>{user.displayName || user.email}</div>
         <Arrow
           className={classNames(styles.arrow, isShowNav && styles.rotate)}
         />
