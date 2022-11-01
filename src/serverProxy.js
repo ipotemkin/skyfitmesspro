@@ -22,7 +22,7 @@ const getRefreshTokenFromCookiesString = (cookieString) => {
 }
 
 // Logging
-// app.use(morgan('dev'));
+// app.use(morgan('dev'))
 
 // чтобы было доступно поле body 
 app.use(bodyParser.urlencoded({extended: true}))
@@ -38,12 +38,12 @@ function onProxyReq(proxyReq, req, res) {
       req.body.refreshToken = newToken
     }
 
-    let bodyData = JSON.stringify(req.body);
+    let bodyData = JSON.stringify(req.body)
     // In case if content-type is application/x-www-form-urlencoded -> we need to change to application/json
-    proxyReq.setHeader('Content-Type','application/json');
-    proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+    proxyReq.setHeader('Content-Type','application/json')
+    proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     // Stream the content
-    proxyReq.write(bodyData);
+    proxyReq.write(bodyData)
   }
 }
 
