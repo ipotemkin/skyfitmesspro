@@ -5,9 +5,8 @@ import {
   FetchBaseQueryError
 } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
-import Cookies from 'js-cookie'
 
-import { accessTokenName, API_URL } from '../constants'
+import { API_URL } from '../constants'
 import { httpOnlyProxy } from '../env'
 import { updateCurrentUser } from '../slices/currentUserSlice'
 import { RootState } from '../store'
