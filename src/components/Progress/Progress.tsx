@@ -11,10 +11,10 @@ type ProgressProps = {
 }
 
 export const Progress: FC<ProgressProps> = ({ exercises, workoutId }) => {
-    const title = `Мой прогресс по тренировке ${workoutId}:`
+  const title = `Мой прогресс по тренировке ${workoutId}:`
 
   return (
-    <div className={styles.progress}>
+    <div className={styles.progress} data-cy="progress-bars">
       <h2 className={styles.title}>{title}</h2>
       <ul className={styles.list}>
         {exercises?.map((exercise) => {

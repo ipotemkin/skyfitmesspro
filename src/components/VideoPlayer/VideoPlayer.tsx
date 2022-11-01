@@ -11,7 +11,7 @@ type VideoPlayerProps = {
 
 export const VideoPlayer: FC<VideoPlayerProps> = ({ url }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-cy="player">
       <ReactPlayer
         playing
         className={styles.player}
