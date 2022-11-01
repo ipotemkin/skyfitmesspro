@@ -5,7 +5,7 @@ import {
   useSetWorkoutStatusMutation,
   useUpdateUserExerciseProgressMutation,
   WorkoutArg,
-  WorkoutStatusArg
+  WorkoutStatusArg,
 } from '../../api/users.api'
 import { Exercise } from '../../types'
 import { Button } from '../Button/Button'
@@ -90,7 +90,11 @@ export const ProgressModal: FC<ProgressModalProps> = ({
 
   return (
     <Modal isOpen={() => setIsOpened(false)}>
-      <div className={styles.content} onKeyDown={handleKeydown}>
+      <div
+        className={styles.content}
+        onKeyDown={handleKeydown}
+        data-cy="progress-modal"
+      >
         <h2 className={styles.title}>Мой прогресс</h2>
         <div className={styles.fields}>
           {form.exercises?.map((exercise: Exercise, index: number) => (
