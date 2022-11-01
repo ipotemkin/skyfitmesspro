@@ -1,24 +1,13 @@
-describe('', () => {
+describe('The profile page', () => {
   const USER_EMAIL = 'test-user@sky.pro'
   const USER_NEW_EMAIL = 'new-test-user@sky.pro'
   const USER_PASSWORD = 'qwerty1234567'
 
+  const COURSE_NUMBER = 0
+  const WORKOUT_NUMBER = 1
+
   before(() => {
-    cy.visit('login')
-
-    cy.get('form').within(() => {
-      cy.root()
-        .find('input[name="email"]')
-        .type(USER_EMAIL)
-        .should('have.value', USER_EMAIL)
-
-      cy.root()
-        .find('input[name="password"]')
-        .type(USER_PASSWORD)
-        .should('have.value', USER_PASSWORD)
-
-      cy.root().submit()
-    })
+    cy.login(USER_EMAIL, USER_PASSWORD)
   })
 
   it('should display the profile page for current user', () => {
@@ -51,19 +40,11 @@ describe('', () => {
     cy.get('@EditEmail').click()
     cy.get('@InputEmail').clear().type(USER_EMAIL)
     cy.get('button').contains('Сохранить').click()
+
+    cy.get('div[data-cy="name-user"]').should('have.text', USER_EMAIL)
   })
 
   it('should display the added courses and should open modal-page', () => {
-    cy.get('h4').contains('Мои курсы').should('exist')
-    cy.get('[data-cy="gallery-courses"]').should('exist').as('GallaryCourses')
-
-    cy.get('@GallaryCourses').children().first().click()
-
-    cy.get('div[data-cy="modal"]').as('Modal')
-
-    cy.get('@Modal').find('h2').should('have.text', 'Выберите тренировку')
-    cy.get('@Modal').find('ul').should('exist').children().first().click()
-
-    cy.location('pathname').should('include', '/workouts/1')
+    cy.displayCoursesAndOpenModalPage(COURSE_NUMBER, WORKOUT_NUMBER)
   })
 })
