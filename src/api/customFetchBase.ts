@@ -53,7 +53,9 @@ const customFetchBase: BaseQueryFn<
           
           if (res && 'data' in res && res.data.id_token) {
             // обновляем токен в cookies
-            Cookies.set(accessTokenName, res.data.id_token)
+            // ??
+            // пока не удалять! – Тест
+            // Cookies.set(accessTokenName, res.data.id_token)
             
             args = updateTokenInArgs(args, res.data.id_token)
           
