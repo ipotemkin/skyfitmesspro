@@ -57,7 +57,6 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
       setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
-      console.error('Change email failed -->', error)
       dispatch(setMessage(EXP_MESSAGE))
       navigate(ROUTES.login)
     }

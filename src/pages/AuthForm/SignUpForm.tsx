@@ -31,12 +31,10 @@ export const SignUpForm: FC = () => {
   } = useForm<FormData>({ mode: 'onTouched' })
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log(data)
     setError('')
     setIsBlocked(true)
     try {
       const res = await signUp({ email: data.email, password: data.password }).unwrap()
-      console.log('signup reponse -->', res)
       // добавляем пользователя в таблицу users
       if (res.localId) await addUser({ uid: res.localId }).unwrap()
       navigate(ROUTES.profile)

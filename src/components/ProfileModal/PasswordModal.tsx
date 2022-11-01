@@ -53,7 +53,6 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
       setCookies({ idToken: res?.idToken })
       setIsOpened(false)
     } catch (error) {
-      console.error('Change password failed -->', error)
       dispatch(setMessage(EXP_MESSAGE))
       navigate(ROUTES.login)
     }

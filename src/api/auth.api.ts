@@ -1,15 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { API_AUTH_URL } from '../constants'
 
+import { API_AUTH_URL } from '../constants'
 import { apiKey, httpOnlyProxy } from '../env'
 import { FirebaseUserRESTAPI, RefreshTokenResponse } from '../types'
 
 let baseUrl = API_AUTH_URL
-console.log('httpOnlyProxy -->', httpOnlyProxy)
 if (httpOnlyProxy) {
-  console.log('httpOnlyProxy -->', httpOnlyProxy)
   baseUrl = '/proxy/v1/'
-  console.log('baseUrl -->', baseUrl)
 }
 
 type SingInArg = {
@@ -41,11 +38,6 @@ export const authApi = createApi({
           returnSecureToken: true
         }
       }),
-      // for DEBUG. TODO: remove on release!
-      transformResponse: (response: FirebaseUserRESTAPI) => {
-        console.log('signUp response -->', response)
-        return response;
-      },
     }),
     signIn: build.mutation<FirebaseUserRESTAPI, SingInArg>({
       query: (arg: SingInArg) => ({
@@ -56,11 +48,6 @@ export const authApi = createApi({
           returnSecureToken: true
         }
       }),
-      // for DEBUG. TODO: remove on release!
-      transformResponse: (response: FirebaseUserRESTAPI) => {
-        console.log('signIn response -->', response)
-        return response;
-      }
     }),
     changeEmail: build.mutation<FirebaseUserRESTAPI, ChangeEmailArg>({
       query: (arg: ChangeEmailArg) => ({
@@ -71,11 +58,6 @@ export const authApi = createApi({
           returnSecureToken: true
         }
       }),
-      // for DEBUG. TODO: remove on release!
-      transformResponse: (response: FirebaseUserRESTAPI) => {
-        console.log('changeEmail response -->', response)
-        return response;
-      }
     }),
     changePassword: build.mutation<FirebaseUserRESTAPI, ChangePasswordArg>({
       query: (arg: ChangePasswordArg) => ({
@@ -86,11 +68,6 @@ export const authApi = createApi({
           returnSecureToken: true
         }
       }),
-      // for DEBUG. TODO: remove on release!
-      transformResponse: (response: FirebaseUserRESTAPI) => {
-        console.log('changePassword response -->', response)
-        return response;
-      }
     }),
     refreshToken: build.mutation<RefreshTokenResponse, string>({
       query: (refreshToken: string) => ({
@@ -101,11 +78,6 @@ export const authApi = createApi({
           grant_type: 'refresh_token'
         }
       }),
-      // for DEBUG. TODO: remove on release!
-      transformResponse: (response: RefreshTokenResponse) => {
-        console.log('refreshToken response -->', response)
-        return response;
-      }
     }),
     getUserData: build.mutation<FirebaseUserRESTAPI, string>({
       query: (idToken: string) => ({
@@ -116,11 +88,6 @@ export const authApi = createApi({
           returnSecureToken: true
         }
       }),
-      // for DEBUG. TODO: remove on release!
-      transformResponse: (response: FirebaseUserRESTAPI) => {
-        console.log('getUserData response -->', response)
-        return response;
-      },
     }),
 
   }),

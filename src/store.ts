@@ -2,7 +2,6 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 
 import { authApi } from './api/auth.api'
 import { coursesApi } from './api/courses.api'
-import { rtkQueryErrorLogger } from './api/middleware.api'
 import { usersApi } from './api/users.api'
 import currentUserReducer from './slices/currentUserSlice'
 import messageReducer from './slices/messageSlice'
@@ -20,7 +19,6 @@ export const store = configureStore({
     .concat(coursesApi.middleware)
     .concat(usersApi.middleware)
     .concat(authApi.middleware)
-    .concat(rtkQueryErrorLogger)
   )
 })
 
