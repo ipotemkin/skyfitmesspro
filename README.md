@@ -163,3 +163,5 @@ npm run build
 - [x] [Mutex](https://www.npmjs.com/package/async-mutex)
 - [x] Express.js
 - [x] http-proxy-middleware
+- [x] node-http-proxy-json
+- [x] body-parser
