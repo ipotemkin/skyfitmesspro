@@ -35,23 +35,11 @@ export const currentUserSlice = createSlice({
         }
       }
     )
-    builder.addMatcher(
-      authApi.endpoints.signUp.matchRejected,
-      (state, { payload }) => {
-        console.error('Sign-up rejected!!!')
-      }
-    )
     // signIn
     builder.addMatcher(
       authApi.endpoints.signIn.matchFulfilled,
       (state, { payload }) => {
         return state = {...payload}
-      }
-    )
-    builder.addMatcher(
-      authApi.endpoints.signIn.matchRejected,
-      (state, { payload }) => {
-        console.error('Sign-in rejected!!!')
       }
     )
     // changeEmail
@@ -64,12 +52,6 @@ export const currentUserSlice = createSlice({
         }
       }
     )
-    builder.addMatcher(
-      authApi.endpoints.changeEmail.matchRejected,
-      (state, { payload }) => {
-        console.error('changeEmail rejected!!!')
-      }
-    )
     // changePassword
     builder.addMatcher(
       authApi.endpoints.changePassword.matchFulfilled,
@@ -80,31 +62,15 @@ export const currentUserSlice = createSlice({
         }
       }
     )
-    builder.addMatcher(
-      authApi.endpoints.changePassword.matchRejected,
-      (state, { payload }) => {
-        console.error('changePassword rejected!!!')
-      }
-    )
     // refreshToken
     builder.addMatcher(
       authApi.endpoints.refreshToken.matchFulfilled,
       (state, { payload }) => {
-        console.log('currentUserSlice: extraReducers: refreshToken done')
         return state = {
           ...state,
           idToken: payload.id_token, 
           refreshToken: payload.refresh_token,
           needRelogin: false
-        }
-      }
-    )
-    builder.addMatcher(
-      authApi.endpoints.refreshToken.matchRejected,
-      (state, { payload }) => {
-        console.error('refreshToken rejected!!!')
-        return state = {
-          ...state,
         }
       }
     )
@@ -116,12 +82,6 @@ export const currentUserSlice = createSlice({
           ...state,
           ...payload
         }
-      }
-    )
-    builder.addMatcher(
-      authApi.endpoints.getUserData.matchRejected,
-      (state, { payload }) => {
-        console.error('getUserData rejected!!!')
       }
     )
     

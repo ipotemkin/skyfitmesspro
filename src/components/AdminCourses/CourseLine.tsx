@@ -24,8 +24,6 @@ export const CourseLine: FC<Props> = ({ item }) => {
             uid: user.localId!,
             courseId: item.id!
       })
-    } else {
-      console.error('error adding course:', item.id)
     }
   }
 
@@ -35,8 +33,6 @@ export const CourseLine: FC<Props> = ({ item }) => {
           uid: user.localId!,
           courseId: item.id!
       })      
-    } else {
-      console.error('error deleting the course with id:', item.id)
     }
   }
 

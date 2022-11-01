@@ -1,30 +1,30 @@
 export interface CourseMainData {
-  id?: number;
-  name?: string;
-  coverUrl?: string;
+  id?: number
+  name?: string
+  coverUrl?: string
 }
 
 export type CourseData = {
-  description?: string;
-  suitableFor?: string[];
-  lines?: string[];
-  workouts?: Workout[];
-  subscription?: boolean;
-} & CourseMainData;
+  description?: string
+  suitableFor?: string[]
+  lines?: string[]
+  workouts?: Workout[]
+  subscription?: boolean
+} & CourseMainData
 
 export type Workout = {
-  id: number;
-  name?: string;
-  videoUrl?: string;
-  exercises?: Exercise[];
-  done?: boolean;
+  id: number
+  name?: string
+  videoUrl?: string
+  exercises?: Exercise[]
+  done?: boolean
 };
 
 export type Exercise = {
-  id: number;
-  name: string;
-  retriesCount: number;
-  userProgress?: number;
+  id: number
+  name: string
+  retriesCount: number
+  userProgress?: number
 };
 
 // username & password are stored in a closed Firebase table. We cannot change it
@@ -40,13 +40,6 @@ export type FormData = {
   confirmPassword?: string
 }
 
-// export type FirebaseUser = {
-//   email: string | null
-//   displayName: string | null
-//   uid: string | null
-//   isLoading: boolean
-// }
-
 export type FirebaseUserRESTAPI = {
   localId?: string
   displayName?: string
@@ -57,8 +50,6 @@ export type FirebaseUserRESTAPI = {
   kind?: string
   expiresIn?: string
   needRelogin?: boolean
-  // needRrefreshToken?: boolean
-  // updatingTokens?: boolean
 }
 
 export type RefreshTokenResponse = {

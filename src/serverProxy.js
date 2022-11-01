@@ -1,6 +1,6 @@
 const path = require('path')
 const express = require('express')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 
 // const morgan = require("morgan")
 const { createProxyMiddleware } = require('http-proxy-middleware')
@@ -24,8 +24,9 @@ const getRefreshTokenFromCookiesString = (cookieString) => {
 // Logging
 // app.use(morgan('dev'));
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+// чтобы было доступно поле body 
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 
 function onProxyReq(proxyReq, req, res) {
 
@@ -59,13 +60,13 @@ function onProxyRes(proxyRes, req, res) {
 
 // Proxy endpoints
 app.use('/proxy', createProxyMiddleware({
-   target: API_SERVICE_URL,
-   changeOrigin: true,
-   pathRewrite: {
-       [`^/proxy`]: '',
-   },
-   onProxyRes,
-   onProxyReq
+  target: API_SERVICE_URL,
+  changeOrigin: true,
+  pathRewrite: {
+    [`^/proxy`]: '',
+  },
+  onProxyRes,
+  onProxyReq
 }))
 
 app.use(express.static(publicPath))

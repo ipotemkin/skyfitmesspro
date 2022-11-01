@@ -14,7 +14,7 @@ export const messageSlice = createSlice({
       state.value = action.payload
     },
     clearMessage: (state) => {
-      return state = {...initialState}
+      return state = { ...initialState }
     }
   }
 })
