@@ -22,7 +22,6 @@
     "http-proxy-middleware": "^2.0.6",
     "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",
-    "morgan": "^1.10.0",
     "node-http-proxy-json": "^0.1.9",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
@@ -71,6 +70,7 @@
     "cross-env": "^7.0.3",
     "cypress": "^10.10.0",
     "eslint-config-prettier": "^8.5.0",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
     "prettier": "2.7.1"
   }
