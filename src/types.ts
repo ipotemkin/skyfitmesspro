@@ -1,3 +1,5 @@
+import { accessTokenName } from "./constants"
+
 export interface CourseMainData {
   id?: number
   name?: string
@@ -63,10 +65,8 @@ export type RefreshTokenResponse = {
 
 export type AppCookies = {
   [index: string]: string | undefined
-  idToken?: string
+  [accessTokenName]?: string
 }
-
-export const appCookiesNames = ['idToken']
 
 export type Message = {
   value?: string

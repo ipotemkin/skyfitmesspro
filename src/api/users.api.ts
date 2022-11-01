@@ -55,12 +55,11 @@ export const usersApi = createApi({
     }),
     getUserCourses: build.query<CourseData[], UserArg>({
       query: ({ uid }) => `/${uid}/courses.json`,
-      providesTags: [{ type: 'UserCourse', id: 'LIST' }]
+      providesTags: [{ type: 'UserCourse', id: 'LIST' }],
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
       query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
-      providesTags: (result, error, arg) => 
-        [
+      providesTags: (result, error, arg) => [
           { type: 'UserCourse', id: arg.courseId },
           { type: 'UserCourse', id: 'LIST' },
         ]
@@ -92,8 +91,7 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: { done: done },
       }),
-      invalidatesTags: (result, error, arg) =>
-        [
+      invalidatesTags: (result, error, arg) => [
           { type: 'UserCourse', id: 'LIST' },
           { type: 'UserCourse', id:  arg.courseId },
           'User'
@@ -105,8 +103,7 @@ export const usersApi = createApi({
         method: 'PUT',
         body: { id: courseId },
       }),
-      invalidatesTags: 
-        [
+      invalidatesTags: [
           { type: 'UserCourse', id: 'LIST' },
           'User'
         ]
@@ -117,12 +114,11 @@ export const usersApi = createApi({
         method: 'DELETE',
         body: { id: courseId },
       }),
-      invalidatesTags: (result, error, arg) => 
-        [
-          { type: 'UserCourse', id: 'LIST' },
-          { type: 'UserCourse', id: arg.courseId },
-          'User'
-        ]
+      invalidatesTags: (result, error, arg) => [
+        { type: 'UserCourse', id: 'LIST' },
+        { type: 'UserCourse', id: arg.courseId },
+        'User'
+      ]
     }),
   }),
 })

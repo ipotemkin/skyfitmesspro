@@ -7,7 +7,7 @@ import {
 import { Mutex } from 'async-mutex'
 import Cookies from 'js-cookie'
 
-import { API_URL } from '../constants'
+import { accessTokenName, API_URL } from '../constants'
 import { httpOnlyProxy } from '../env'
 import { updateCurrentUser } from '../slices/currentUserSlice'
 import { RootState } from '../store'
@@ -53,7 +53,7 @@ const customFetchBase: BaseQueryFn<
           
           if (res && 'data' in res && res.data.id_token) {
             // обновляем токен в cookies
-            Cookies.set('idToken', res.data.id_token)
+            Cookies.set(accessTokenName, res.data.id_token)
             
             args = updateTokenInArgs(args, res.data.id_token)
           
