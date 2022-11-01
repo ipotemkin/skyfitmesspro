@@ -31,7 +31,7 @@ export const UserInfo: FC<Props> = ({ user }) => {
           {`Логин: ${user.displayName || user.email}`}
         </p>
       </div>
-      <div className={styles.editBlock}>
+      <div className={styles.editBlock} data-cy="edit-data-user">
         <Button onClick={handleEmailClick}>Редактировать e-mail</Button>
         <Button onClick={handlePasswordClick}>Редактировать пароль</Button>
       </div>
