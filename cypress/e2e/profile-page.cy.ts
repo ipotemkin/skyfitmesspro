@@ -51,13 +51,15 @@ describe('', () => {
     cy.get('@EditEmail').click()
     cy.get('@InputEmail').clear().type(USER_EMAIL)
     cy.get('button').contains('Сохранить').click()
+
+    cy.get('div[data-cy="name-user"]').should('have.text', USER_EMAIL)
   })
 
   it('should display the added courses and should open modal-page', () => {
     cy.get('h4').contains('Мои курсы').should('exist')
-    cy.get('[data-cy="gallery-courses"]').should('exist').as('GallaryCourses')
+    cy.get('[data-cy="gallery-courses"]').should('exist').as('GalleryCourses')
 
-    cy.get('@GallaryCourses').children().first().click()
+    cy.get('@GalleryCourses').children().first().click()
 
     cy.get('div[data-cy="modal"]').as('Modal')
 

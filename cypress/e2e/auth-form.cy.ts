@@ -5,6 +5,9 @@ describe('Test registration', () => {
   const ERROR_EMAIL = 'test-user.sky.pro'
   const ERROR_PASSWORD = '12345'
 
+  const INCORRECT_EMAIL_WARNING = 'Введите корректный e-mail'
+  const INCORRECT_PASSWORD_WARNING = 'Пароль должен быть не менее 6 символов'
+
   before(() => {
     cy.visit('/')
   })
@@ -32,7 +35,7 @@ describe('Test registration', () => {
         .type(ERROR_EMAIL)
         .should('have.value', ERROR_EMAIL)
         .blur()
-      cy.root().contains('Введите корректный e-mail').should('exist')
+      cy.root().contains(INCORRECT_EMAIL_WARNING).should('exist')
 
       cy.root()
         .find('input[name="password"]')
@@ -40,9 +43,7 @@ describe('Test registration', () => {
         .should('have.value', ERROR_PASSWORD)
         .blur()
 
-      cy.root()
-        .contains('Пароль должен быть не менее 6 символов')
-        .should('exist')
+      cy.root().contains(INCORRECT_PASSWORD_WARNING).should('exist')
     })
   })
 
@@ -53,16 +54,14 @@ describe('Test registration', () => {
         .clear()
         .type(USER_EMAIL)
         .should('have.value', USER_EMAIL)
-      cy.root().contains('Введите корректный e-mail').should('not.exist')
+      cy.root().contains(INCORRECT_EMAIL_WARNING).should('not.exist')
 
       cy.root()
         .find('input[name="password"]')
         .clear()
         .type(USER_PASSWORD)
         .should('have.value', USER_PASSWORD)
-      cy.root()
-        .contains('Пароль должен быть не менее 6 символов')
-        .should('not.exist')
+      cy.root().contains(INCORRECT_PASSWORD_WARNING).should('not.exist')
 
       cy.root().submit()
       cy.location('pathname').should('eq', '/profile')
