@@ -52,14 +52,14 @@ export const AppRoutes = () => {
   const isTokenValid = user.idToken ? checkJWTExpTime(user.idToken) : false
 
   useEffect(() => {
-    // если токен истек или недейстителен, просим пользователя перезайти
-    if ((user.idToken && !isTokenValid) || user.needRelogin) {
+    // просим пользователя перезайти
+    if (user.needRelogin) {
       dispatch(setMessage(EXP_MESSAGE))
       Cookies.remove(accessTokenName)
       setIsLoggedIn(undefined)
     } else
     // если токен валиден, редиректим на заданную страницу
-    if (user.idToken && isTokenValid)
+    if (isTokenValid || (user.idToken && !user.needRelogin))
       setIsLoggedIn(true)
     // если токена нет, редиректим на home page
     else setIsLoggedIn(false)
