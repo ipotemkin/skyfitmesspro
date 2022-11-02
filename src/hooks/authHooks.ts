@@ -4,7 +4,7 @@ import { useAppDispatch } from './appHooks'
 import Cookies from 'js-cookie'
 import { accessTokenName } from '../constants'
 
-// возвращает фукнцию для загрузки credentials из cookies
+// возвращает функцию для загрузки credentials из cookies
 export const useLoadCredentialsFromCookies = () => {
   const dispatch = useAppDispatch()
 
@@ -12,16 +12,18 @@ export const useLoadCredentialsFromCookies = () => {
     const idToken = Cookies.get(accessTokenName)
     if (idToken) {
       const { email, user_id: localId } = parseJWT(idToken)
-     
+
       // Получаем данные о пользователе из idToken
-      dispatch(updateCurrentUser({
-        idToken,
-        email,
-        localId,
-        needRelogin: false
-      }))
+      dispatch(
+        updateCurrentUser({
+          idToken,
+          email,
+          localId,
+          needRelogin: false,
+        })
+      )
     }
   }
-  
+
   return { loadCredentials }
 }

@@ -1,4 +1,4 @@
-import { accessTokenName } from "./constants"
+import { accessTokenName } from './constants'
 
 export interface CourseMainData {
   id?: number
@@ -20,21 +20,21 @@ export type Workout = {
   videoUrl?: string
   exercises?: Exercise[]
   done?: boolean
-};
+}
 
 export type Exercise = {
   id: number
   name: string
   retriesCount: number
   userProgress?: number
-};
+}
 
 // username & password are stored in a closed Firebase table. We cannot change it
 // uid is to link UserData to a specified user in the closed Firebase table
 export type UserData = {
-  uid: string;
-  courses: CourseData[];
-};
+  uid: string
+  courses: CourseData[]
+}
 
 export type FormData = {
   email: string
@@ -72,21 +72,21 @@ export type Message = {
   value?: string
 }
 
-// стурктура idToken
+// структура idToken
 export type idTokenType = {
-  aud: string  // project name
+  aud: string // project name
   auth_time: number // время последней авторизации
   email: string
   email_verified: boolean
-  exp: number  // время экспирации токена
+  exp: number // время экспирации токена
   firebase: {
     identities: {
       email: string[]
     }
     sign_in_provider: string
   }
-  iat: number  // issued at
-  iss: string  // "https://securetoken.google.com/skyfitnesspro-202210"
-  sub: string  // == user_id
+  iat: number // issued at
+  iss: string // "https://securetoken.google.com/skyfitnesspro-202210"
+  sub: string // == user_id
   user_id: string
 }

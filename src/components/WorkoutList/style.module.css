@@ -76,7 +76,7 @@
 
   font-weight: 400;
   font-size: 20px;
-  line-height: 23px;
+  line-height: 1.2;
   letter-spacing: -0.05px;
   text-align: center;
 }
@@ -84,7 +84,7 @@
 .text {
   font-weight: 400;
   font-size: 16px;
-  line-height: 18px;
+  line-height: 1.1;
   letter-spacing: 0.001em;
   text-align: center;
 }

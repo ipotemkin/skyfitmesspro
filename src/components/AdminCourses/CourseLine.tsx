@@ -21,8 +21,8 @@ export const CourseLine: FC<Props> = ({ item }) => {
   const handleAddCourse = async () => {
     if (user && user.localId && item.id !== undefined) {
       await addCourse({
-            uid: user.localId!,
-            courseId: item.id!
+        uid: user.localId!,
+        courseId: item.id!,
       })
     }
   }
@@ -30,9 +30,9 @@ export const CourseLine: FC<Props> = ({ item }) => {
   const handleRemoveCourse = async () => {
     if (user && user.localId && item.id !== undefined) {
       await delCourse({
-          uid: user.localId!,
-          courseId: item.id!
-      })      
+        uid: user.localId!,
+        courseId: item.id!,
+      })
     }
   }
 

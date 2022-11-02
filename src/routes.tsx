@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import { AdminPage } from './pages/AdminPage/AdminPage'
 import { useAppSelector } from './hooks/appHooks'
@@ -15,7 +16,6 @@ import { checkJWTExpTime, formatString } from './utils'
 import { useDispatch } from 'react-redux'
 import { setMessage } from './slices/messageSlice'
 import { accessTokenName, EXP_MESSAGE } from './constants'
-import Cookies from 'js-cookie'
 
 export const ROUTES = {
   home: '/',
@@ -24,31 +24,32 @@ export const ROUTES = {
   admin: '/admin',
   aboutCourse: '/aboutcourse',
   profile: '/profile',
-  workout: '/courses/{}/workouts/{}',  // '/courses/:id/workouts/:day'
+  workout: '/courses/{}/workouts/{}', // '/courses/:id/workouts/:day'
 }
 
 type ProtectedRouteProps = {
-  redirectPath?: string;
-  isAllowed?: boolean;
+  redirectPath?: string
+  isAllowed?: boolean
 }
 
-const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, isAllowed }) => {
-  if (isAllowed === undefined)
-    redirectPath = ROUTES.login
+const ProtectedRoute: FC<ProtectedRouteProps> = ({
+  redirectPath = ROUTES.home,
+  isAllowed,
+}) => {
+  if (isAllowed === undefined) redirectPath = ROUTES.login
 
-  if (!isAllowed)
-    return <Navigate to={redirectPath} replace={true} />
-  
-    return <Outlet />
+  if (!isAllowed) return <Navigate to={redirectPath} replace={true} />
+
+  return <Outlet />
 }
 
 export const AppRoutes = () => {
   const user = useAppSelector(selectCurrentUser)
   const dispatch = useDispatch()
-  
+
   // если поставить false, то даже если в куках есть данные, перенаправляет на home page
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(true)
-  
+
   const isTokenValid = user.idToken ? checkJWTExpTime(user.idToken) : false
 
   useEffect(() => {
@@ -57,9 +58,9 @@ export const AppRoutes = () => {
       dispatch(setMessage(EXP_MESSAGE))
       Cookies.remove(accessTokenName)
       setIsLoggedIn(undefined)
-    } else
+    }
     // если токен валиден, редиректим на заданную страницу
-    if (isTokenValid || (user.idToken && !user.needRelogin))
+    else if (isTokenValid || (user.idToken && !user.needRelogin))
       setIsLoggedIn(true)
     // если токена нет, редиректим на home page
     else setIsLoggedIn(false)
@@ -74,7 +75,10 @@ export const AppRoutes = () => {
       <Route element={<ProtectedRoute isAllowed={isLoggedIn} />}>
         <Route path={ROUTES.admin} element={<AdminPage />} />
         <Route path={ROUTES.profile} element={<ProfilePage />} />
-        <Route path={formatString(ROUTES.workout, [':id', ':day'])} element={<Workout />} />
+        <Route
+          path={formatString(ROUTES.workout, [':id', ':day'])}
+          element={<Workout />}
+        />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -26,16 +26,21 @@ export const UserCourses: FC<Props> = ({
     <div>
       <h4 className={styles.title}>Мои курсы</h4>{' '}
       {!userCourses && !isLoading && <Warning text="У вас пока нет курсов!" />}
-      <div className={styles.gallery}>
-        {userCourses &&
-          userCourses.map((item) => (
-            <div data-cy="gallery-courses" className={styles.wrapper} key={item.id}>
-              <div onClick={(e) => handleCourseClick(e, item.id || 0)}>
+      <div className={styles.galleryWrapper}>
+        <div className={styles.gallery}>
+          {userCourses &&
+            userCourses.map((item) => (
+              <div
+                data-cy="gallery-course"
+                className={styles.wrapper}
+                key={item.id}
+                onClick={(e) => handleCourseClick(e, item.id || 0)}
+              >
                 <Card item={item} key={item.id} />
                 <div className={styles.go}>Перейти →</div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </div>
   )

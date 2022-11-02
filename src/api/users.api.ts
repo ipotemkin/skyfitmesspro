@@ -1,4 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
+
 import { CourseData, UserData } from '../types'
 import customFetchBase from './customFetchBase'
 
@@ -51,7 +52,7 @@ export const usersApi = createApi({
     }),
     getUsersWithCourses: build.query<UserData[], void>({
       query: () => `.json`,
-      providesTags: ['User']
+      providesTags: ['User'],
     }),
     getUserCourses: build.query<CourseData[], UserArg>({
       query: ({ uid }) => `/${uid}/courses.json`,
@@ -60,19 +61,18 @@ export const usersApi = createApi({
     getUserCourse: build.query<CourseData, CourseArg>({
       query: ({ uid, courseId }) => `/${uid}/courses/${courseId}.json`,
       providesTags: (result, error, arg) => [
-          { type: 'UserCourse', id: arg.courseId },
-          { type: 'UserCourse', id: 'LIST' },
-        ]
+        { type: 'UserCourse', id: arg.courseId },
+        { type: 'UserCourse', id: 'LIST' },
+      ],
     }),
     getUserExercises: build.query<UserData, WorkoutArg>({
       query: ({ uid, courseId, workoutId }) =>
-      `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
-      providesTags: (result, error, arg) => 
-        [
-          { type: 'UserCourse', id: arg.courseId },
-          { type: 'UserCourse', id: 'LIST' },
-        ]
-      }),
+        `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
+      providesTags: (result, error, arg) => [
+        { type: 'UserCourse', id: arg.courseId },
+        { type: 'UserCourse', id: 'LIST' },
+      ],
+    }),
     updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
         url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json`,
@@ -82,8 +82,8 @@ export const usersApi = createApi({
       invalidatesTags: (result, error, arg) => [
         { type: 'UserCourse', id: arg.arg.courseId },
         { type: 'UserCourse', id: 'LIST' },
-        'User'
-      ]
+        'User',
+      ],
     }),
     setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
       query: ({ uid, courseId, workoutId, done }) => ({
@@ -92,10 +92,10 @@ export const usersApi = createApi({
         body: { done: done },
       }),
       invalidatesTags: (result, error, arg) => [
-          { type: 'UserCourse', id: 'LIST' },
-          { type: 'UserCourse', id:  arg.courseId },
-          'User'
-        ]
+        { type: 'UserCourse', id: 'LIST' },
+        { type: 'UserCourse', id: arg.courseId },
+        'User',
+      ],
     }),
     addUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
@@ -103,10 +103,7 @@ export const usersApi = createApi({
         method: 'PUT',
         body: { id: courseId },
       }),
-      invalidatesTags: [
-          { type: 'UserCourse', id: 'LIST' },
-          'User'
-        ]
+      invalidatesTags: [{ type: 'UserCourse', id: 'LIST' }, 'User'],
     }),
     delUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
@@ -117,8 +114,8 @@ export const usersApi = createApi({
       invalidatesTags: (result, error, arg) => [
         { type: 'UserCourse', id: 'LIST' },
         { type: 'UserCourse', id: arg.courseId },
-        'User'
-      ]
+        'User',
+      ],
     }),
   }),
 })
@@ -132,5 +129,5 @@ export const {
   useUpdateUserExerciseProgressMutation,
   useSetWorkoutStatusMutation,
   useAddUserCourseMutation,
-  useDelUserCourseMutation
+  useDelUserCourseMutation,
 } = usersApi
