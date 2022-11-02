@@ -17,3 +17,15 @@
 
   background-color: #271a58;
 }
+
+@media (max-width: 840px) {
+  .message {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 425px) {
+  .message {
+    font-size: 20px;
+  }
+}

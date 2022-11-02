@@ -127,8 +127,8 @@
 
 @media (max-width: 840px) {
   .wrapper {
-    padding-right: calc(50% - 300px);
-    padding-left: calc(50% - 300px);
+    padding-right: calc(50% - 320px);
+    padding-left: calc(50% - 320px);
   }
 
   .title {
@@ -137,7 +137,7 @@
 
   .sticker {
     top: -15px;
-    right: -55px;
+    right: -40px;
 
     font-size: 16px;
     line-height: 18px;

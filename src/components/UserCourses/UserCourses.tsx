@@ -29,11 +29,14 @@ export const UserCourses: FC<Props> = ({
       <div className={styles.gallery}>
         {userCourses &&
           userCourses.map((item) => (
-            <div data-cy="gallery-courses" className={styles.wrapper} key={item.id}>
-              <div onClick={(e) => handleCourseClick(e, item.id || 0)}>
-                <Card item={item} key={item.id} />
-                <div className={styles.go}>Перейти →</div>
-              </div>
+            <div
+              data-cy="gallery-course"
+              className={styles.wrapper}
+              key={item.id}
+              onClick={(e) => handleCourseClick(e, item.id || 0)}
+            >
+              <Card item={item} key={item.id} />
+              <div className={styles.go}>Перейти →</div>
             </div>
           ))}
       </div>

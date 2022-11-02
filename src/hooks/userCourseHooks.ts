@@ -24,9 +24,8 @@ const getValidKeys = (obj: object) => {
 export const useUserCourses = (uid?: string) => {
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
 
-  const {
-    data: userCoursesData, isLoading: isUserCoursesLoading
-  } = useGetUserCoursesQuery({ uid } ?? skipToken)
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } =
+    useGetUserCoursesQuery({ uid } ?? skipToken)
 
   const [userCourses, setUserCourses] = useState<CourseData[]>()
   const [isLoading, setIsLoading] = useState(true)
@@ -49,23 +48,24 @@ export const useUserCourses = (uid?: string) => {
   return { data: userCourses, isLoading }
 }
 
-// возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователяя
+// возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователя
 export const useCoursesWithSubscription = (uid?: string) => {
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
 
-  const {
-    data: userCoursesData, isLoading: isUserCoursesLoading
-  } = useGetUserCoursesQuery({ uid } ?? skipToken)
-  
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } =
+    useGetUserCoursesQuery({ uid } ?? skipToken)
+
   const [isLoading, setIsLoading] = useState(true)
-  const [coursesWithSubscription, setCoursesWithSubscription] = useState<CourseData[]>([])
+  const [coursesWithSubscription, setCoursesWithSubscription] = useState<
+    CourseData[]
+  >([])
 
   useEffect(() => {
     const res: CourseData[] = []
 
     if (!isUserCoursesLoading && courses) {
       const coursesTemp: CourseData[] = []
-      
+
       // добавляем свойство 'subscription'
       if (userCoursesData) {
         if (userCoursesData.length > 0) {
@@ -81,9 +81,11 @@ export const useCoursesWithSubscription = (uid?: string) => {
           courses.forEach((course: CourseData) => {
             res.push({
               ...course,
-              subscription: validKeys.includes(String(course.id)) ? true : false,         
+              subscription: validKeys.includes(String(course.id))
+                ? true
+                : false,
             })
-          })        
+          })
         }
         setCoursesWithSubscription(res)
         return
@@ -101,17 +103,21 @@ export const useCoursesWithSubscription = (uid?: string) => {
   return { data: coursesWithSubscription, isLoading }
 }
 
-// полные даннные по заданному курсу пользователя
+// полные данные по заданному курсу пользователя
 export const useUserCourse = (courseId?: number) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: course } = useGetCourseQuery(courseId ?? skipToken)
 
-  const queryArgs = user.localId && courseId !== undefined
-    ? { uid: user.localId, courseId}
-    : undefined
-  
-  const { 
-    data: userCourseData, error, isLoading: isUserCourseLoading, isError: isErrorQuery
+  const queryArgs =
+    user.localId && courseId !== undefined
+      ? { uid: user.localId, courseId }
+      : undefined
+
+  const {
+    data: userCourseData,
+    error,
+    isLoading: isUserCourseLoading,
+    isError: isErrorQuery,
   } = useGetUserCourseQuery(queryArgs ?? skipToken)
 
   const [userCourse, setUserCourse] = useState<CourseData>()
@@ -124,10 +130,10 @@ export const useUserCourse = (courseId?: number) => {
 
   useEffect(() => {
     if (userCourseData && course && user?.localId) {
-    const res = {}
-    merge(res, course, userCourseData)
-    setUserCourse(res)
-  }
+      const res = {}
+      merge(res, course, userCourseData)
+      setUserCourse(res)
+    }
   }, [userCourseData, course, user?.localId])
 
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }

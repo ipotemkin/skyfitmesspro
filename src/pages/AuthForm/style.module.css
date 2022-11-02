@@ -12,6 +12,15 @@
   background: #271a58;
 }
 
+.formMessage {
+  color: #ffffff;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+
+  margin-bottom: 30px;
+}
+
 .form {
   box-sizing: border-box;
   display: flex;
@@ -103,8 +112,8 @@
 
 @media (max-width: 840px) {
   .formWrapper {
-    padding-right: calc(50% - 300px);
-    padding-left: calc(50% - 300px);
+    padding-right: calc(50% - 320px);
+    padding-left: calc(50% - 320px);
   }
 }
 
@@ -120,12 +129,22 @@
     padding-right: calc(50% - 180px);
     padding-left: calc(50% - 180px);
   }
+
+  .formMessage {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
 }
 
 @media (max-width: 425px) {
   .formWrapper {
     padding-right: calc(50% - 150px);
     padding-left: calc(50% - 150px);
+  }
+
+  .formMessage {
+    font-size: 20px;
+    margin-bottom: 20px;
   }
 
   .form {
