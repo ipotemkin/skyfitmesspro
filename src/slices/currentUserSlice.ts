@@ -23,6 +23,7 @@ export const currentUserSlice = createSlice({
       }
     },
     deleteCurrentUser: (state) => {
+      Cookies.remove(accessTokenName)
       return state = { ...initialState }
     }
   },
