@@ -18,13 +18,13 @@
 
   font-weight: 400;
   font-size: 32px;
-  line-height: 40px;
+  line-height: 1.25;
 }
 
 .text {
   font-size: 18px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.33;
   letter-spacing: -0.05px;
 }
 
@@ -44,7 +44,7 @@
   font-family: inherit;
   font-size: 18px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.33;
   letter-spacing: -0.05px;
 
   border: none;
