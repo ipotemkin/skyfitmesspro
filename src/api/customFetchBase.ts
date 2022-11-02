@@ -50,12 +50,7 @@ const customFetchBase: BaseQueryFn<
           }
           const res = await runRefreshToken(api, submitToken)
           
-          if (res && 'data' in res && res.data.id_token) {
-            // обновляем токен в cookies
-            // ??
-            // пока не удалять! – Тест
-            // Cookies.set(accessTokenName, res.data.id_token)
-            
+          if (res && 'data' in res && res.data.id_token) {            
             args = updateTokenInArgs(args, res.data.id_token)
           
             // Retry the initial query
