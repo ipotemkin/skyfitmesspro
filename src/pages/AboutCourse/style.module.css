@@ -44,7 +44,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 64px;
-  line-height: 72px;
+  line-height: 1.1;
 
   letter-spacing: -0.8px;
   font-feature-settings: 'pnum' on, 'lnum' on;
@@ -74,7 +74,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 40px;
-  line-height: 48px;
+  line-height: 1.2;
 
   font-feature-settings: 'pnum' on, 'lnum' on;
 
@@ -119,7 +119,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 32px;
-  line-height: 40px;
+  line-height: 1.25;
   font-feature-settings: 'pnum' on, 'lnum' on;
 
   box-sizing: border-box;
@@ -135,7 +135,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
-  line-height: 32px;
+  line-height: 1.33;
 
   font-feature-settings: 'pnum' on, 'lnum' on;
 
@@ -162,7 +162,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
-  line-height: 32px;
+  line-height: 1.33;
   font-feature-settings: 'pnum' on, 'lnum' on;
 
   box-sizing: border-box;
@@ -178,7 +178,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
-  line-height: 32px;
+  line-height: 1.33;
   font-feature-settings: 'pnum' on, 'lnum' on;
 
   margin: 0;
@@ -210,7 +210,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 32px;
-  line-height: 40px;
+  line-height: 1.25;
   font-feature-settings: 'pnum' on, 'lnum' on;
 
   margin: 0;
@@ -345,7 +345,6 @@
   }
 
   .footerText {
-    line-height: 24px;
     margin-bottom: 20px;
   }
 }
@@ -374,9 +373,5 @@
     width: 30px;
     height: 30px;
     margin-right: 10px;
-  }
-
-  .descriptionText {
-    line-height: 24px;
   }
 }

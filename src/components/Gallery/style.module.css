@@ -2,10 +2,9 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
-  gap: 37px;
+  gap: 40px;
 
   box-sizing: border-box;
-  width: 100%;
   margin: 0 auto;
   margin-bottom: 34px;
 }
@@ -18,7 +17,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
-  line-height: 55px;
+  line-height: 1.8;
 
   letter-spacing: -1.16878px;
   font-feature-settings: 'pnum' on, 'lnum' on;
@@ -29,18 +28,32 @@
 @media (max-width: 1200px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
+    gap: 30px;
   }
 }
 
 @media (max-width: 768px) {
   .gallery {
-    gap: 20px;
+    gap: 25px;
+  }
+
+  .errorMessage {
+    font-size: 20px;
   }
 }
 
 @media (max-width: 680px) {
   .gallery {
     grid-template-columns: 1fr;
+  }
+
+  .errorMessage {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 425px) {
+  .errorMessage {
+    font-size: 16px;
   }
 }

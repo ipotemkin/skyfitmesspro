@@ -9,7 +9,7 @@
 
   font-weight: 400;
   font-size: 32px;
-  line-height: 40px;
+  line-height: 1.25;
 
   text-align: center;
 }
@@ -32,7 +32,7 @@
 
   font-weight: 400;
   font-size: 24px;
-  line-height: 32px;
+  line-height: 1.33;
 }
 
 .name {
@@ -67,7 +67,7 @@
 
   font-weight: 400;
   font-size: 24px;
-  line-height: 36px;
+  line-height: 1.33;
 
   color: #000;
   text-align: center;
