@@ -7,9 +7,9 @@ import { accessTokenName } from '../constants'
 // возвращает фукнцию для загрузки credentials из cookies
 export const useLoadCredentialsFromCookies = () => {
   const dispatch = useAppDispatch()
-  const idToken = Cookies.get(accessTokenName)
 
   const loadCredentials = () => {
+    const idToken = Cookies.get(accessTokenName)
     if (idToken) {
       const { email, user_id: localId } = parseJWT(idToken)
      

@@ -164,7 +164,7 @@ npm run build
 - [x] Redux + Redux Toolkit + RTK Query
 - [x] Firebase
 - [x] React Router DOM, реализация routing
-- [x] React-cookie
+- [x] js-cookie
 - [x] TypeScript
 - [x] [Material UI](https://mui.com/material-ui/getting-started/overview/)
 - [x] [Mutex](https://www.npmjs.com/package/async-mutex)

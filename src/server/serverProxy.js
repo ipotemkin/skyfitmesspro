@@ -9,7 +9,7 @@ const modifyResponse = require('node-http-proxy-json')
 
 const app = express()
 const port = process.env.PORT || 3000
-const publicPath = path.join(__dirname, '..', 'build')
+const publicPath = path.join(__dirname, '../..', 'build')
 
 const API_SERVICE_URL = 'https://identitytoolkit.googleapis.com'
 
