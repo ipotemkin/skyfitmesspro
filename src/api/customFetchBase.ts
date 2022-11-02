@@ -10,6 +10,7 @@ import { API_URL } from '../constants'
 import { httpOnlyProxy } from '../env'
 import { updateCurrentUser } from '../slices/currentUserSlice'
 import { RootState } from '../store'
+import { checkJWTExpTime } from '../utils'
 import { AddTokenToUrl, runRefreshToken, updateTokenInArgs } from './utils'
     
 // Create a new mutex
@@ -29,12 +30,14 @@ const customFetchBase: BaseQueryFn<
   await mutex.waitForUnlock()
   
   const { idToken } = (api.getState() as RootState).currentUser
-  if (idToken)
-    args = AddTokenToUrl(args, idToken)
+  args = AddTokenToUrl(args, idToken || '')
+  
+  let result: any = true
+  if (idToken && checkJWTExpTime(idToken))
+    result = await baseQuery(args, api, extraOptions)
+  else result = false
 
-  let result = await baseQuery(args, api, extraOptions)
-
-  if ([400, 401, 403].includes(result.error?.status as number)) {
+  if (!result || [400, 401, 403].includes(result.error?.status as number)) {
     let success = false
 
     if (!mutex.isLocked()) {
