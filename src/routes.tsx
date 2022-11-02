@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 
 import { AdminPage } from './pages/AdminPage/AdminPage'
-import { useAppCookies, useAppSelector } from './hooks/appHooks'
+import { useAppSelector } from './hooks/appHooks'
 import { AboutCourse } from './pages/AboutCourse/AboutCourse'
 import { LoginForm } from './pages/AuthForm/LoginForm'
 import { SignUpForm } from './pages/AuthForm/SignUpForm'
@@ -14,7 +14,8 @@ import { selectCurrentUser } from './slices/currentUserSlice'
 import { checkJWTExpTime, formatString } from './utils'
 import { useDispatch } from 'react-redux'
 import { setMessage } from './slices/messageSlice'
-import { EXP_MESSAGE } from './constants'
+import { accessTokenName, EXP_MESSAGE } from './constants'
+import Cookies from 'js-cookie'
 
 export const ROUTES = {
   home: '/',
@@ -43,7 +44,6 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectPath = ROUTES.home, i
 
 export const AppRoutes = () => {
   const user = useAppSelector(selectCurrentUser)
-  const { removeCookies } = useAppCookies()
   const dispatch = useDispatch()
   
   // если поставить false, то даже если в куках есть данные, перенаправляет на home page
@@ -52,18 +52,18 @@ export const AppRoutes = () => {
   const isTokenValid = user.idToken ? checkJWTExpTime(user.idToken) : false
 
   useEffect(() => {
-    // если токен истек или недейстителен, просим пользователя перезайти
-    if ((user.idToken && !isTokenValid) || user.needRelogin) {
+    // просим пользователя перезайти
+    if (user.needRelogin) {
       dispatch(setMessage(EXP_MESSAGE))
-      removeCookies()
+      Cookies.remove(accessTokenName)
       setIsLoggedIn(undefined)
     } else
     // если токен валиден, редиректим на заданную страницу
-    if (user.idToken && isTokenValid)
+    if (isTokenValid || (user.idToken && !user.needRelogin))
       setIsLoggedIn(true)
     // если токена нет, редиректим на home page
     else setIsLoggedIn(false)
-  }, [removeCookies, user.idToken, user.needRelogin, isTokenValid, dispatch])
+  }, [user.idToken, user.needRelogin, isTokenValid, dispatch])
 
   return (
     <Routes>
