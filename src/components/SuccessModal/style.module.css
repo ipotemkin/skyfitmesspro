@@ -1,26 +1,24 @@
 .content {
-  box-sizing: border-box;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 42px 42px 0;
 
+  box-sizing: border-box;
   width: 444px;
+  padding: 42px 42px 0;
 
   background: #ffffff;
   border-radius: 12px;
 }
 
 .title {
-  margin: 0;
-  margin-bottom: 10px;
-
   font-weight: 400;
   font-size: 40px;
   line-height: 48px;
-
   text-align: center;
+
+  margin: 0;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 500px) {

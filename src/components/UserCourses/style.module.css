@@ -1,10 +1,10 @@
 .title {
-  margin: 0;
-  margin-bottom: 60px;
-
   font-weight: 400;
   font-size: 48px;
   line-height: 1.16;
+
+  margin: 0;
+  margin-bottom: 60px;
 }
 
 .gallery {

@@ -155,3 +155,9 @@
     font-size: 18px;
   }
 }
+
+@media (max-width: 425px) {
+  .progress {
+    padding: 26px 15px 40px;
+  }
+}

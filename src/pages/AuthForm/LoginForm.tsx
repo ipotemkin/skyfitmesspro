@@ -32,7 +32,7 @@ export const LoginForm: FC = () => {
       setFormMessage(message)
       dispatch(clearMessage())
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const {
@@ -48,7 +48,8 @@ export const LoginForm: FC = () => {
     try {
       await login({ email: data.email, password: data.password }).unwrap()
       navigate(ROUTES.profile)
-    } catch (error: any) { // TODO выяснить, какой тип сюда вписать
+    } catch (error: any) {
+      // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error))
       setIsBlocked(false)
     }
@@ -66,7 +67,7 @@ export const LoginForm: FC = () => {
 
   return (
     <div className={styles.formWrapper}>
-      {formMessage &&<h2 style={{ color: 'white' }}>{formMessage}</h2>}
+      {formMessage && <h2 className={styles.formMessage}>{formMessage}</h2>}
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.logo}>
           <Logo />

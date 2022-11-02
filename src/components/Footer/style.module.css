@@ -35,9 +35,9 @@
 }
 
 @media (max-width: 840px) {
-  .footer {
-    padding-right: calc(50% - 300px);
-    padding-left: calc(50% - 300px);
+  .wrapper {
+    padding-right: calc(50% - 320px);
+    padding-left: calc(50% - 320px);
   }
 }
 
