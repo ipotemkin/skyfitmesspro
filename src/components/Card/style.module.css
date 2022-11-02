@@ -46,7 +46,7 @@
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
   .card {
     width: 280px;
     min-height: 370px;

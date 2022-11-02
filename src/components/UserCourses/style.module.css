@@ -16,7 +16,7 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 34px;
+  margin-bottom: 70px;
 }
 
 .link {
@@ -61,6 +61,7 @@
 @media (max-width: 768px) {
   .gallery {
     gap: 20px;
+    margin-bottom: 60px;
   }
 }
 

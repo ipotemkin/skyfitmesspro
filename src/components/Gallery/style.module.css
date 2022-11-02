@@ -18,7 +18,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
-  line-height: 55px;
+  line-height: 1.8;
 
   letter-spacing: -1.16878px;
   font-feature-settings: 'pnum' on, 'lnum' on;
@@ -37,10 +37,24 @@
   .gallery {
     gap: 20px;
   }
+
+  .errorMessage {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 680px) {
   .gallery {
     grid-template-columns: 1fr;
+  }
+
+  .errorMessage {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 425px) {
+  .errorMessage {
+    font-size: 16px;
   }
 }
