@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   gap: 35px;
+  row-gap: 14px;
 
   width: 100%;
   min-height: 100px;
