@@ -2,10 +2,9 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
-  gap: 37px;
+  gap: 40px;
 
   box-sizing: border-box;
-  width: 100%;
   margin: 0 auto;
   margin-bottom: 34px;
 }
@@ -29,13 +28,13 @@
 @media (max-width: 1200px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
+    gap: 30px;
   }
 }
 
 @media (max-width: 768px) {
   .gallery {
-    gap: 20px;
+    gap: 25px;
   }
 
   .errorMessage {
