@@ -28,6 +28,7 @@
 @media (max-width: 1200px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
   }
 }
 

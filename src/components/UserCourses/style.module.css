@@ -10,13 +10,12 @@
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 37px;
   justify-items: center;
+  gap: 37px;
 
   box-sizing: border-box;
-  width: 100%;
   margin: 0 auto;
-  margin-bottom: 140px;
+  margin-bottom: 34px;
 }
 
 .link {
