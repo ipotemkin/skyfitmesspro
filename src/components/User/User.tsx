@@ -3,7 +3,6 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppCookies } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { deleteCurrentUser } from '../../slices/currentUserSlice'
 import { FirebaseUserRESTAPI } from '../../types'
@@ -19,7 +18,6 @@ export const User: FC<Props> = ({ user }) => {
   const [isShowNav, setIsShowNav] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { removeCookies } = useAppCookies()
 
   const outerRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
@@ -29,7 +27,6 @@ export const User: FC<Props> = ({ user }) => {
   }
 
   const handleLogout = () => {
-    removeCookies()
     dispatch(deleteCurrentUser())
   }
 
