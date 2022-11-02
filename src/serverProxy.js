@@ -14,11 +14,9 @@ const publicPath = path.join(__dirname, '..', 'build')
 const API_SERVICE_URL = 'https://identitytoolkit.googleapis.com'
 
 const getRefreshTokenFromCookiesString = (cookieString) => {
-   const result = cookieString.match(/refreshToken=(.[^;]*[^;]).*/)
-   if (!result || result.length > 1) {
-    const newToken = result[1]
-    return newToken ? newToken : undefined
-  } else return undefined
+  const result = cookieString.match(/refreshToken=(.[^;]*[^;]).*/)
+  if (result && result.length > 1 && result[1]) return result[1]
+  return undefined
 }
 
 // Logging
@@ -33,7 +31,7 @@ function onProxyReq(proxyReq, req, res) {
   if(req.body) {
     const isRefteshToken = req.url.includes('token?key=')
 
-    if (isRefteshToken) {
+    if (isRefteshToken && !req.body.refreshToken) {
       const newToken = getRefreshTokenFromCookiesString(req.headers.cookie)
       req.body.refreshToken = newToken
     }
