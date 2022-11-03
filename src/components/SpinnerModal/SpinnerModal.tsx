@@ -6,15 +6,11 @@ import Box from '@mui/material/Box';
 
 import { Modal } from '../Modal/Modal'
 
-// import styles from './style.module.css'
-
 type SpinnerModalProps = {
   setIsOpened?: Function
 }
 
-const noop = () => {}
-
-export const SpinnerModal: FC<SpinnerModalProps> = ({ setIsOpened = noop }) => {
+export const SpinnerModal: FC<SpinnerModalProps> = ({ setIsOpened = () => {} }) => {
   const isVisible = useAppSelector(selectSpinner)
 
   return (
@@ -22,9 +18,10 @@ export const SpinnerModal: FC<SpinnerModalProps> = ({ setIsOpened = noop }) => {
       { isVisible &&
       <Modal isOpen={setIsOpened}>
         <Box sx={{ display: 'flex' }}>
-          <CircularProgress />
+          <CircularProgress thickness={8} size="4rem" />
         </Box>
-      </Modal> }  
+      </Modal>
+      }  
     </>
   )
 }
