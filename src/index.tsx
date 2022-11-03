@@ -7,6 +7,7 @@ import App from './App'
 import { ScrollToTop } from './components/ScrollToTop/ScrollToTop'
 
 import './index.css'
+import { SpinnerModal } from './components/SpinnerModal/SpinnerModal'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
@@ -16,6 +17,7 @@ root.render(
     <Provider store={store}>
       <ScrollToTop />
       <App />
+      <SpinnerModal />
     </Provider>
   </BrowserRouter>
 )
