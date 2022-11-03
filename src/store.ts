@@ -5,11 +5,13 @@ import { coursesApi } from './api/courses.api'
 import { usersApi } from './api/users.api'
 import currentUserReducer from './slices/currentUserSlice'
 import messageReducer from './slices/messageSlice'
+import spinnerReducer from './slices/spinnerSlice'
 
 export const store = configureStore({
   reducer: {
     currentUser: currentUserReducer,
     message: messageReducer,
+    spinner: spinnerReducer,
     [coursesApi.reducerPath]: coursesApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [authApi.reducerPath]: authApi.reducer,

@@ -1,0 +1,36 @@
+.content {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 36px 53px 58px;
+
+  width: 444px;
+  max-height: 626px;
+
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 40px;
+
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.25;
+}
+
+@media (max-width: 500px) {
+  .title {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .content {
+    width: 320px;
+    padding: 25px 10px 40px;
+  }
+}

@@ -9,6 +9,7 @@ import { Mutex } from 'async-mutex'
 import { API_URL } from '../constants'
 import { httpOnlyProxy } from '../env'
 import { updateCurrentUser } from '../slices/currentUserSlice'
+import { hideSpinner, showSpinner } from '../slices/spinnerSlice'
 import { RootState } from '../store'
 import { checkJWTExpTime } from '../utils'
 import { AddTokenToUrl, runRefreshToken, updateTokenInArgs } from './utils'
@@ -25,6 +26,7 @@ const customFetchBase: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
+  api.dispatch(showSpinner())
 
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock()
@@ -82,7 +84,7 @@ const customFetchBase: BaseQueryFn<
       result = await baseQuery(args, api, extraOptions)
     }
   }
-
+  api.dispatch(hideSpinner())
   return result
 }
 
