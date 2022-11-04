@@ -2,12 +2,11 @@ import { FC, lazy, useEffect, useState } from 'react'
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { useAppSelector } from './hooks/appHooks'
+import { useAppDispatch, useAppSelector } from './hooks/appHooks'
 import { Main } from './pages/Main/Main'
 import { NotFound } from './pages/NotFound/NotFound'
 import { selectCurrentUser } from './slices/currentUserSlice'
 import { checkJWTExpTime, formatString } from './utils'
-import { useDispatch } from 'react-redux'
 import { selectMessage, setMessage } from './slices/messageSlice'
 import { accessTokenName, EXP_MESSAGE } from './constants'
 
@@ -54,7 +53,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({
 export const AppRoutes = () => {  
   const user = useAppSelector(selectCurrentUser)
   const message = useAppSelector(selectMessage)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   // если поставить false, то даже если в куках есть данные, перенаправляет на home page
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(true)

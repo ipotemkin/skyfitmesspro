@@ -1,17 +1,16 @@
 import classNames from 'classnames'
 import { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useSignInMutation } from '../../api/auth.api'
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
-import { useAppSelector } from '../../hooks/appHooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { clearMessage, selectMessage } from '../../slices/messageSlice'
 import { FormData } from '../../types'
-import { getErrorMessage } from '../../utils'
+import { AuthErrorType, getErrorMessage } from '../../utils'
 
 import styles from './style.module.css'
 
@@ -24,7 +23,7 @@ export const LoginForm: FC = () => {
   const [login] = useSignInMutation()
   const message = useAppSelector(selectMessage)
   const [formMessage, setFormMessage] = useState('')
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -48,9 +47,8 @@ export const LoginForm: FC = () => {
     try {
       await login({ email: data.email, password: data.password }).unwrap()
       navigate(ROUTES.profile)
-    } catch (error: any) {
-      // TODO выяснить, какой тип сюда вписать
-      setError(getErrorMessage(error))
+    } catch (error) {
+      setError(getErrorMessage(error as AuthErrorType))
       setIsBlocked(false)
     }
   }
