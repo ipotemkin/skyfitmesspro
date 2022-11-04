@@ -8,7 +8,7 @@ import { NotFound } from './pages/NotFound/NotFound'
 import { selectCurrentUser } from './slices/currentUserSlice'
 import { checkJWTExpTime, formatString } from './utils'
 import { useDispatch } from 'react-redux'
-import { setMessage } from './slices/messageSlice'
+import { selectMessage, setMessage } from './slices/messageSlice'
 import { accessTokenName, EXP_MESSAGE } from './constants'
 
 // import AdminPage from './pages/AdminPage/AdminPage'
@@ -53,6 +53,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({
 
 export const AppRoutes = () => {  
   const user = useAppSelector(selectCurrentUser)
+  const message = useAppSelector(selectMessage)
   const dispatch = useDispatch()
 
   // если поставить false, то даже если в куках есть данные, перенаправляет на home page
@@ -62,21 +63,29 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     // просим пользователя перезайти
-    if (user.needRelogin) {
+    if (message === EXP_MESSAGE) setIsLoggedIn(undefined)
+
+    // просим пользователя перезайти
+    else if (user.needRelogin) {
+      // console.log('needRelogin')
       dispatch(setMessage(EXP_MESSAGE))
       Cookies.remove(accessTokenName)
       setIsLoggedIn(undefined)
     }
+
     // если токен валиден, редиректим на заданную страницу
-    else if (isTokenValid || (user.idToken && !user.needRelogin))
+    else if (isTokenValid || (user.idToken && !user.needRelogin)) {
+      console.log('go to the specified page')
       setIsLoggedIn(true)
+    }
+
     // если токена нет, редиректим на home page
     else setIsLoggedIn(false)
-  }, [user.idToken, user.needRelogin, isTokenValid, dispatch])
+  }, [user.idToken, user.needRelogin, isTokenValid, dispatch, message])
 
   return (
     <Routes>
-    <Route path={ROUTES.home} element={<Main />} />
+      <Route path={ROUTES.home} element={<Main />} />
       <Route path={ROUTES.login} element={<LoginForm />} />
       <Route path={ROUTES.signup} element={<SignUpForm />} />
       <Route path={`${ROUTES.aboutCourse}/:id`} element={<AboutCourse />} />
