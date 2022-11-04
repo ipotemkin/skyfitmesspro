@@ -17,7 +17,7 @@ import { WarningPage } from '../WarningPage/WarningPage'
 
 import styles from './style.module.css'
 
-export const Workout: FC = () => {
+const Workout: FC = () => {
   const { id, day } = useParams()
   const courseId = Number(id) - 1
   const workoutIdx = Number(day) - 1
@@ -109,3 +109,5 @@ export const Workout: FC = () => {
     </div>
   )
 }
+
+export default Workout

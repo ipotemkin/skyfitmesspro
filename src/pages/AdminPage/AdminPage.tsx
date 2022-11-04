@@ -6,7 +6,7 @@ import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 import styles from './style.module.css'
 
-export const AdminPage = () => {
+const AdminPage = () => {
   const currentUser = useAppSelector(selectCurrentUser)
 
   return (
@@ -21,3 +21,5 @@ export const AdminPage = () => {
     </div>
   )
 }
+
+export default AdminPage

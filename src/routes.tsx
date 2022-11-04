@@ -1,21 +1,29 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, lazy, useEffect, useState } from 'react'
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { AdminPage } from './pages/AdminPage/AdminPage'
 import { useAppSelector } from './hooks/appHooks'
-import { AboutCourse } from './pages/AboutCourse/AboutCourse'
-import { LoginForm } from './pages/AuthForm/LoginForm'
-import { SignUpForm } from './pages/AuthForm/SignUpForm'
 import { Main } from './pages/Main/Main'
 import { NotFound } from './pages/NotFound/NotFound'
-import { ProfilePage } from './pages/ProfilePage/ProfilePage'
-import { Workout } from './pages/WorkoutPage/Workout'
 import { selectCurrentUser } from './slices/currentUserSlice'
 import { checkJWTExpTime, formatString } from './utils'
 import { useDispatch } from 'react-redux'
 import { setMessage } from './slices/messageSlice'
 import { accessTokenName, EXP_MESSAGE } from './constants'
+
+// import { AdminPage } from './pages/AdminPage/AdminPage'
+// import { AboutCourse } from './pages/AboutCourse/AboutCourse'
+// import { LoginForm } from './pages/AuthForm/LoginForm'
+// import { SignUpForm } from './pages/AuthForm/SignUpForm'
+// import { ProfilePage } from './pages/ProfilePage/ProfilePage'
+// import { Workout } from './pages/WorkoutPage/Workout'
+
+const AboutCourse = lazy(() => import('./pages/AboutCourse/AboutCourse'))
+const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage'))
+const SignUpForm = lazy(() => import('./pages/AuthForm/SignUpForm'))
+const LoginForm = lazy(() => import('./pages/AuthForm/LoginForm'))
+const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage'))
+const Workout = lazy(() => import('./pages/WorkoutPage/Workout'))
 
 export const ROUTES = {
   home: '/',
@@ -43,7 +51,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({
   return <Outlet />
 }
 
-export const AppRoutes = () => {
+export const AppRoutes = () => {  
   const user = useAppSelector(selectCurrentUser)
   const dispatch = useDispatch()
 
@@ -68,7 +76,7 @@ export const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path={ROUTES.home} element={<Main />} />
+    <Route path={ROUTES.home} element={<Main />} />
       <Route path={ROUTES.login} element={<LoginForm />} />
       <Route path={ROUTES.signup} element={<SignUpForm />} />
       <Route path={`${ROUTES.aboutCourse}/:id`} element={<AboutCourse />} />

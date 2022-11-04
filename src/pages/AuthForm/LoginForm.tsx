@@ -126,3 +126,5 @@ export const LoginForm: FC = () => {
     </div>
   )
 }
+
+export default LoginForm
