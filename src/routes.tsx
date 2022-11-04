@@ -74,10 +74,8 @@ export const AppRoutes = () => {
     }
 
     // если токен валиден, редиректим на заданную страницу
-    else if (isTokenValid || (user.idToken && !user.needRelogin)) {
-      console.log('go to the specified page')
+    else if (isTokenValid || (user.idToken && !user.needRelogin))
       setIsLoggedIn(true)
-    }
 
     // если токена нет, редиректим на home page
     else setIsLoggedIn(false)
