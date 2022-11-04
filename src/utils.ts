@@ -8,7 +8,7 @@ export const formatString = (text: string, args: string[]) => {
   return res
 }
 
-type AuthErrorType = {
+export type AuthErrorType = {
   status: number
   data: {
     error: {
