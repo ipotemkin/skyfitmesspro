@@ -11,12 +11,12 @@ import { useDispatch } from 'react-redux'
 import { setMessage } from './slices/messageSlice'
 import { accessTokenName, EXP_MESSAGE } from './constants'
 
-// import { AdminPage } from './pages/AdminPage/AdminPage'
-// import { AboutCourse } from './pages/AboutCourse/AboutCourse'
-// import { LoginForm } from './pages/AuthForm/LoginForm'
-// import { SignUpForm } from './pages/AuthForm/SignUpForm'
-// import { ProfilePage } from './pages/ProfilePage/ProfilePage'
-// import { Workout } from './pages/WorkoutPage/Workout'
+// import AdminPage from './pages/AdminPage/AdminPage'
+// import AboutCourse from './pages/AboutCourse/AboutCourse'
+// import LoginForm from './pages/AuthForm/LoginForm'
+// import SignUpForm from './pages/AuthForm/SignUpForm'
+// import ProfilePage from './pages/ProfilePage/ProfilePage'
+// import Workout from './pages/WorkoutPage/Workout'
 
 const AboutCourse = lazy(() => import('./pages/AboutCourse/AboutCourse'))
 const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage'))

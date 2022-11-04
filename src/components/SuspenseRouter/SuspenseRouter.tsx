@@ -1,14 +1,15 @@
 import { BrowserHistory, createBrowserHistory, Update } from 'history'
-import { useLayoutEffect, useRef, useState, useTransition } from 'react'
+import { FC, useLayoutEffect, useRef, useState, useTransition } from 'react'
 import { Router } from 'react-router-dom'
 
-export interface BrowserRouterProps {
+type Props = {
   basename?: string
   children?: React.ReactNode
   window?: Window
 }
 
-export function SuspenseRouter({ basename, children, window }: BrowserRouterProps) {
+// не переключает на новую страницу, пока она не готова
+export const SuspenseRouter: FC<Props> = ({ basename, children, window }) => {
   let historyRef = useRef<BrowserHistory>()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPending, startTransition] = useTransition()
@@ -24,11 +25,7 @@ export function SuspenseRouter({ basename, children, window }: BrowserRouterProp
     location: history.location,
   })
 
- const setStateAsync = (update: Update) => {
-    startTransition(() => {
-      setState(update)
-    })
-  }
+  const setStateAsync = (update: Update) => startTransition(() => setState(update))
 
   useLayoutEffect(() => history.listen(setStateAsync), [history])
 
