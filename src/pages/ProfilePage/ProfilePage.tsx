@@ -11,7 +11,7 @@ import { WarningPage } from '../WarningPage/WarningPage'
 
 import styles from './style.module.css'
 
-export const ProfilePage: FC = () => {
+const ProfilePage: FC = () => {
   const currentUser = useAppSelector(selectCurrentUser)
   const [isWorkoutsShown, setIsWorkoutsShown] = useState(false)
   const [activeCourseId, setActiveCourseId] = useState<number>(1)
@@ -42,3 +42,5 @@ export const ProfilePage: FC = () => {
     </div>
   )
 }
+
+export default ProfilePage

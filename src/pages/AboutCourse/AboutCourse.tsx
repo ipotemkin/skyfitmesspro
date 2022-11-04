@@ -8,7 +8,7 @@ import { LOGO_COLOR_DARK } from '../../constants'
 
 import styles from './style.module.css'
 
-export const AboutCourse: FC = () => {
+const AboutCourse: FC = () => {
   const { id } = useParams()
   const { data: course } = useGetCourseQuery(Number(id) - 1 || 0)
 
@@ -69,3 +69,5 @@ export const AboutCourse: FC = () => {
     </div>
   )
 }
+
+export default AboutCourse
