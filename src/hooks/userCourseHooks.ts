@@ -1,7 +1,6 @@
 // USER COURSES HOOKS
 
-import { MutationDefinition, skipToken } from '@reduxjs/toolkit/dist/query'
-import { QueryKeys } from '@reduxjs/toolkit/dist/query/core/apiState'
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { merge } from 'lodash'
 import { useEffect, useState } from 'react'
 

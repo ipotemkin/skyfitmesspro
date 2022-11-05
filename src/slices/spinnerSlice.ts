@@ -19,6 +19,9 @@ export const SpinnerSlice = createSlice({
     showSpinner: (state) => {
       if (!state.prefetch) state.visible = true
     },
+    showSpinnerForce: (state) => {
+      state.visible = true
+    },
     hideSpinner: (state) => {
       return state = { ...initialState }
     },
@@ -30,6 +33,7 @@ export const SpinnerSlice = createSlice({
 
 export const {
   showSpinner,
+  showSpinnerForce,
   hideSpinner,
   setPrefetchSpinner,
 } = SpinnerSlice.actions
