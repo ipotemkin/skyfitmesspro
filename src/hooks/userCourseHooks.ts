@@ -1,14 +1,16 @@
 // USER COURSES HOOKS
 
-import { skipToken } from '@reduxjs/toolkit/dist/query'
+import { MutationDefinition, skipToken } from '@reduxjs/toolkit/dist/query'
+import { QueryKeys } from '@reduxjs/toolkit/dist/query/core/apiState'
 import { merge } from 'lodash'
 import { useEffect, useState } from 'react'
 
 import { useGetCourseQuery, useGetCoursesQuery } from '../api/courses.api'
-import { useGetUserCourseQuery, useGetUserCoursesQuery } from '../api/users.api'
+import { useGetUserCourseQuery, useGetUserCoursesQuery, usePrefetch } from '../api/users.api'
 import { selectCurrentUser } from '../slices/currentUserSlice'
+import { setPrefetchSpinner } from '../slices/spinnerSlice'
 import { CourseData } from '../types'
-import { useAppSelector } from './appHooks'
+import { useAppDispatch, useAppSelector } from './appHooks'
 
 // возвращает список ключей, не равных null
 // это необходимо для очистки сырой информации из БД
@@ -137,4 +139,16 @@ export const useUserCourse = (courseId?: number) => {
   }, [userCourseData, course, user?.localId])
 
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
+}
+
+export const usePrefetchUserCourse = (endpoint: any) => {
+  const dispatch = useAppDispatch()
+  const prefetchFunc = usePrefetch(endpoint)
+
+  const newPrefetchFunc = (args: any) => {
+    dispatch(setPrefetchSpinner())
+    prefetchFunc({ ...args })
+  }
+
+  return newPrefetchFunc
 }
