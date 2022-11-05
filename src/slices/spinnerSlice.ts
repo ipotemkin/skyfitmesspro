@@ -17,7 +17,6 @@ export const SpinnerSlice = createSlice({
   initialState,
   reducers: {
     showSpinner: (state) => {
-      console.log('showSpinner state -->', state)
       if (!state.prefetch) state.visible = true
     },
     hideSpinner: (state) => {
