@@ -26,7 +26,7 @@ const customFetchBase: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  api.dispatch(showSpinner())
+  // api.dispatch(showSpinner())
 
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock()
@@ -40,6 +40,7 @@ const customFetchBase: BaseQueryFn<
   else result = false
 
   if (!result || [400, 401, 403].includes(result.error?.status as number)) {
+    api.dispatch(showSpinner())
     let success = false
 
     if (!mutex.isLocked()) {

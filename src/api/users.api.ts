@@ -130,4 +130,5 @@ export const {
   useSetWorkoutStatusMutation,
   useAddUserCourseMutation,
   useDelUserCourseMutation,
+  usePrefetch,
 } = usersApi
