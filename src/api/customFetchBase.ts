@@ -13,7 +13,7 @@ import { hideSpinner, showSpinner } from '../slices/spinnerSlice'
 import { RootState } from '../store'
 import { checkJWTExpTime } from '../utils'
 import { AddTokenToUrl, runRefreshToken, updateTokenInArgs } from './utils'
-    
+
 // Create a new mutex
 const mutex = new Mutex()
 

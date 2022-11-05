@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
 type SpinnerType = {
-  visible?: boolean
+  visible: boolean
+  prefetch: boolean
 }
 
 const initialState: SpinnerType = {
-  visible: false
+  visible: false,
+  prefetch: false
 }
 
 export const SpinnerSlice = createSlice({
@@ -15,17 +17,21 @@ export const SpinnerSlice = createSlice({
   initialState,
   reducers: {
     showSpinner: (state) => {
-      state.visible = true
+      if (!state.prefetch) state.visible = true
     },
     hideSpinner: (state) => {
       return state = { ...initialState }
-    }
+    },
+    setPrefetchSpinner: (state) => {
+      state.prefetch = true
+    },
   }
 })
 
 export const {
   showSpinner,
-  hideSpinner
+  hideSpinner,
+  setPrefetchSpinner,
 } = SpinnerSlice.actions
 
 export const selectSpinner = (state: RootState) => state.spinner?.visible
