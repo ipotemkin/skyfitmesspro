@@ -10,20 +10,16 @@ type Props = {
 
 // не переключает на новую страницу, пока она не готова
 export const SuspenseRouter: FC<Props> = ({ basename, children, window }) => {
-  let historyRef = useRef<BrowserHistory>()
+  const historyRef = useRef<BrowserHistory>()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPending, startTransition] = useTransition()
 
-  if (historyRef.current == null) {
-    //const history = createBrowserHistory(startTransition, { window });
+  if (historyRef.current == null)
     historyRef.current = createBrowserHistory({ window })
-  }
 
-  let history = historyRef.current
-  let [state, setState] = useState({
-    action: history.action,
-    location: history.location,
-  })
+  const history = historyRef.current
+  const { action, location } = history
+  const [state, setState] = useState({ action, location })
 
   const setStateAsync = (update: Update) => startTransition(() => setState(update))
 
