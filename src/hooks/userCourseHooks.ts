@@ -73,6 +73,8 @@ export const useCoursesWithSubscription = (uid?: string) => {
 export const useUserCourse = (courseId?: number) => {
   const user = useAppSelector(selectCurrentUser)
   const { data: course } = useGetCourseQuery(courseId ?? skipToken)
+  const [userCourse, setUserCourse] = useState<CourseData>()
+  const [isError, setIsError] = useState(false)
 
   const queryArgs =
     user.localId && courseId !== undefined
@@ -86,9 +88,6 @@ export const useUserCourse = (courseId?: number) => {
     isError: isErrorQuery,
   } = useGetUserCourseQuery(queryArgs ?? skipToken)
 
-  const [userCourse, setUserCourse] = useState<CourseData>()
-  const [isError, setIsError] = useState(false)
-
   useEffect(() => {
     if (isErrorQuery) setIsError(true)
     else setIsError(false)
@@ -96,8 +95,6 @@ export const useUserCourse = (courseId?: number) => {
 
   useEffect(() => {
     if (userCourseData && course && user?.localId)
-      // const res = {}
-      // merge(res, course, userCourseData)
       setUserCourse(mergeCourseData(course, userCourseData))
   }, [userCourseData, course, user?.localId])
 
