@@ -13,27 +13,23 @@ import { addSubscription, getValidKeys, mergeCourseData } from './utils'
 
 // возвращает курсы заданного пользователя (без данных из /users)
 export const useUserCourses = (uid?: string) => {
-  const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-
-  const { data: userCoursesData, isLoading: isUserCoursesLoading } =
-    useGetUserCoursesQuery({ uid } ?? skipToken)
-
   const [userCourses, setUserCourses] = useState<CourseData[]>()
   const [isLoading, setIsLoading] = useState(true)
+  const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
+  const { data: userCoursesData, isLoading: isUserCoursesLoading } =
+    useGetUserCoursesQuery({ uid } ?? skipToken)
 
   useEffect(() => {
     if (userCoursesData && courses) {
       const res = []
       const validKeys: string[] = getValidKeys(userCoursesData)
-      for (let i in validKeys) res.push(courses[+validKeys[i]])
+      for (let key of validKeys) res.push(courses[+key])
       setUserCourses(res)
     }
   }, [userCoursesData, courses])
 
   useEffect(() => {
-    if (!isCoursesLoading && !isUserCoursesLoading) {
-      setIsLoading(false)
-    }
+    if (!isCoursesLoading && !isUserCoursesLoading) setIsLoading(false)
   }, [isCoursesLoading, isUserCoursesLoading])
 
   return { data: userCourses, isLoading }
@@ -42,14 +38,12 @@ export const useUserCourses = (uid?: string) => {
 // возвращает курсы с доп полем subscription чтобы добавлять/удалять курсы для пользователя
 export const useCoursesWithSubscription = (uid?: string) => {
   const { data: courses, isLoading: isCoursesLoading } = useGetCoursesQuery()
-
+  const [isLoading, setIsLoading] = useState(true)
   const { data: userCoursesData, isLoading: isUserCoursesLoading } =
     useGetUserCoursesQuery({ uid } ?? skipToken)
-
-  const [isLoading, setIsLoading] = useState(true)
-  const [coursesWithSubscription, setCoursesWithSubscription] = useState<
-    CourseData[]
-  >([])
+  
+  const [coursesWithSubscription, setCoursesWithSubscription] = 
+    useState<CourseData[]>([])
 
   useEffect(() => {
     if (!isUserCoursesLoading && courses) {
