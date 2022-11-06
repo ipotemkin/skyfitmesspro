@@ -3,18 +3,14 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { CourseData, UserData } from '../types'
 import customFetchBase from './customFetchBase'
 
-type TokenArg = {
-  idToken?: string
-}
-
 type UserArg = {
   uid?: string
-} & TokenArg
+}
 
 type CourseArg = {
   uid: string
   courseId: number
-} & TokenArg
+} & UserArg
 
 export type WorkoutArg = {
   workoutId: number
