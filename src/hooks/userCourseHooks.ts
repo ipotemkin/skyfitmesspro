@@ -83,14 +83,13 @@ export const useUserCourse = (courseId?: number) => {
   } = useGetUserCourseQuery(queryArgs ?? skipToken)
 
   useEffect(() => {
-    if (isErrorQuery) setIsError(true)
-    else setIsError(false)
+    isErrorQuery ? setIsError(true) : setIsError(false)
   }, [isErrorQuery])
 
   useEffect(() => {
-    if (userCourseData && course && user?.localId)
+    if (userCourseData && course && user.localId)
       setUserCourse(mergeCourseData(course, userCourseData))
-  }, [userCourseData, course, user?.localId])
+  }, [userCourseData, course, user.localId])
 
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }

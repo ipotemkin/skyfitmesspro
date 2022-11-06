@@ -12,8 +12,8 @@ import { selectCurrentUser } from '../../slices/currentUserSlice'
 import styles from './style.module.css'
 
 export const Main = () => {
-  const user = useAppSelector(selectCurrentUser)
-  const isLoggedIn = user && user.localId
+  const { localId } = useAppSelector(selectCurrentUser)
+  const isLoggedIn = localId ? true : false
 
   return (
     <>
