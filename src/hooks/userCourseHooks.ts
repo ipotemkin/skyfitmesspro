@@ -1,7 +1,6 @@
 // USER COURSES HOOKS
 
 import { skipToken } from '@reduxjs/toolkit/dist/query'
-import { merge } from 'lodash'
 import { useEffect, useState } from 'react'
 
 import { useGetCourseQuery, useGetCoursesQuery } from '../api/courses.api'
@@ -10,16 +9,7 @@ import { selectCurrentUser } from '../slices/currentUserSlice'
 import { setPrefetchSpinner } from '../slices/spinnerSlice'
 import { CourseData } from '../types'
 import { useAppDispatch, useAppSelector } from './appHooks'
-
-// возвращает список ключей, не равных null
-// это необходимо для очистки сырой информации из БД
-const getValidKeys = (obj: object) => {
-  const validKeys = []
-  for (let [curKey, curValue] of Object.entries(obj)) {
-    if (curValue) validKeys.push(curKey)
-  }
-  return validKeys
-}
+import { addSubscription, getValidKeys, mergeCourseData } from './utils'
 
 // возвращает курсы заданного пользователя (без данных из /users)
 export const useUserCourses = (uid?: string) => {
@@ -62,45 +52,18 @@ export const useCoursesWithSubscription = (uid?: string) => {
   >([])
 
   useEffect(() => {
-    const res: CourseData[] = []
-
     if (!isUserCoursesLoading && courses) {
-      const coursesTemp: CourseData[] = []
 
       // добавляем свойство 'subscription'
       if (userCoursesData) {
-        // если userCoursesData – это список
-        if (userCoursesData.length > 0) {
-          userCoursesData.forEach((course: CourseData) => {
-            coursesTemp.push({
-              ...course,
-              subscription: course ? true : false,
-            })
-          })
-          merge(res, courses, coursesTemp)
-        // если userCoursesData – это объект
-        } else {
-          const validKeys = getValidKeys(userCoursesData)
-          courses.forEach((course: CourseData) => {
-            res.push({
-              ...course,
-              subscription: validKeys.includes(String(course.id))
-                ? true
-                : false,
-            })
-          })
-        }
+        const res = addSubscription(userCoursesData, courses)
         setCoursesWithSubscription(res)
-        return
-      }
-      setCoursesWithSubscription(courses)
+      } else setCoursesWithSubscription(courses)
     }
   }, [userCoursesData, courses, isUserCoursesLoading])
 
   useEffect(() => {
-    if (!isCoursesLoading && !isUserCoursesLoading) {
-      setIsLoading(false)
-    }
+    if (!isCoursesLoading && !isUserCoursesLoading) setIsLoading(false)
   }, [isCoursesLoading, isUserCoursesLoading])
 
   return { data: coursesWithSubscription, isLoading }
@@ -132,11 +95,10 @@ export const useUserCourse = (courseId?: number) => {
   }, [isErrorQuery])
 
   useEffect(() => {
-    if (userCourseData && course && user?.localId) {
-      const res = {}
-      merge(res, course, userCourseData)
-      setUserCourse(res)
-    }
+    if (userCourseData && course && user?.localId)
+      // const res = {}
+      // merge(res, course, userCourseData)
+      setUserCourse(mergeCourseData(course, userCourseData))
   }, [userCourseData, course, user?.localId])
 
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
