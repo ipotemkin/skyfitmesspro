@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSignInMutation } from '../../api/auth.api'
 import { Button } from '../../components/Button/Button'
 import { Logo } from '../../components/Logo/Logo'
+import { validPasswordLength } from '../../constants'
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { clearMessage, selectMessage } from '../../slices/messageSlice'
@@ -15,7 +16,6 @@ import { AuthErrorType, getErrorMessage } from '../../utils'
 import styles from './style.module.css'
 
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i)
-const validPasswordLength = 6
 
 export const LoginForm: FC = () => {
   const [error, setError] = useState('')
@@ -53,13 +53,9 @@ export const LoginForm: FC = () => {
     }
   }
 
-  const focusHandler = () => {
-    setError('')
-  }
+  const focusHandler = () => setError('')
 
-  const clickHandler = () => {
-    navigate(ROUTES.signup)
-  }
+  const clickHandler = () => navigate(ROUTES.signup)
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
 
