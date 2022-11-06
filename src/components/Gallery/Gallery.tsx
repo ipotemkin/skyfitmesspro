@@ -31,9 +31,8 @@ export const Gallery = () => {
           <Skeleton
             sx={{ bgcolor: SKELETON_COLOR, borderRadius: '30px' }}
             variant="rounded"
-            width={360}
-            height={480}
             key={index.toString()}
+            className={styles.skeleton}
           />
         ))}
       {error && (
