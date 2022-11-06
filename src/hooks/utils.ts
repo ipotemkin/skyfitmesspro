@@ -1,7 +1,7 @@
 // возвращает список ключей, не равных null
 
-import { merge } from "lodash"
-import { CourseData } from "../types"
+import { merge } from 'lodash'
+import { CourseData } from '../types'
 
 // это необходимо для очистки сырой информации из БД
 export const getValidKeys = (obj: object) => {
