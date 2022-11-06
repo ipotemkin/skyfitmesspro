@@ -14,10 +14,10 @@ export const getValidKeys = (obj: object) => {
 
 export const addSubscription = (source: CourseData[] | Object, courses: CourseData[]) => {
   const res: CourseData[] = []
-  const coursesTemp: CourseData[] = []
 
   // если userCoursesData – это список
   if (Array.isArray(source)) {
+    const coursesTemp: CourseData[] = []
     source.forEach((course: CourseData) => {
       coursesTemp.push({
         ...course,
