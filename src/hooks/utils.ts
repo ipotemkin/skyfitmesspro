@@ -1,8 +1,8 @@
-// возвращает список ключей, не равных null
-
 import { merge } from 'lodash'
+
 import { CourseData } from '../types'
 
+// возвращает список ключей, не равных null
 // это необходимо для очистки сырой информации из БД
 export const getValidKeys = (obj: object) => {
   const validKeys = []
