@@ -123,3 +123,5 @@ export const SignUpForm: FC = () => {
     </div>
   )
 }
+
+export default SignUpForm

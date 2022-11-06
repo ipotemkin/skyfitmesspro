@@ -1,8 +1,8 @@
 import classNames from 'classnames'
 import { FC, useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { deleteCurrentUser } from '../../slices/currentUserSlice'
 import { FirebaseUserRESTAPI } from '../../types'
@@ -16,7 +16,7 @@ type Props = {
 
 export const User: FC<Props> = ({ user }) => {
   const [isShowNav, setIsShowNav] = useState(false)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const outerRef = useRef<HTMLDivElement>(null)

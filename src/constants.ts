@@ -1,3 +1,5 @@
+import { ErrorTypes } from "./types"
+
 export const LOGO_COLOR_DARK = '#000000'
 
 export const LOGO_COLOR_LIGHT = '#ffffff'
@@ -11,10 +13,6 @@ export const API_URL =
 
 export const API_AUTH_URL = 'https://identitytoolkit.googleapis.com/v1'
 
-type ErrorTypes = {
-  [index: string]: string
-}
-
 export const ERRORS: ErrorTypes = {
   EMAIL_NOT_FOUND: 'Неверный email',
   INVALID_PASSWORD: 'Неверный пароль',
@@ -24,3 +22,5 @@ export const ERRORS: ErrorTypes = {
 export const EXP_MESSAGE = 'Ваша сессия истекла. Пожалуйста, войдите в систему!'
 
 export const accessTokenName = 'idToken'
+
+export const validPasswordLength = 6

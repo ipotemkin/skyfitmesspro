@@ -1,10 +1,9 @@
 import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
 
 import { useChangeEmailMutation } from '../../api/auth.api'
 import { EXP_MESSAGE } from '../../constants'
-import { useAppSelector } from '../../hooks/appHooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/appHooks'
 import { useGoToLoginWithMessage } from '../../hooks/shortcutsHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { hideSpinner, showSpinner } from '../../slices/spinnerSlice'
@@ -26,7 +25,7 @@ const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
   const user = useAppSelector(selectCurrentUser)
   const goToLoginWithMessage = useGoToLoginWithMessage()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const {
     register,

@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
+import { usePrefetch } from '../../api/courses.api'
 
-import { useUserCourses } from '../../hooks/userCourseHooks'
+import { usePrefetchUserCourse, useUserCourses } from '../../hooks/userCourseHooks'
 import { FirebaseUserRESTAPI } from '../../types'
 import { Card } from '../Card/Card'
 import { Warning } from '../Warning/Warning'
@@ -17,9 +18,16 @@ export const UserCourses: FC<Props> = ({
   handleWorkouts = (courseId: number) => {},
 }) => {
   const { data: userCourses, isLoading } = useUserCourses(user.localId)
+  const prefetchWorkouts = usePrefetchUserCourse('getUserCourse')
+  const prefetchCourseData = usePrefetch('getCourse')
 
   const handleCourseClick = (e: React.MouseEvent, courseId: number) => {
     handleWorkouts(courseId)
+  }
+
+  const handlePrefetch = (uid: string, courseId: number) => {
+    prefetchCourseData(courseId)
+    prefetchWorkouts({ uid, courseId })
   }
 
   return (
@@ -35,6 +43,7 @@ export const UserCourses: FC<Props> = ({
                 className={styles.wrapper}
                 key={item.id}
                 onClick={(e) => handleCourseClick(e, item.id || 0)}
+                onMouseEnter={() => handlePrefetch(user.localId!, item.id!)}
               >
                 <Card item={item} key={item.id} />
                 <div className={styles.go}>Перейти →</div>

@@ -1,11 +1,10 @@
 import classNames from 'classnames'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
 
 import { useChangePasswordMutation } from '../../api/auth.api'
 import { EXP_MESSAGE } from '../../constants'
-import { useAppSelector } from '../../hooks/appHooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/appHooks'
 import { useGoToLoginWithMessage } from '../../hooks/shortcutsHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { hideSpinner, showSpinner } from '../../slices/spinnerSlice'
@@ -29,7 +28,7 @@ export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
   const user = useAppSelector(selectCurrentUser)
   const goToLoginWithMessage = useGoToLoginWithMessage()
   const [changePassword] = useChangePasswordMutation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const {
     register,
     handleSubmit,

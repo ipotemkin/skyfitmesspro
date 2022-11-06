@@ -1,21 +1,21 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, lazy, useEffect, useState } from 'react'
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { AdminPage } from './pages/AdminPage/AdminPage'
-import { useAppSelector } from './hooks/appHooks'
-import { AboutCourse } from './pages/AboutCourse/AboutCourse'
-import { LoginForm } from './pages/AuthForm/LoginForm'
-import { SignUpForm } from './pages/AuthForm/SignUpForm'
+import { useAppDispatch, useAppSelector } from './hooks/appHooks'
 import { Main } from './pages/Main/Main'
 import { NotFound } from './pages/NotFound/NotFound'
-import { ProfilePage } from './pages/ProfilePage/ProfilePage'
-import { Workout } from './pages/WorkoutPage/Workout'
 import { selectCurrentUser } from './slices/currentUserSlice'
 import { checkJWTExpTime, formatString } from './utils'
-import { useDispatch } from 'react-redux'
-import { setMessage } from './slices/messageSlice'
+import { selectMessage, setMessage } from './slices/messageSlice'
 import { accessTokenName, EXP_MESSAGE } from './constants'
+
+const AboutCourse = lazy(() => import('./pages/AboutCourse/AboutCourse'))
+const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage'))
+const SignUpForm = lazy(() => import('./pages/AuthForm/SignUpForm'))
+const LoginForm = lazy(() => import('./pages/AuthForm/LoginForm'))
+const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage'))
+const Workout = lazy(() => import('./pages/WorkoutPage/Workout'))
 
 export const ROUTES = {
   home: '/',
@@ -43,9 +43,10 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({
   return <Outlet />
 }
 
-export const AppRoutes = () => {
+export const AppRoutes = () => {  
   const user = useAppSelector(selectCurrentUser)
-  const dispatch = useDispatch()
+  const message = useAppSelector(selectMessage)
+  const dispatch = useAppDispatch()
 
   // если поставить false, то даже если в куках есть данные, перенаправляет на home page
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(true)
@@ -54,17 +55,22 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     // просим пользователя перезайти
-    if (user.needRelogin) {
+    if (message === EXP_MESSAGE) setIsLoggedIn(undefined)
+
+    // просим пользователя перезайти
+    else if (user.needRelogin) {
       dispatch(setMessage(EXP_MESSAGE))
       Cookies.remove(accessTokenName)
       setIsLoggedIn(undefined)
     }
+
     // если токен валиден, редиректим на заданную страницу
     else if (isTokenValid || (user.idToken && !user.needRelogin))
       setIsLoggedIn(true)
+
     // если токена нет, редиректим на home page
     else setIsLoggedIn(false)
-  }, [user.idToken, user.needRelogin, isTokenValid, dispatch])
+  }, [user.idToken, user.needRelogin, isTokenValid, dispatch, message])
 
   return (
     <Routes>

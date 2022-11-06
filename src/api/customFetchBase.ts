@@ -9,11 +9,11 @@ import { Mutex } from 'async-mutex'
 import { API_URL } from '../constants'
 import { httpOnlyProxy } from '../env'
 import { updateCurrentUser } from '../slices/currentUserSlice'
-import { hideSpinner, showSpinner } from '../slices/spinnerSlice'
+import { hideSpinnerForce, showFetchSpinner, showSpinnerForce } from '../slices/spinnerSlice'
 import { RootState } from '../store'
 import { checkJWTExpTime } from '../utils'
 import { AddTokenToUrl, runRefreshToken, updateTokenInArgs } from './utils'
-    
+
 // Create a new mutex
 const mutex = new Mutex()
 
@@ -26,7 +26,7 @@ const customFetchBase: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  api.dispatch(showSpinner())
+  api.dispatch(showFetchSpinner())
 
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock()
@@ -40,6 +40,7 @@ const customFetchBase: BaseQueryFn<
   else result = false
 
   if (!result || [400, 401, 403].includes(result.error?.status as number)) {
+    api.dispatch(showSpinnerForce())
     let success = false
 
     if (!mutex.isLocked()) {
@@ -67,9 +68,7 @@ const customFetchBase: BaseQueryFn<
             }
           } 
       } finally {
-        if (!success) {
-          api.dispatch(updateCurrentUser({ needRelogin: true }))
-        }
+        if (!success) api.dispatch(updateCurrentUser({ needRelogin: true }))
         // release must be called once the mutex should be released again.
         release()
       }
@@ -78,13 +77,14 @@ const customFetchBase: BaseQueryFn<
       await mutex.waitForUnlock()
       
       const { idToken } = (api.getState() as RootState).currentUser
-      if (idToken)
-        args = updateTokenInArgs(args, idToken)
+      if (idToken) args = updateTokenInArgs(args, idToken)
       
       result = await baseQuery(args, api, extraOptions)
     }
   }
-  api.dispatch(hideSpinner())
+  // делаем задержку в полсекунды, чтобы спиннер не морглал,
+  // если несколько запросов идут друг за другом
+  setTimeout(() => api.dispatch(hideSpinnerForce()), 500)
   return result
 }
 
