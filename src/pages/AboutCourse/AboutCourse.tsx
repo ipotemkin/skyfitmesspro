@@ -1,3 +1,4 @@
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { FC } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
@@ -10,7 +11,7 @@ import styles from './style.module.css'
 
 const AboutCourse: FC = () => {
   const { id } = useParams()
-  const { data: course } = useGetCourseQuery(Number(id) - 1 || 0)
+  const { data: course } = useGetCourseQuery(Number(id) - 1 ?? skipToken)
 
   return (
     <div className={styles.wrapper}>

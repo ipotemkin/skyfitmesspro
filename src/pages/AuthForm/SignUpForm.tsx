@@ -34,9 +34,9 @@ export const SignUpForm: FC = () => {
     setError('')
     setIsBlocked(true)
     try {
-      const res = await signUp({ email: data.email, password: data.password }).unwrap()
+      const { localId } = await signUp({ email: data.email, password: data.password }).unwrap()
       // добавляем пользователя в таблицу users
-      if (res.localId) await addUser({ uid: res.localId }).unwrap()
+      if (localId) await addUser({ uid: localId }).unwrap()
       navigate(ROUTES.profile)
     } catch (error: any) { // TODO выяснить, какой тип сюда вписать
       setError(getErrorMessage(error, 'Что-то пошло не так...'))
@@ -44,9 +44,7 @@ export const SignUpForm: FC = () => {
     }
   }
 
-  const focusHandler = () => {
-    setError('')
-  }
+  const focusHandler = () => setError('')
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
 

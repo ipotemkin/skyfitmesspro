@@ -9,7 +9,7 @@ if (httpOnlyProxy) {
   baseUrl = '/proxy/v1/'
 }
 
-type SingInArg = {
+type Credentials = {
   email: string
   password: string
 }
@@ -29,8 +29,8 @@ export const authApi = createApi({
   tagTypes: ['Auth'],
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
-    signUp: build.mutation<FirebaseUserRESTAPI, SingInArg>({
-      query: (arg: SingInArg) => ({
+    signUp: build.mutation<FirebaseUserRESTAPI, Credentials>({
+      query: (arg: Credentials) => ({
         url: `accounts:signUp?key=${apiKey}`,
         method: 'POST',
         body: {
@@ -39,8 +39,8 @@ export const authApi = createApi({
         }
       }),
     }),
-    signIn: build.mutation<FirebaseUserRESTAPI, SingInArg>({
-      query: (arg: SingInArg) => ({
+    signIn: build.mutation<FirebaseUserRESTAPI, Credentials>({
+      query: (arg: Credentials) => ({
         url: `accounts:signInWithPassword?key=${apiKey}`,
         method: 'POST',
         body: {

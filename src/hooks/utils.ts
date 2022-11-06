@@ -40,8 +40,8 @@ export const addSubscription = (source: CourseData[] | Object, courses: CourseDa
   return res
 }
   
-  export const mergeCourseData = (course1: CourseData, course2: CourseData) => {
-    const res = {}
-    merge(res, course1, course2)
-    return res
-  }
+export const mergeCourseData = (course1: CourseData, course2: CourseData) => {
+  const res = {}
+  merge(res, course1, course2)
+  return res
+}

@@ -16,9 +16,8 @@ export const coursesApi = createApi({
     getCourse: build.query<CourseData, number>({
       query: (courseId: number) => `courses/${courseId}.json`,
       transformResponse: (response: CourseData) => {
-        if (response.description) {
+        if (response.description)
           response.description = parseFirebaseString(response.description)
-        }
         return response
       },
     }),
