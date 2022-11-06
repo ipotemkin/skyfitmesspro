@@ -72,6 +72,10 @@ export type Message = {
   value?: string
 }
 
+export type ErrorTypes = {
+  [index: string]: string
+}
+
 // структура idToken
 export type idTokenType = {
   aud: string // project name

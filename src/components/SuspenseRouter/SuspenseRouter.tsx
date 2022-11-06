@@ -1,8 +1,9 @@
 import { BrowserHistory, createBrowserHistory, Update } from 'history'
 import { FC, useEffect, useLayoutEffect, useRef, useState, useTransition } from 'react'
 import { Router } from 'react-router-dom'
+
 import { useAppDispatch } from '../../hooks/appHooks'
-import { hideSpinner, showSpinnerForce } from '../../slices/spinnerSlice'
+import { hideSpinner, showSpinner } from '../../slices/spinnerSlice'
 
 type Props = {
   basename?: string
@@ -13,7 +14,6 @@ type Props = {
 // не переключает на новую страницу, пока она не готова
 export const SuspenseRouter: FC<Props> = ({ basename, children, window }) => {
   const historyRef = useRef<BrowserHistory>()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPending, startTransition] = useTransition()
   const dispatch = useAppDispatch()
 
@@ -25,7 +25,7 @@ export const SuspenseRouter: FC<Props> = ({ basename, children, window }) => {
   const [state, setState] = useState({ action, location })
 
   const setStateAsync = (update: Update) => {
-    dispatch(showSpinnerForce())
+    dispatch(showSpinner())
     startTransition(() => setState(update))
   }
 

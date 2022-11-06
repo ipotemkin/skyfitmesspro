@@ -69,6 +69,7 @@ export const useCoursesWithSubscription = (uid?: string) => {
 
       // добавляем свойство 'subscription'
       if (userCoursesData) {
+        // если userCoursesData – это список
         if (userCoursesData.length > 0) {
           userCoursesData.forEach((course: CourseData) => {
             coursesTemp.push({
@@ -77,6 +78,7 @@ export const useCoursesWithSubscription = (uid?: string) => {
             })
           })
           merge(res, courses, coursesTemp)
+        // если userCoursesData – это объект
         } else {
           const validKeys = getValidKeys(userCoursesData)
           courses.forEach((course: CourseData) => {
@@ -140,6 +142,7 @@ export const useUserCourse = (courseId?: number) => {
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }
 
+// hook для получения функции для prefetch запросов
 export const usePrefetchUserCourse = (endpoint: any) => {
   const dispatch = useAppDispatch()
   const prefetchFunc = usePrefetch(endpoint)

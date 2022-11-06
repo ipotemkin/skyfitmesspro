@@ -9,7 +9,7 @@ import { Mutex } from 'async-mutex'
 import { API_URL } from '../constants'
 import { httpOnlyProxy } from '../env'
 import { updateCurrentUser } from '../slices/currentUserSlice'
-import { hideSpinner, showSpinner, showSpinnerForce } from '../slices/spinnerSlice'
+import { hideSpinnerForce, showFetchSpinner, showSpinnerForce } from '../slices/spinnerSlice'
 import { RootState } from '../store'
 import { checkJWTExpTime } from '../utils'
 import { AddTokenToUrl, runRefreshToken, updateTokenInArgs } from './utils'
@@ -26,7 +26,7 @@ const customFetchBase: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  api.dispatch(showSpinner())
+  api.dispatch(showFetchSpinner())
 
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock()
@@ -68,9 +68,7 @@ const customFetchBase: BaseQueryFn<
             }
           } 
       } finally {
-        if (!success) {
-          api.dispatch(updateCurrentUser({ needRelogin: true }))
-        }
+        if (!success) api.dispatch(updateCurrentUser({ needRelogin: true }))
         // release must be called once the mutex should be released again.
         release()
       }
@@ -79,13 +77,12 @@ const customFetchBase: BaseQueryFn<
       await mutex.waitForUnlock()
       
       const { idToken } = (api.getState() as RootState).currentUser
-      if (idToken)
-        args = updateTokenInArgs(args, idToken)
+      if (idToken) args = updateTokenInArgs(args, idToken)
       
       result = await baseQuery(args, api, extraOptions)
     }
   }
-  api.dispatch(hideSpinner())
+  api.dispatch(hideSpinnerForce())
   return result
 }
 

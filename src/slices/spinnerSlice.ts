@@ -5,11 +5,13 @@ import { RootState } from '../store'
 type SpinnerType = {
   visible: boolean
   prefetch: boolean
+  isLoading: boolean
 }
 
 const initialState: SpinnerType = {
   visible: false,
-  prefetch: false
+  prefetch: false,
+  isLoading: false
 }
 
 export const SpinnerSlice = createSlice({
@@ -19,12 +21,31 @@ export const SpinnerSlice = createSlice({
     showSpinner: (state) => {
       if (!state.prefetch) state.visible = true
     },
+    // spinner при запросах, его нельзя отключить с помощью hideSpinner
+    // он отключается только с помощью hideSpinnerForce
+    showFetchSpinner: (state) => {
+      if (!state.prefetch) {
+        state.visible = true
+        state.isLoading = true
+      }
+    },
+    // spinner при запросах для обновлнния токенов, его нельзя отключить с помощью hideSpinner
+    // он отключается только с помощью hideSpinnerForce
     showSpinnerForce: (state) => {
       state.visible = true
+      state.isLoading = true
     },
+    // зарывает spinner, если нет активной загрузки данных
     hideSpinner: (state) => {
+      if (!state.isLoading)
+        return state = { ...initialState }
+    },
+    // зарывает spinner в любом случае
+    hideSpinnerForce: (state) => {
       return state = { ...initialState }
     },
+    // используется для prefetch запросов, чтобы не показывать спиннер на экране
+    // так как prefetch запросы идут в фоновом режиме
     setPrefetchSpinner: (state) => {
       state.prefetch = true
     },
@@ -33,8 +54,10 @@ export const SpinnerSlice = createSlice({
 
 export const {
   showSpinner,
+  showFetchSpinner,
   showSpinnerForce,
   hideSpinner,
+  hideSpinnerForce,
   setPrefetchSpinner,
 } = SpinnerSlice.actions
 
