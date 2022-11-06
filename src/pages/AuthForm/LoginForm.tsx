@@ -53,13 +53,9 @@ export const LoginForm: FC = () => {
     }
   }
 
-  const focusHandler = () => {
-    setError('')
-  }
+  const focusHandler = () => setError('')
 
-  const clickHandler = () => {
-    navigate(ROUTES.signup)
-  }
+  const clickHandler = () => navigate(ROUTES.signup)
 
   const inputPasswordStyle = classNames(styles.input, styles.inputPassword)
 

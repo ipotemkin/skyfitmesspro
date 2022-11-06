@@ -1,6 +1,8 @@
 import { BrowserHistory, createBrowserHistory, Update } from 'history'
-import { FC, useLayoutEffect, useRef, useState, useTransition } from 'react'
+import { FC, useEffect, useLayoutEffect, useRef, useState, useTransition } from 'react'
 import { Router } from 'react-router-dom'
+import { useAppDispatch } from '../../hooks/appHooks'
+import { hideSpinner, showSpinnerForce } from '../../slices/spinnerSlice'
 
 type Props = {
   basename?: string
@@ -13,6 +15,7 @@ export const SuspenseRouter: FC<Props> = ({ basename, children, window }) => {
   const historyRef = useRef<BrowserHistory>()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPending, startTransition] = useTransition()
+  const dispatch = useAppDispatch()
 
   if (historyRef.current == null)
     historyRef.current = createBrowserHistory({ window })
@@ -21,9 +24,17 @@ export const SuspenseRouter: FC<Props> = ({ basename, children, window }) => {
   const { action, location } = history
   const [state, setState] = useState({ action, location })
 
-  const setStateAsync = (update: Update) => startTransition(() => setState(update))
+  const setStateAsync = (update: Update) => {
+    dispatch(showSpinnerForce())
+    startTransition(() => setState(update))
+  }
 
-  useLayoutEffect(() => history.listen(setStateAsync), [history])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useLayoutEffect(() => { history.listen(setStateAsync) }, [history])
+
+  useEffect(() => {
+    if (!isPending) dispatch(hideSpinner())
+  }, [dispatch, isPending])
 
   return (
     <Router
