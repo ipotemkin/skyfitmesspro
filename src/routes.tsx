@@ -10,13 +10,6 @@ import { checkJWTExpTime, formatString } from './utils'
 import { selectMessage, setMessage } from './slices/messageSlice'
 import { accessTokenName, EXP_MESSAGE } from './constants'
 
-// import AdminPage from './pages/AdminPage/AdminPage'
-// import AboutCourse from './pages/AboutCourse/AboutCourse'
-// import LoginForm from './pages/AuthForm/LoginForm'
-// import SignUpForm from './pages/AuthForm/SignUpForm'
-// import ProfilePage from './pages/ProfilePage/ProfilePage'
-// import Workout from './pages/WorkoutPage/Workout'
-
 const AboutCourse = lazy(() => import('./pages/AboutCourse/AboutCourse'))
 const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage'))
 const SignUpForm = lazy(() => import('./pages/AuthForm/SignUpForm'))
@@ -66,7 +59,6 @@ export const AppRoutes = () => {
 
     // просим пользователя перезайти
     else if (user.needRelogin) {
-      // console.log('needRelogin')
       dispatch(setMessage(EXP_MESSAGE))
       Cookies.remove(accessTokenName)
       setIsLoggedIn(undefined)
