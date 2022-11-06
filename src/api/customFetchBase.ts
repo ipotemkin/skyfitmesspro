@@ -82,7 +82,9 @@ const customFetchBase: BaseQueryFn<
       result = await baseQuery(args, api, extraOptions)
     }
   }
-  api.dispatch(hideSpinnerForce())
+  // делаем задержку в полсекунды, чтобы спиннер не морглал,
+  // если несколько запросов идут друг за другом
+  setTimeout(() => api.dispatch(hideSpinnerForce()), 500)
   return result
 }
 
