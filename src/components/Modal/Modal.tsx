@@ -1,4 +1,6 @@
-import { FC, ReactNode, useEffect } from 'react'
+import { FC, ReactNode } from 'react'
+
+import { useEscapeKey } from '../../hooks/formHooks'
 
 import styles from './style.module.css'
 
@@ -8,15 +10,7 @@ type ModalProps = {
 }
 
 export const Modal: FC<ModalProps> = ({ isOpen, children }) => {
-  useEffect(() => {
-    const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.code === 'Escape') isOpen()
-    }
-
-    document.addEventListener('keydown', handleEscapeKey)
-
-    return () => document.removeEventListener('keydown', handleEscapeKey)
-  }, [isOpen])
+  useEscapeKey(isOpen)
 
   return (
     <div data-cy="modal" className={styles.modal} onClick={() => isOpen()}>

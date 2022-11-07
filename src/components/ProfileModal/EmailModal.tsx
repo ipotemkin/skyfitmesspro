@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useChangeEmailMutation } from '../../api/auth.api'
 import { EXP_MESSAGE } from '../../constants'
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks'
+import { useEscapeKey } from '../../hooks/formHooks'
 import { useGoToLoginWithMessage } from '../../hooks/shortcutsHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { hideSpinner, showSpinner } from '../../slices/spinnerSlice'
@@ -23,6 +24,7 @@ type EmailData = {
 const validEmail = new RegExp(/^[\w]{1}[\w-.]*@[\w-]+\.\w{2,3}$/i)
 
 export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
+  useEscapeKey(() => setIsOpened(false))
   const user = useAppSelector(selectCurrentUser)
   const goToLoginWithMessage = useGoToLoginWithMessage()
   const dispatch = useAppDispatch()
