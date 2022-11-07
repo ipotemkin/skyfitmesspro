@@ -29,9 +29,9 @@ app.use(bodyParser.json())
 function onProxyReq(proxyReq, req, res) {
 
   if(req.body) {
-    const isRefteshToken = req.url.includes('token?key=')
+    const isRefreshToken = req.url.includes('token?key=')
 
-    if (isRefteshToken && !req.body.refreshToken) {
+    if (isRefreshToken && !req.body.refreshToken) {
       const newToken = getRefreshTokenFromCookiesString(req.headers.cookie)
       req.body.refreshToken = newToken
     }
