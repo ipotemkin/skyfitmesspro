@@ -19,8 +19,10 @@ export const Modal: FC<ModalProps> = ({ isOpen, children }) => {
   }, [isOpen])
 
   return (
-    <div data-cy="modal" className={styles.modal} onClick={() => isOpen()}>
-      <div onClick={(e) => e.stopPropagation()}>{children}</div>
+    <div data-cy="modal" className={styles.modal}onClick={() => isOpen()}>
+      <div onClick={(e) => e.stopPropagation()}>
+        {children}
+      </div>
     </div>
   )
 }
