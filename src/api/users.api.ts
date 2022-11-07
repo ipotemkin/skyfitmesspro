@@ -52,6 +52,10 @@ export const usersApi = createApi({
     }),
     getUserCourses: build.query<CourseData[], UserArg>({
       query: ({ uid }) => `/${uid}/courses.json`,
+      transformResponse: (response: CourseData[]) => {
+        console.log('transformResponse: getUserCourses -->', response)
+        return response
+      },
       providesTags: [{ type: 'UserCourse', id: 'LIST' }],
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
@@ -61,14 +65,14 @@ export const usersApi = createApi({
         { type: 'UserCourse', id: 'LIST' },
       ],
     }),
-    getUserExercises: build.query<UserData, WorkoutArg>({
-      query: ({ uid, courseId, workoutId }) =>
-        `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
-      providesTags: (result, error, arg) => [
-        { type: 'UserCourse', id: arg.courseId },
-        { type: 'UserCourse', id: 'LIST' },
-      ],
-    }),
+    // getUserExercises: build.query<UserData, WorkoutArg>({
+    //   query: ({ uid, courseId, workoutId }) =>
+    //     `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
+    //   providesTags: (result, error, arg) => [
+    //     { type: 'UserCourse', id: arg.courseId },
+    //     { type: 'UserCourse', id: 'LIST' },
+    //   ],
+    // }),
     updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
         url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json`,
@@ -107,11 +111,26 @@ export const usersApi = createApi({
         method: 'DELETE',
         body: { id: courseId },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'UserCourse', id: 'LIST' },
-        { type: 'UserCourse', id: arg.courseId },
-        'User',
-      ],
+      async onQueryStarted({ uid, courseId }, { dispatch, queryFulfilled }) {
+        dispatch(
+          usersApi.util.updateQueryData('getUserCourses', { uid }, (draftCourses: CourseData[]) => {
+            console.log('draftCourses (1) -->', draftCourses)
+            const newCourses = draftCourses.filter((item: CourseData) => item.id !== courseId)
+            console.log('newCourses -->', newCourses)
+            draftCourses = [...newCourses]
+            console.log('draftCourses (2) -->', draftCourses)
+        }))
+        try {
+          await queryFulfilled
+        } catch {
+          dispatch(usersApi.util.invalidateTags(['UserCourse']))
+        }
+      },
+      // invalidatesTags: (result, error, arg) => [
+      //   { type: 'UserCourse', id: 'LIST' },
+      //   { type: 'UserCourse', id: arg.courseId },
+      //   'User',
+      // ],
     }),
   }),
 })
@@ -121,7 +140,7 @@ export const {
   useGetUserCoursesQuery,
   useGetUsersWithCoursesQuery,
   useGetUserCourseQuery,
-  useGetUserExercisesQuery,
+  // useGetUserExercisesQuery,
   useUpdateUserExerciseProgressMutation,
   useSetWorkoutStatusMutation,
   useAddUserCourseMutation,
