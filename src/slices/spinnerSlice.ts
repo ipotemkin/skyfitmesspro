@@ -35,12 +35,12 @@ export const SpinnerSlice = createSlice({
       state.visible = true
       state.isLoading = true
     },
-    // зарывает spinner, если нет активной загрузки данных
+    // закрывает spinner, если нет активной загрузки данных
     hideSpinner: (state) => {
       if (!state.isLoading)
         return state = { ...initialState }
     },
-    // зарывает spinner в любом случае
+    // закрывает spinner в любом случае
     hideSpinnerForce: (state) => {
       return state = { ...initialState }
     },

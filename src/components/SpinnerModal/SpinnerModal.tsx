@@ -18,7 +18,11 @@ export const SpinnerModal: FC<SpinnerModalProps> = ({ setIsOpened = () => {} }) 
       { isVisible &&
       <Modal isOpen={setIsOpened}>
         <Box sx={{ display: 'flex' }}>
-          <CircularProgress thickness={8} size="4rem" />
+          <CircularProgress
+            thickness={6}
+            size="4rem"
+            style={{ color: '#FFF' }}
+          />
         </Box>
       </Modal>
       }  
