@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useChangePasswordMutation } from '../../api/auth.api'
 import { EXP_MESSAGE } from '../../constants'
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks'
+import { useEscapeKey } from '../../hooks/formHooks'
 import { useGoToLoginWithMessage } from '../../hooks/shortcutsHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { hideSpinner, showSpinner } from '../../slices/spinnerSlice'
@@ -25,6 +26,7 @@ type PasswordData = {
 const validPasswordLength = 6
 
 export const PasswordModal: FC<PasswordModalProps> = ({ setIsOpened }) => {
+  useEscapeKey(() => setIsOpened(false))
   const user = useAppSelector(selectCurrentUser)
   const goToLoginWithMessage = useGoToLoginWithMessage()
   const [changePassword] = useChangePasswordMutation()

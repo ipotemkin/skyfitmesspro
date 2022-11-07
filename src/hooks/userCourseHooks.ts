@@ -65,15 +65,13 @@ export const useCoursesWithSubscription = (uid?: string) => {
 
 // полные данные по заданному курсу пользователя
 export const useUserCourse = (courseId?: number) => {
-  const user = useAppSelector(selectCurrentUser)
+  const { localId: uid } = useAppSelector(selectCurrentUser)
   const { data: course } = useGetCourseQuery(courseId ?? skipToken)
   const [userCourse, setUserCourse] = useState<CourseData>()
   const [isError, setIsError] = useState(false)
 
   const queryArgs =
-    user.localId && courseId !== undefined
-      ? { uid: user.localId, courseId }
-      : undefined
+    uid && courseId !== undefined ? { uid, courseId } : undefined
 
   const {
     data: userCourseData,
@@ -87,9 +85,9 @@ export const useUserCourse = (courseId?: number) => {
   }, [isErrorQuery])
 
   useEffect(() => {
-    if (userCourseData && course && user.localId)
+    if (userCourseData && course && uid)
       setUserCourse(mergeCourseData(course, userCourseData))
-  }, [userCourseData, course, user.localId])
+  }, [userCourseData, course, uid])
 
   return { data: userCourse, isLoading: isUserCourseLoading, error, isError }
 }
@@ -112,11 +110,11 @@ export const useUpdateProgressAndWorkoutStatus = () => {
   const [setWorkoutStatus] = useSetWorkoutStatusMutation()
 
   const updateProgressAndWorkoutStatus = async (
-      exercises: Exercise[],
-      workoutArg: WorkoutArg,
+    exercises: Exercise[],
+    workoutArg: WorkoutArg,
   ) => { 
-  let workoutStatus = true
-  if (exercises) {
+    let workoutStatus = true
+    if (exercises) {
       exercises.forEach((item: Exercise, index: number) => {
         // проверяем, выполнены ли упражнения
         workoutStatus &&= item.userProgress === item.retriesCount
