@@ -66,7 +66,7 @@ export const useCoursesWithSubscription = (uid?: string) => {
 // полные данные по заданному курсу пользователя
 export const useUserCourse = (courseId?: number) => {
   const { localId: uid } = useAppSelector(selectCurrentUser)
-  const { data: course } = useGetCourseQuery(courseId ?? skipToken)
+  const { data: course, isError: isCourseError } = useGetCourseQuery(courseId ?? skipToken)
   const [userCourse, setUserCourse] = useState<CourseData>()
   const [isError, setIsError] = useState(false)
 
@@ -81,8 +81,10 @@ export const useUserCourse = (courseId?: number) => {
   } = useGetUserCourseQuery(queryArgs ?? skipToken)
 
   useEffect(() => {
-    isErrorQuery ? setIsError(true) : setIsError(false)
-  }, [isErrorQuery])
+    if (isErrorQuery || isCourseError) setIsError(true)
+    else setIsError(false)
+    // isErrorQuery ? setIsError(true) : setIsError(false)
+  }, [isErrorQuery, isCourseError])
 
   useEffect(() => {
     if (userCourseData && course && uid)

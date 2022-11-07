@@ -27,12 +27,12 @@ export const ROUTES = {
   workout: '/courses/{}/workouts/{}', // '/courses/:id/workouts/:day'
 }
 
-type ProtectedRouteProps = {
+type Props = {
   redirectPath?: string
   isAllowed?: boolean
 }
 
-const ProtectedRoute: FC<ProtectedRouteProps> = ({
+const ProtectedRoute: FC<Props> = ({
   redirectPath = ROUTES.home,
   isAllowed,
 }) => {
