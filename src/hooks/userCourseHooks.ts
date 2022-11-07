@@ -4,10 +4,10 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useEffect, useState } from 'react'
 
 import { useGetCourseQuery, useGetCoursesQuery } from '../api/courses.api'
-import { useGetUserCourseQuery, useGetUserCoursesQuery, usePrefetch } from '../api/users.api'
+import { ExercisePayload, useGetUserCourseQuery, useGetUserCoursesQuery, usePrefetch, useSetWorkoutStatusMutation, useUpdateUserExerciseProgressMutation, WorkoutArg, WorkoutStatusArg } from '../api/users.api'
 import { selectCurrentUser } from '../slices/currentUserSlice'
 import { setPrefetchSpinner } from '../slices/spinnerSlice'
-import { CourseData } from '../types'
+import { CourseData, Exercise } from '../types'
 import { useAppDispatch, useAppSelector } from './appHooks'
 import { addSubscription, getValidKeys, mergeCourseData } from './utils'
 
@@ -105,4 +105,40 @@ export const usePrefetchUserCourse = (endpoint: any) => {
   }
 
   return newPrefetchFunc
+}
+
+export const useUpdateProgressAndWorkoutStatus = () => {
+  const [updateProgress] = useUpdateUserExerciseProgressMutation()
+  const [setWorkoutStatus] = useSetWorkoutStatusMutation()
+
+  const updateProgressAndWorkoutStatus = async (
+      exercises: Exercise[],
+      workoutArg: WorkoutArg,
+  ) => { 
+  let workoutStatus = true
+  if (exercises) {
+      exercises.forEach((item: Exercise, index: number) => {
+        // проверяем, выполнены ли упражнения
+        workoutStatus &&= item.userProgress === item.retriesCount
+
+        const updateData: ExercisePayload = {
+          arg: {
+            ...workoutArg,
+            exerciseId: index,
+          },
+          body: {
+            userProgress: item.userProgress || 0,
+          },
+        }
+        updateProgress({ ...updateData }).unwrap()
+      })
+      const workoutStatusArg: WorkoutStatusArg = {
+        ...workoutArg,
+        done: workoutStatus,
+      }
+      await setWorkoutStatus({ ...workoutStatusArg }).unwrap()
+    }
+  }
+
+  return updateProgressAndWorkoutStatus
 }
