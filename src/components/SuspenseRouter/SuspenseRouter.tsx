@@ -13,11 +13,11 @@ type Props = {
 
 // не переключает на новую страницу, пока она не готова
 export const SuspenseRouter: FC<Props> = ({ basename, children, window }) => {
-  const historyRef = useRef<BrowserHistory>()
+  const historyRef = useRef<BrowserHistory | null>(null)
   const [isPending, startTransition] = useTransition()
   const dispatch = useAppDispatch()
 
-  if (historyRef.current == null)
+  if (historyRef.current === null)
     historyRef.current = createBrowserHistory({ window })
 
   const history = historyRef.current

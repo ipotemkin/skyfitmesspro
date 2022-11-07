@@ -1,20 +1,10 @@
 import { ERRORS } from "./constants"
+import { AuthErrorType } from "./types"
 
 export const formatString = (text: string, args: string[]) => {
   let res = text
-  for (const arg of args) {
-    res = res.replace(/{}/, arg)
-  }
+  for (const arg of args) res = res.replace(/{}/, arg)
   return res
-}
-
-export type AuthErrorType = {
-  status: number
-  data: {
-    error: {
-      message: string
-    }
-  }
 }
 
 export const getErrorMessage = (
@@ -50,8 +40,6 @@ export const checkJWTExpTime = (token: string) => {
 }
 
 export const getQueryErrorStatus = (error: any) => {
-  if (error && 'status' in error) {
-    return error.status
-  }
+  if (error && 'status' in error) return error.status
   return undefined
 }
