@@ -1,3 +1,4 @@
+import { current } from '@reduxjs/toolkit'
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { setPrefetchSpinner } from '../slices/spinnerSlice'
 
@@ -34,6 +35,8 @@ export type ExercisePayload = {
   body: ExerciseProgress
 }
 
+type CourseDataOrNull = CourseData | null
+
 export const usersApi = createApi({
   reducerPath: 'users/api',
   tagTypes: ['UserCourse', 'User'],
@@ -53,10 +56,10 @@ export const usersApi = createApi({
     }),
     getUserCourses: build.query<CourseData[], UserArg>({
       query: ({ uid }) => `/${uid}/courses.json`,
-      transformResponse: (response: CourseData[]) => {
-        console.log('transformResponse: getUserCourses -->', response)
-        return response
-      },
+      // transformResponse: (response: CourseData[]) => {
+      //   console.log('transformResponse: getUserCourses -->', response)
+      //   return response
+      // },
       providesTags: [{ type: 'UserCourse', id: 'LIST' }],
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
@@ -103,8 +106,7 @@ export const usersApi = createApi({
             'getUserCourses',
             { uid },
             (draftCourses: CourseData[]) => {
-              // const newCourses = current.draftCourses
-              draftCourses.push({ id: courseId })
+              draftCourses[courseId] = { id: courseId }
               return draftCourses
           }))
           try {
@@ -128,9 +130,11 @@ export const usersApi = createApi({
           usersApi.util.updateQueryData(
             'getUserCourses',
             { uid },
-            (draftCourses: CourseData[]) => (
-              draftCourses.filter((item: CourseData) => item.id !== courseId)
-        )))
+            (draftCourses: CourseData[]) => {
+              const courses = draftCourses as CourseDataOrNull[]
+              courses[courseId] = null
+              return courses as CourseData[]
+        }))
         try {
           await queryFulfilled
         } catch {
