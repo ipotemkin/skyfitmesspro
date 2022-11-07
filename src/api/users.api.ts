@@ -1,4 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
+import { setPrefetchSpinner } from '../slices/spinnerSlice'
 
 import { CourseData, UserData } from '../types'
 import customFetchBase from './customFetchBase'
@@ -65,14 +66,6 @@ export const usersApi = createApi({
         { type: 'UserCourse', id: 'LIST' },
       ],
     }),
-    // getUserExercises: build.query<UserData, WorkoutArg>({
-    //   query: ({ uid, courseId, workoutId }) =>
-    //     `/${uid}/courses/${courseId}/workouts/${workoutId}/exercises.json`,
-    //   providesTags: (result, error, arg) => [
-    //     { type: 'UserCourse', id: arg.courseId },
-    //     { type: 'UserCourse', id: 'LIST' },
-    //   ],
-    // }),
     updateUserExerciseProgress: build.mutation<void, ExercisePayload>({
       query: ({ arg, body }) => ({
         url: `/${arg.uid}/courses/${arg.courseId}/workouts/${arg.workoutId}/exercises/${arg.exerciseId}.json`,
@@ -103,8 +96,26 @@ export const usersApi = createApi({
         method: 'PUT',
         body: { id: courseId },
       }),
-      invalidatesTags: [{ type: 'UserCourse', id: 'LIST' }, 'User'],
-    }),
+      async onQueryStarted({ uid, courseId }, { dispatch, queryFulfilled }) {
+        dispatch(setPrefetchSpinner())
+        dispatch(
+          usersApi.util.updateQueryData(
+            'getUserCourses',
+            { uid },
+            (draftCourses: CourseData[]) => {
+              // const newCourses = current.draftCourses
+              draftCourses.push({ id: courseId })
+              return draftCourses
+          }))
+          try {
+            await queryFulfilled
+          } catch {
+            dispatch(usersApi.util.invalidateTags(['UserCourse']))
+          }
+    },
+    invalidatesTags: ['User'],
+    // invalidatesTags: [{ type: 'UserCourse', id: 'LIST' }, 'User'],
+  }),
     delUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
         url: `/${uid}/courses/${courseId}.json`,
@@ -112,20 +123,21 @@ export const usersApi = createApi({
         body: { id: courseId },
       }),
       async onQueryStarted({ uid, courseId }, { dispatch, queryFulfilled }) {
+        dispatch(setPrefetchSpinner())
         dispatch(
-          usersApi.util.updateQueryData('getUserCourses', { uid }, (draftCourses: CourseData[]) => {
-            console.log('draftCourses (1) -->', draftCourses)
-            const newCourses = draftCourses.filter((item: CourseData) => item.id !== courseId)
-            console.log('newCourses -->', newCourses)
-            draftCourses = [...newCourses]
-            console.log('draftCourses (2) -->', draftCourses)
-        }))
+          usersApi.util.updateQueryData(
+            'getUserCourses',
+            { uid },
+            (draftCourses: CourseData[]) => (
+              draftCourses.filter((item: CourseData) => item.id !== courseId)
+        )))
         try {
           await queryFulfilled
         } catch {
           dispatch(usersApi.util.invalidateTags(['UserCourse']))
         }
       },
+      invalidatesTags: ['User'],
       // invalidatesTags: (result, error, arg) => [
       //   { type: 'UserCourse', id: 'LIST' },
       //   { type: 'UserCourse', id: arg.courseId },
@@ -140,7 +152,6 @@ export const {
   useGetUserCoursesQuery,
   useGetUsersWithCoursesQuery,
   useGetUserCourseQuery,
-  // useGetUserExercisesQuery,
   useUpdateUserExerciseProgressMutation,
   useSetWorkoutStatusMutation,
   useAddUserCourseMutation,
