@@ -1,16 +1,12 @@
 import { FC, useEffect, useState } from 'react'
 
-import {
-  ExercisePayload,
-  useSetWorkoutStatusMutation,
-  useUpdateUserExerciseProgressMutation,
-  WorkoutArg,
-  WorkoutStatusArg,
-} from '../../api/users.api'
+import { WorkoutArg } from '../../api/users.api'
+import { useUpdateProgressAndWorkoutStatus } from '../../hooks/userCourseHooks'
 import { Exercise } from '../../types'
 import { Button } from '../Button/Button'
 import { Modal } from '../Modal/Modal'
 import { ProgressInput } from './ProgressInput'
+import { validateInput } from './validator'
 
 import styles from './style.module.css'
 
@@ -32,58 +28,28 @@ export const ProgressModal: FC<ProgressModalProps> = ({
   onClick,
 }) => {
   const [form, setForm] = useState<Form>({ exercises: [] })
-  const [updateProgress] = useUpdateUserExerciseProgressMutation()
-  const [setWorkoutStatus] = useSetWorkoutStatusMutation()
+  const updateProgressAndWorkoutStatus = useUpdateProgressAndWorkoutStatus()
 
-  useEffect(() => {
-    setForm({ exercises })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { setForm({ exercises }) }, [])
 
   const handleInput = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    const newExercises: Exercise[] = [...(form.exercises || [])]
-    newExercises[index].userProgress = Math.max(
-      0,
-      Math.min(Number(e.target.value), newExercises[index].retriesCount)
-    )
-    setForm({ exercises: newExercises })
+    const exercises = [...form.exercises || []]
+    exercises[index].userProgress = validateInput(exercises[index], e.target.value)
+    setForm({ exercises })
   }
 
   const handleSubmit = async () => {
-    let workoutStatus = true
-    if (form.exercises) {
-      form.exercises.forEach((item: Exercise, index: number) => {
-        // проверяем, выполнены ли упражнения
-        workoutStatus &&= item.userProgress === item.retriesCount
-
-        const updateData: ExercisePayload = {
-          arg: {
-            ...workoutArg,
-            exerciseId: index,
-          },
-          body: {
-            userProgress: item.userProgress || 0,
-          },
-        }
-        updateProgress({ ...updateData }).unwrap()
-      })
-      const workoutStatusArg: WorkoutStatusArg = {
-        ...workoutArg,
-        done: workoutStatus,
-      }
-      await setWorkoutStatus({ ...workoutStatusArg }).unwrap()
-    }
+    if (form.exercises) await updateProgressAndWorkoutStatus(form.exercises, workoutArg)
     if (onClick) onClick()
   }
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     event.stopPropagation()
-    if (event.key === 'Enter') {
-      handleSubmit()
-    }
+    if (event.key === 'Enter') handleSubmit()
   }
 
   return (

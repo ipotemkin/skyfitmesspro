@@ -3,18 +3,14 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { CourseData, UserData } from '../types'
 import customFetchBase from './customFetchBase'
 
-type TokenArg = {
-  idToken?: string
-}
-
 type UserArg = {
   uid?: string
-} & TokenArg
+}
 
 type CourseArg = {
   uid: string
   courseId: number
-} & TokenArg
+}
 
 export type WorkoutArg = {
   workoutId: number
@@ -89,7 +85,7 @@ export const usersApi = createApi({
       query: ({ uid, courseId, workoutId, done }) => ({
         url: `/${uid}/courses/${courseId}/workouts/${workoutId}.json`,
         method: 'PATCH',
-        body: { done: done },
+        body: { done },
       }),
       invalidatesTags: (result, error, arg) => [
         { type: 'UserCourse', id: 'LIST' },

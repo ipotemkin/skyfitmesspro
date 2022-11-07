@@ -13,14 +13,16 @@ export const Modal: FC<ModalProps> = ({ isOpen, children }) => {
       if (event.code === 'Escape') isOpen()
     }
 
-    window.addEventListener('keydown', handleEscapeKey)
+    document.addEventListener('keydown', handleEscapeKey)
 
     return () => document.removeEventListener('keydown', handleEscapeKey)
   }, [isOpen])
 
   return (
     <div data-cy="modal" className={styles.modal} onClick={() => isOpen()}>
-      <div onClick={(e) => e.stopPropagation()}>{children}</div>
+      <div onClick={(e) => e.stopPropagation()}>
+        {children}
+      </div>
     </div>
   )
 }

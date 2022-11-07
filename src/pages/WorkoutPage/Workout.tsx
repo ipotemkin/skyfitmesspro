@@ -54,13 +54,9 @@ const Workout: FC = () => {
     workoutId: workoutIdx,
   }
 
-  const handleClick = () => {
-    setIsModalOneShown(true)
-  }
+  const handleClick = () => setIsModalOneShown(true)
 
-  const handleWorkoutClick = () => {
-    setIsWorkoutsShown(true)
-  }
+  const handleWorkoutClick = () => setIsWorkoutsShown(true)
 
   const handleSendClick = () => {
     setIsModalOneShown(false)
