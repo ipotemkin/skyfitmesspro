@@ -48,7 +48,6 @@ export const ProgressModal: FC<ProgressModalProps> = ({
   }
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    event.stopPropagation()
     if (event.key === 'Enter') handleSubmit()
   }
 
