@@ -1,4 +1,3 @@
-import { current } from '@reduxjs/toolkit'
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { setPrefetchSpinner } from '../slices/spinnerSlice'
 
@@ -56,10 +55,6 @@ export const usersApi = createApi({
     }),
     getUserCourses: build.query<CourseData[], UserArg>({
       query: ({ uid }) => `/${uid}/courses.json`,
-      // transformResponse: (response: CourseData[]) => {
-      //   console.log('transformResponse: getUserCourses -->', response)
-      //   return response
-      // },
       providesTags: [{ type: 'UserCourse', id: 'LIST' }],
     }),
     getUserCourse: build.query<CourseData, CourseArg>({
@@ -75,11 +70,27 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: body,
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'UserCourse', id: arg.arg.courseId },
-        { type: 'UserCourse', id: 'LIST' },
-        'User',
-      ],
+      async onQueryStarted({ arg, body }, { dispatch, queryFulfilled }) {
+        dispatch(setPrefetchSpinner())
+        dispatch(
+          usersApi.util.updateQueryData(
+            'getUserCourse',
+            { uid: arg.uid, courseId: arg.courseId },
+            (draftCourse: CourseData) => {
+              draftCourse.workouts![arg.workoutId].exercises![arg.exerciseId].userProgress! = body.userProgress
+              return draftCourse
+        }))
+        try {
+          await queryFulfilled
+        } catch {
+          dispatch(usersApi.util.invalidateTags([
+            { type: 'UserCourse', id: arg.courseId },
+            { type: 'UserCourse', id: 'LIST' },
+            'User',
+          ]))
+        }
+      },
+      invalidatesTags: ['User'],
     }),
     setWorkoutStatus: build.mutation<void, WorkoutStatusArg>({
       query: ({ uid, courseId, workoutId, done }) => ({
@@ -112,11 +123,10 @@ export const usersApi = createApi({
           try {
             await queryFulfilled
           } catch {
-            dispatch(usersApi.util.invalidateTags(['UserCourse']))
+            dispatch(usersApi.util.invalidateTags([{ type: 'UserCourse', id: 'LIST' }]))
           }
     },
     invalidatesTags: ['User'],
-    // invalidatesTags: [{ type: 'UserCourse', id: 'LIST' }, 'User'],
   }),
     delUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
@@ -138,15 +148,12 @@ export const usersApi = createApi({
         try {
           await queryFulfilled
         } catch {
-          dispatch(usersApi.util.invalidateTags(['UserCourse']))
-        }
+          dispatch(usersApi.util.invalidateTags([
+            { type: 'UserCourse', id: 'LIST' },
+            { type: 'UserCourse', id: courseId },
+        ]))}
       },
       invalidatesTags: ['User'],
-      // invalidatesTags: (result, error, arg) => [
-      //   { type: 'UserCourse', id: 'LIST' },
-      //   { type: 'UserCourse', id: arg.courseId },
-      //   'User',
-      // ],
     }),
   }),
 })
