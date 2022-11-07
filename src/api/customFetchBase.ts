@@ -12,7 +12,7 @@ import { updateCurrentUser } from '../slices/currentUserSlice'
 import { hideSpinnerForce, showFetchSpinner, showSpinnerForce } from '../slices/spinnerSlice'
 import { RootState } from '../store'
 import { checkJWTExpTime } from '../utils'
-import { AddTokenToUrl, runRefreshToken, updateTokenInArgs } from './utils'
+import { addTokenToUrl, runRefreshToken, updateTokenInArgs } from './utils'
 
 // Create a new mutex
 const mutex = new Mutex()
@@ -32,7 +32,7 @@ const customFetchBase: BaseQueryFn<
   await mutex.waitForUnlock()
   
   const { idToken } = (api.getState() as RootState).currentUser
-  args = AddTokenToUrl(args, idToken || '')
+  args = addTokenToUrl(args, idToken || '')
   
   let result: any = true
   if (idToken && checkJWTExpTime(idToken))

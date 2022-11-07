@@ -15,7 +15,7 @@ export const updateTokenInArgs = (args: string | FetchArgs, newToken: string) =>
   return args
 }
 
-export const AddTokenToUrl = (args: string | FetchArgs, token: string) => {
+export const addTokenToUrl = (args: string | FetchArgs, token: string) => {
   const queryString = '?auth=' + token
   if (typeof args === 'string') return args + queryString
   args.url = args.url + queryString

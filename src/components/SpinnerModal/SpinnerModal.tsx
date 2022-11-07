@@ -1,9 +1,9 @@
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
 import { FC } from 'react'
+
 import { useAppSelector } from '../../hooks/appHooks'
 import { selectSpinner } from '../../slices/spinnerSlice'
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-
 import { Modal } from '../Modal/Modal'
 
 type SpinnerModalProps = {
