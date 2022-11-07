@@ -76,6 +76,15 @@ export type ErrorTypes = {
   [index: string]: string
 }
 
+export type AuthErrorType = {
+  status: number
+  data: {
+    error: {
+      message: string
+    }
+  }
+}
+
 // структура idToken
 export type idTokenType = {
   aud: string // project name

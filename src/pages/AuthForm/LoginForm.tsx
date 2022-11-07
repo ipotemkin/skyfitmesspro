@@ -10,8 +10,8 @@ import { validPasswordLength } from '../../constants'
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks'
 import { ROUTES } from '../../routes'
 import { clearMessage, selectMessage } from '../../slices/messageSlice'
-import { FormData } from '../../types'
-import { AuthErrorType, getErrorMessage } from '../../utils'
+import { AuthErrorType, FormData } from '../../types'
+import { getErrorMessage } from '../../utils'
 
 import styles from './style.module.css'
 
