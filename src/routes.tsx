@@ -55,7 +55,7 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     // просим пользователя перезайти
-    if (message === EXP_MESSAGE) setIsLoggedIn(undefined)
+    if (message) setIsLoggedIn(undefined)
 
     // просим пользователя перезайти
     else if (user.needRelogin) {

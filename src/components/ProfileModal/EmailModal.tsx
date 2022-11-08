@@ -8,6 +8,7 @@ import { useEscapeKey } from '../../hooks/formHooks'
 import { useGoToLoginWithMessage } from '../../hooks/shortcutsHooks'
 import { selectCurrentUser } from '../../slices/currentUserSlice'
 import { hideSpinner, showSpinner } from '../../slices/spinnerSlice'
+import { getErrorMessage } from '../../utils'
 import { Button } from '../Button/Button'
 import { Logo } from '../Logo/Logo'
 
@@ -56,9 +57,10 @@ export const EmailModal: FC<EmailModalProps> = ({ setIsOpened }) => {
       }).unwrap()
       dispatch(hideSpinner())
       setIsOpened(false)
-    } catch {
+    } catch (error: any) {
+      const message = getErrorMessage(error, EXP_MESSAGE)
       dispatch(hideSpinner())
-      goToLoginWithMessage(EXP_MESSAGE)
+      goToLoginWithMessage(message)
     }
   }
 
