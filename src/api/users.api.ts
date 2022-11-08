@@ -1,8 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
+
 import { getValidKeys } from '../hooks/utils'
 import { setPrefetchSpinner } from '../slices/spinnerSlice'
-
-import { CourseData, UserData } from '../types'
+import { CourseData, UserData, Workout } from '../types'
 import { coursesApi } from './courses.api'
 import customFetchBase from './customFetchBase'
 
@@ -14,6 +14,10 @@ type CourseArg = {
   uid: string
   courseId: number
 }
+
+export type WorkoutsArg = {
+  workouts: Workout[]
+} & CourseArg
 
 export type WorkoutArg = {
   workoutId: number
@@ -99,7 +103,7 @@ export const usersApi = createApi({
                   }
                 // если всё есть
                 } else {
-                  draftCourse.workouts![arg.workoutId].exercises![arg.exerciseId].userProgress! = body.userProgress    
+                  draftCourse.workouts![arg.workoutId].exercises![arg.exerciseId].userProgress! = body.userProgress
                 }
               }
               return draftCourse
@@ -138,10 +142,13 @@ export const usersApi = createApi({
         method: 'PUT',
         body: { id: workoutId + 1 },
       }),
-      invalidatesTags: [
-        { type: 'UserCourse', id: 'LIST' },
-        'User'
-      ],
+    }),
+    addUserWorkouts: build.mutation<void, WorkoutsArg>({
+      query: ({ uid, courseId, workouts }) => ({
+        url: `/${uid}/courses/${courseId}/workouts.json`,
+        method: 'PUT',
+        body: workouts,
+      }),
     }),
     addUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
@@ -170,21 +177,26 @@ export const usersApi = createApi({
           await queryFulfilled
           try {
             const { data } = await dispatch(coursesApi.endpoints.getWorkouts.initiate(courseId))
+            // добавяем тренировки в новый курс пользователя
             if (data) {
-              for (let i = 0; i < data.length; i++ )
-                dispatch(usersApi.endpoints.addUserWorkout.initiate({ uid, courseId, workoutId: i }))  
+              const newWorkouts: Workout[] = []
+              for (let i = 0; i < data.length; i++ ) newWorkouts.push({ id: i + 1 })
+              await dispatch(usersApi.endpoints.addUserWorkouts.initiate({
+                uid,
+                courseId,
+                workouts: newWorkouts,
+              }))
             }
           } catch {
             console.error('No workouts in this course')
           }
         } catch {
+          // dispatch(usersApi.util.invalidateTags([{ type: 'UserCourse', id: 'LIST' }]))
         } finally {
           dispatch(usersApi.util.invalidateTags([{ type: 'UserCourse', id: 'LIST' }]))
         }
       },
-      invalidatesTags: [
-        'User'
-      ],
+      invalidatesTags: ['User'],
     }),
     delUserCourse: build.mutation<void, CourseArg>({
       query: ({ uid, courseId }) => ({
