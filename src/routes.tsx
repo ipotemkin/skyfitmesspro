@@ -3,13 +3,13 @@ import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import { useAppDispatch, useAppSelector } from './hooks/appHooks'
-import { Main } from './pages/Main/Main'
 import { NotFound } from './pages/NotFound/NotFound'
 import { selectCurrentUser } from './slices/currentUserSlice'
 import { checkJWTExpTime, formatString } from './utils'
 import { selectMessage, setMessage } from './slices/messageSlice'
 import { accessTokenName, EXP_MESSAGE } from './constants'
 
+const Main = lazy(() => import('./pages/Main/Main'))
 const AboutCourse = lazy(() => import('./pages/AboutCourse/AboutCourse'))
 const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage'))
 const SignUpForm = lazy(() => import('./pages/AuthForm/SignUpForm'))

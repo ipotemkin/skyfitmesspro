@@ -4,6 +4,7 @@ import { Router } from 'react-router-dom'
 
 import { useAppDispatch } from '../../hooks/appHooks'
 import { hideSpinner, showSpinner } from '../../slices/spinnerSlice'
+import { getPath } from './utils'
 
 type Props = {
   basename?: string
@@ -11,21 +12,35 @@ type Props = {
   window?: Window
 }
 
+// храним страницы, для которых уже загружен код
+const loadedPages: string[] = []
+
 // не переключает на новую страницу, пока она не готова
 export const SuspenseRouter: FC<Props> = ({ basename, children, window }) => {
   const historyRef = useRef<BrowserHistory | null>(null)
   const [isPending, startTransition] = useTransition()
   const dispatch = useAppDispatch()
 
-  if (historyRef.current === null)
+  if (historyRef.current === null) {
     historyRef.current = createBrowserHistory({ window })
+    if (loadedPages.length === 0) {
+      const newLoc = getPath(historyRef.current.location.pathname)  
+      if (newLoc) loadedPages.push(newLoc)
+    }
+  }
 
   const history = historyRef.current
   const { action, location } = history
   const [state, setState] = useState({ action, location })
 
   const setStateAsync = (update: Update) => {
-    dispatch(showSpinner())
+    const newLoc = getPath(update.location.pathname)
+    
+    // если код страницы еще не загружен, добавляем её в список и показываем спиннер
+    if (newLoc && !loadedPages.includes(newLoc)) {
+      loadedPages.push(newLoc)
+      dispatch(showSpinner())
+    }
     startTransition(() => setState(update))
   }
 
