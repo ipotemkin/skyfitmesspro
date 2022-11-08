@@ -11,7 +11,7 @@ import { selectCurrentUser } from '../../slices/currentUserSlice'
 
 import styles from './style.module.css'
 
-export const Main = () => {
+const Main = () => {
   const { localId } = useAppSelector(selectCurrentUser)
   const isLoggedIn = localId ? true : false
 
@@ -52,3 +52,5 @@ export const Main = () => {
     </>
   )
 }
+
+export default Main

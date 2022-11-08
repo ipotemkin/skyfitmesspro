@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { API_URL } from '../constants'
-import { CourseData } from '../types'
+import { CourseData, Workout } from '../types'
 import { parseFirebaseString } from './utils'
 
 export const coursesApi = createApi({
@@ -21,6 +21,9 @@ export const coursesApi = createApi({
           response.description = parseFirebaseString(response.description)
         return response
       },
+    }),
+    getWorkouts: build.query<Workout[], number>({
+      query: (courseId: number) => `courses/${courseId}/workouts.json`,
     }),
   }),
 })
