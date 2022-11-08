@@ -191,6 +191,8 @@ export const usersApi = createApi({
             console.error('No workouts in this course')
           }
         } catch {
+          // dispatch(usersApi.util.invalidateTags([{ type: 'UserCourse', id: 'LIST' }]))
+        } finally {
           dispatch(usersApi.util.invalidateTags([{ type: 'UserCourse', id: 'LIST' }]))
         }
       },
