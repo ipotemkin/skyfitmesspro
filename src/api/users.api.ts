@@ -76,48 +76,6 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: body,
       }),
-      // optimistic update
-      async onQueryStarted({ arg, body }, { dispatch, queryFulfilled }) {
-        dispatch(setPrefetchSpinner())
-        dispatch(
-          usersApi.util.updateQueryData(
-            'getUserCourse',
-            { uid: arg.uid, courseId: arg.courseId },
-            (draftCourse: CourseData) => {
-              if (draftCourse.workouts && draftCourse.workouts[arg.workoutId]) {
-                // если нет блока упражнений
-                if (!draftCourse.workouts[arg.workoutId].exercises) {
-                  draftCourse.workouts[arg.workoutId].exercises = []
-                }                
-                
-                // если нет конкретного упражнения
-                if (
-                  draftCourse.workouts[arg.workoutId].exercises && 
-                  !draftCourse.workouts[arg.workoutId].exercises![arg.exerciseId]
-                ) {
-                  draftCourse.workouts[arg.workoutId].exercises![arg.exerciseId] = {
-                    name: '',
-                    id: arg.exerciseId,
-                    retriesCount: 0,
-                    userProgress: body.userProgress
-                  }
-                // если всё есть
-                } else {
-                  draftCourse.workouts![arg.workoutId].exercises![arg.exerciseId].userProgress! = body.userProgress
-                }
-              }
-              return draftCourse
-        }))
-        try {
-          await queryFulfilled
-        } catch {
-          dispatch(usersApi.util.invalidateTags([
-            { type: 'UserCourse', id: arg.courseId },
-            { type: 'UserCourse', id: 'LIST' },
-            'User',
-          ]))
-        }
-      },
       invalidatesTags: (result, error, arg) => [
         { type: 'UserCourse', id: arg.arg.courseId },
         { type: 'UserCourse', id: 'LIST' },
