@@ -177,6 +177,7 @@ npm run cypress
 - [x] React Router DOM, реализация routing
 - [x] js-cookie
 - [x] TypeScript
+- [x] Cypress
 - [x] [Material UI](https://mui.com/material-ui/getting-started/overview/)
 - [x] [Mutex](https://www.npmjs.com/package/async-mutex)
 - [x] Express.js
